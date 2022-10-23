@@ -70,6 +70,11 @@ public class Cliente {
 			this.telefono = telefono;
 		}
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Cliente [nombre=" + nombre + ", apellidos=" + apellidos + ", gmail=" + gmail + ", contraseña="
+				+ contraseña + ", direccion=" + direccion + ", telefono=" + telefono + "]";
+	}
 	
 }
