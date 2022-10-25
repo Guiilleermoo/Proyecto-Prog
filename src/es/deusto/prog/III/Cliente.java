@@ -83,7 +83,7 @@ public class Cliente {
 
 	@Override
 	public String toString() {
-		return "Cliente [nombre=" + nombre + ", apellidos=" + apellidos + ",DNI + ", DNI + ", gmail=" + gmail + ", contraseña="
+		return "Cliente [nombre=" + nombre + ", apellidos=" + apellidos + ",DNI =" + DNI + ", gmail=" + gmail + ", contraseña="
 				+ contraseña + ", direccion=" + direccion + ", telefono=" + telefono + "]";
 	}
 	
