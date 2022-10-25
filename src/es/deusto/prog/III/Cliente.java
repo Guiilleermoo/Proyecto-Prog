@@ -3,18 +3,20 @@ package es.deusto.prog.III;
 public class Cliente {
 	protected String nombre;
 	protected String apellidos;
+	protected String DNI;
 	protected String gmail;
-	protected String contraseña;
+	protected String contraseÃ±a;
 	protected String direccion;
 	protected String telefono;
 	
-	public Cliente(String nombre, String apellidos, String gmail, String contraseña, String direccion,
+	public Cliente(String nombre, String apellidos,String DNI, String gmail, String contraseÃ±a, String direccion,
 			String telefono) {
 		super();
 		this.nombre = nombre;
 		this.apellidos = apellidos;
+		this.DNI = DNI;
 		this.gmail = gmail;
-		this.contraseña = contraseña;
+		this.contraseÃ±a = contraseÃ±a;
 		this.direccion = direccion;
 		this.telefono = telefono;
 	}
@@ -34,7 +36,15 @@ public class Cliente {
 	public void setApellidos(String apellidos) {
 		this.apellidos = apellidos;
 	}
-
+	
+	public String getDNI() {
+		return DNI;
+	}
+	
+	public void setDNI(String DNI) {
+		this.DNI = DNI;
+	}
+	
 	public String getGmail() {
 		return gmail;
 	}
@@ -43,12 +53,12 @@ public class Cliente {
 		this.gmail = gmail;
 	}
 
-	public String getContraseña() {
-		return contraseña;
+	public String getContraseÃ±a() {
+		return contraseÃ±a;
 	}
 
-	public void setContraseña(String contraseña) {
-		this.contraseña = contraseña;
+	public void setContraseÃ±a(String contraseÃ±a) {
+		this.contraseÃ±a = contraseÃ±a;
 	}
 
 	public String getDireccion() {
@@ -65,7 +75,7 @@ public class Cliente {
 
 	public void setTelefono(String telefono) {
 		if (telefono.length() < 9 || telefono.length() > 9) {
-			System.err.println("Error guardando el teléfono");
+			System.err.println("Error guardando el telÃ©fono");
 		} else {
 			this.telefono = telefono;
 		}
@@ -73,8 +83,8 @@ public class Cliente {
 
 	@Override
 	public String toString() {
-		return "Cliente [nombre=" + nombre + ", apellidos=" + apellidos + ", gmail=" + gmail + ", contraseña="
-				+ contraseña + ", direccion=" + direccion + ", telefono=" + telefono + "]";
+		return "Cliente [nombre=" + nombre + ", apellidos=" + apellidos + ",DNI + ", DNI + ", gmail=" + gmail + ", contraseÃ±a="
+				+ contraseÃ±a + ", direccion=" + direccion + ", telefono=" + telefono + "]";
 	}
 	
 }
