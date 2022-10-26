@@ -5,6 +5,12 @@ public class Ropa extends Producto{
 	protected String articulo;
 	protected int talla;
 
+	public Ropa() {
+		super(null, null, null, 0);
+		this.articulo = null;
+		this.talla = 0;
+	}
+	
 	public Ropa(String deporte, String marca, Genero genero, double precio, String articulo, int talla) {
 		super(deporte, marca, genero, precio);
 		this.articulo = articulo;

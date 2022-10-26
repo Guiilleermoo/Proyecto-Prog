@@ -8,6 +8,16 @@ public class Cliente {
 	protected String direccion;
 	protected String telefono;
 	
+	public Cliente() {
+		super();
+		this.id = 0;
+		this.nombreYApellidos = null;
+		this.gmail = null;
+		this.contrasena = null;
+		this.direccion = null;
+		this.telefono = null;
+	}
+	
 	public Cliente(String nombreYApellidos, String gmail, String contrasena, String direccion,
 			String telefono) {
 		super();

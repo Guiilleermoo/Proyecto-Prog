@@ -12,6 +12,17 @@ public class Trabajador {
 	public enum Status {
 		JEFE,EMPLEADO;
 	}
+	
+	public Trabajador() {
+		super();
+		this.id = id++;
+		this.nombreYApellidos = null;
+		this.gmail = null;
+		this.contrasena = null;
+		this.status = null;
+		this.salario = 0;
+		this.telefono = null;
+	}
 
 	public Trabajador(String nombreYApellidos, String gmail, String contrasena, Status status, double salario,
 			String telefono) {

@@ -7,6 +7,11 @@ public class Calzado extends Producto {
 	public enum Talla {
 		XS,S,M,L,XL,XXL;
 	}
+	public Calzado() {
+		super(null, null, null, 0);
+		this.articulo = null;
+		this.talla = null;
+	}
 
 	public Calzado(String deporte, String marca, Genero genero, double precio, String articulo, Talla talla) {
 		super(deporte, marca, genero, precio);

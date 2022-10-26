@@ -8,7 +8,7 @@ public abstract class Producto {
 	protected double precio;
 	
 	public enum Genero {
-		HOMBRE,MUJER,NIÑO,NIÑA,UNISEX;
+		HOMBRE,MUJER,NIÃ‘O,NIÃ‘A,UNISEX;
 	}
 
 	public Producto(String deporte, String marca, Genero genero, double precio) {

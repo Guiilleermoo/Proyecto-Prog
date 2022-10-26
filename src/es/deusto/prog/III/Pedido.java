@@ -13,6 +13,14 @@ public class Pedido {
 	public enum Estado {
 		PREPARACION, LISTO, FINALIZADO;
 	}
+	
+	public Pedido() {
+		super();
+		this.cliente = null;
+		this.fecha = null;
+		this.productos = null;
+		this.estado = Estado.LISTO;
+	}
 
 	public Pedido(String cliente, Date fecha, ArrayList<Producto> productos, Estado estado) {
 		super();
