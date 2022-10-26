@@ -1,21 +1,27 @@
 package es.deusto.prog.III;
 
-public class Cliente {
-	protected int id = -1;
+public class Trabajador {
+	protected int id;
 	protected String nombreYApellidos;
 	protected String gmail;
 	protected String contrasena;
-	protected String direccion;
+	protected Status status;
+	protected double salario;
 	protected String telefono;
 	
-	public Cliente(String nombreYApellidos, String gmail, String contrasena, String direccion,
+	public enum Status {
+		JEFE,EMPLEADO;
+	}
+
+	public Trabajador(String nombreYApellidos, String gmail, String contrasena, Status status, double salario,
 			String telefono) {
 		super();
 		this.id = id++;
 		this.nombreYApellidos = nombreYApellidos;
 		this.gmail = gmail;
 		this.contrasena = contrasena;
-		this.direccion = direccion;
+		this.status = status;
+		this.salario = salario;
 		this.telefono = telefono;
 	}
 
@@ -26,7 +32,7 @@ public class Cliente {
 	public void setNombreYApellidos(String nombreYApellidos) {
 		this.nombreYApellidos = nombreYApellidos;
 	}
-	
+
 	public String getGmail() {
 		return gmail;
 	}
@@ -43,12 +49,20 @@ public class Cliente {
 		this.contrasena = contrasena;
 	}
 
-	public String getDireccion() {
-		return direccion;
+	public Status getStatus() {
+		return status;
 	}
 
-	public void setDireccion(String direccion) {
-		this.direccion = direccion;
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
+	public double getSalario() {
+		return salario;
+	}
+
+	public void setSalario(double salario) {
+		this.salario = salario;
 	}
 
 	public String getTelefono() {
@@ -65,8 +79,8 @@ public class Cliente {
 
 	@Override
 	public String toString() {
-		return "Cliente [nombreYApellidos=" + nombreYApellidos + ",gmail=" + gmail + ", contrasena="
-				+ contrasena + ", direccion=" + direccion + ", telefono=" + telefono + "]";
+		return "Trabajador [id=" + id + ", nombreYApellidos=" + nombreYApellidos + ", gmail=" + gmail + ", contrasena="
+				+ contrasena + ", status=" + status + ", salario=" + salario + ", telefono=" + telefono + "]";
 	}
 	
 }

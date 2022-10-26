@@ -1,20 +1,7 @@
 package ventanas;
 
-import java.awt.BorderLayout;
-import java.awt.Container;
-import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
+import java.awt.*;
+import javax.swing.*;
 
 import es.deusto.prog.III.Cliente;
 
@@ -63,13 +50,13 @@ public class VentanaLogging extends JFrame{
 		gmailText.setBounds(430, 270, 160, 25);
 		panel.add(gmailText);
 
-		JLabel contraseñaLabel = new JLabel("Contraseña");
-		contraseñaLabel.setBounds(340, 300, 80, 25);
-		panel.add(contraseñaLabel);
+		JLabel contrasenaLabel = new JLabel("Contraseña");
+		contrasenaLabel.setBounds(340, 300, 80, 25);
+		panel.add(contrasenaLabel);
 
-		JPasswordField contraseñaText = new JPasswordField(20);
-		contraseñaText.setBounds(430, 300, 160, 25);
-		panel.add(contraseñaText);
+		JPasswordField contrasenaText = new JPasswordField(20);
+		contrasenaText.setBounds(430, 300, 160, 25);
+		panel.add(contrasenaText);
 
 		JButton accesoButton = new JButton("Acceder");
 		accesoButton.setBounds(340, 340, 120, 25);
@@ -80,12 +67,12 @@ public class VentanaLogging extends JFrame{
 		panel.add(registroButton);
 		
 		
-		accesoButton.addActionListener(new ActionListener() {
+		/*accesoButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				for (Cliente cliente: clientes)  {
-					if (gmailText.toString() == cliente.getGmail() && contraseñaText.toString() == cliente.getContraseña()) {
+					if (gmailText.toString() == cliente.getGmail() && contrasenaText.toString() == cliente.getContrasena()) {
 						ventanaCliente.setVisible(true);
 					} else {
 						System.err.println("Error: gmail y/o contraseña incorrectos");
@@ -94,7 +81,7 @@ public class VentanaLogging extends JFrame{
 				
 			}
 		
-		});
+		});*/
 		
 	
 	
