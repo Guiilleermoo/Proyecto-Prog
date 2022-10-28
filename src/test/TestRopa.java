@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import es.deusto.prog.III.Producto.Genero;
 import es.deusto.prog.III.Ropa;
+import es.deusto.prog.III.Ropa.Talla;
 
 public class TestRopa {
 
@@ -16,7 +17,7 @@ public class TestRopa {
 	private Genero genero = Genero.HOMBRE;
 	private float precio = 1000;
 	private String articulo = "Articulo";
-	private int talla = 10;
+	private Talla talla = Talla.M;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -59,7 +60,7 @@ public class TestRopa {
 
 	@Test
 	public void testSetTalla() {
-		int talla1 = 20;
+		Talla talla1 = Talla.M;
 		ropa.setTalla(talla1);
 		assertEquals(ropa.getTalla(), talla1);
 	}

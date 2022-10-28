@@ -1,24 +1,34 @@
 package es.deusto.prog.III;
 
 public abstract class Producto {
-	protected int id = -1;
 	protected String deporte;
 	protected String marca;
 	protected Genero genero;
 	protected double precio;
 	
+	
 	public enum Genero {
 		HOMBRE,MUJER,NIÑO,NIÑA,UNISEX;
 	}
 
-	public Producto(String deporte, String marca, Genero genero, double precio) {
+	public Producto( String deporte, String marca, Genero genero, double precio) {
 		super();
-		this.id = id++;
 		this.deporte = deporte;
 		this.marca = marca;
 		this.genero = genero;
 		this.precio = precio;
+		
 	}
+
+	public Producto() {
+		super();
+		this.deporte = "Futbol";
+		this.marca = "Nike";
+		this.genero = Genero.HOMBRE;
+		this.precio = 20;
+		
+	}
+
 
 	public String getDeporte() {
 		return deporte;
@@ -52,10 +62,13 @@ public abstract class Producto {
 		this.precio = precio;
 	}
 
+
 	@Override
 	public String toString() {
-		return "Producto [id=" + id + ", deporte=" + deporte + ", marca=" + marca + ", genero=" + genero + ", precio="
-				+ precio + "]";
+		return "Producto [deporte=" + deporte + ", marca=" + marca + ", genero=" + genero + ", precio="
+				+ precio + ", comprador="  + "]";
 	}
+	
+	
 	
 }

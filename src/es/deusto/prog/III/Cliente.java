@@ -1,16 +1,19 @@
 package es.deusto.prog.III;
 
+import java.util.ArrayList;
+
 public class Cliente {
-	protected int id = -1;
+	
 	protected String nombreYApellidos;
 	protected String gmail;
 	protected String contrasena;
 	protected String direccion;
 	protected String telefono;
+	protected ArrayList<Producto> articulos;
 	
 	public Cliente() {
 		super();
-		this.id = 0;
+		
 		this.nombreYApellidos = null;
 		this.gmail = null;
 		this.contrasena = null;
@@ -21,7 +24,7 @@ public class Cliente {
 	public Cliente(String nombreYApellidos, String gmail, String contrasena, String direccion,
 			String telefono) {
 		super();
-		this.id = id++;
+		
 		this.nombreYApellidos = nombreYApellidos;
 		this.gmail = gmail;
 		this.contrasena = contrasena;

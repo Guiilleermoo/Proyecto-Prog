@@ -2,18 +2,16 @@ package es.deusto.prog.III;
 
 public class Calzado extends Producto {
 	protected String articulo;
-	protected Talla talla;
+	protected int talla;
 	
-	public enum Talla {
-		XS,S,M,L,XL,XXL;
-	}
+	
 	public Calzado() {
 		super(null, null, null, 0);
 		this.articulo = null;
-		this.talla = null;
+		this.talla = 42;
 	}
 
-	public Calzado(String deporte, String marca, Genero genero, double precio, String articulo, Talla talla) {
+	public Calzado(String deporte, String marca, Genero genero, double precio, String articulo, int talla) {
 		super(deporte, marca, genero, precio);
 		this.articulo = articulo;
 		this.talla = talla;
@@ -27,11 +25,11 @@ public class Calzado extends Producto {
 		this.articulo = articulo;
 	}
 
-	public Talla getTalla() {
+	public int getTalla() {
 		return talla;
 	}
 
-	public void setTalla(Talla talla) {
+	public void setTalla(int talla) {
 		this.talla = talla;
 	}
 

@@ -2,11 +2,11 @@ package test;
 
 import static org.junit.Assert.*;
 
+
 import org.junit.Before;
 import org.junit.Test;
 
 import es.deusto.prog.III.Calzado;
-import es.deusto.prog.III.Calzado.Talla;
 import es.deusto.prog.III.Producto.Genero;
 
 public class TestCalzado {
@@ -17,7 +17,7 @@ public class TestCalzado {
 	private Genero genero = Genero.HOMBRE;
 	private float precio = 1000;
 	private String articulo = "Articulo";
-	private Talla talla = Talla.L;
+	private int talla = 38;
 	
 	@Before
 	public void setup() throws Exception  {
@@ -60,7 +60,7 @@ public class TestCalzado {
 
 	@Test
 	public void testSetTalla() {
-		Talla talla1 = Talla.S;
+		int talla1 = 1;
 		calzado.setTalla(talla1);
 		assertEquals(calzado.getTalla(), talla1);
 	}
