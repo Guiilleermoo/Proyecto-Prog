@@ -39,5 +39,4 @@ public class Compra {
 		return "Compra [cliente=" + cliente + ", articulos=" + articulos + "]";
 	}
 	
-	
 }

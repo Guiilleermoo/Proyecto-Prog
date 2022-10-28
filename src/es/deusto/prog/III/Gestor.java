@@ -59,6 +59,4 @@ public class Gestor {
 		return "Gestor [productos=" + productos + ", empleados=" + empleados + ", clientes=" + clientes + "]";
 	}
 	
-	
-	
 }
