@@ -1,7 +1,7 @@
 package es.deusto.prog.III;
 
 public class Trabajador {
-	protected int id;
+	protected int id = -1;
 	protected String nombreYApellidos;
 	protected String gmail;
 	protected String contrasena;
@@ -15,7 +15,6 @@ public class Trabajador {
 	
 	public Trabajador() {
 		super();
-		this.id = id++;
 		this.nombreYApellidos = null;
 		this.gmail = null;
 		this.contrasena = null;
@@ -27,13 +26,22 @@ public class Trabajador {
 	public Trabajador(String nombreYApellidos, String gmail, String contrasena, Status status, double salario,
 			String telefono) {
 		super();
-		this.id = id++;
 		this.nombreYApellidos = nombreYApellidos;
 		this.gmail = gmail;
 		this.contrasena = contrasena;
 		this.status = status;
 		this.salario = salario;
 		this.telefono = telefono;
+	}
+
+	
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getNombreYApellidos() {
