@@ -8,7 +8,7 @@ public abstract class Producto {
 	
 	
 	public enum Genero {
-		HOMBRE,MUJER,NIÑO,NIÑA,UNISEX;
+		HOMBRE,MUJER,NINO,NINA,UNISEX;
 	}
 
 	public Producto( String deporte, String marca, Genero genero, double precio) {
@@ -68,7 +68,5 @@ public abstract class Producto {
 		return "Producto [deporte=" + deporte + ", marca=" + marca + ", genero=" + genero + ", precio="
 				+ precio + ", comprador="  + "]";
 	}
-	
-	
 	
 }
