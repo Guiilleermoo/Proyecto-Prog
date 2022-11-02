@@ -35,7 +35,7 @@ public class GestorBD {
 		}
 	}
 		
-	public void crearBBDD() {
+	/**public void crearBBDD() {
 		//Se abre la conexión y se obtiene el Statement
 		//Al abrir la conexión, si no existía el fichero, se crea la base de datos
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
@@ -57,9 +57,9 @@ public class GestorBD {
 			System.err.println(String.format("* Error al crear la BBDD: %s", ex.getMessage()));
 			ex.printStackTrace();			
 		}
-	}
+	}**/
 	
-	public void borrarBBDD() {
+	/**public void borrarBBDD() {
 		//Se abre la conexión y se obtiene el Statement
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
 		     Statement stmt = con.createStatement()) {
@@ -83,14 +83,14 @@ public class GestorBD {
 			System.err.println(String.format("* Error al borrar el archivo de la BBDD: %s", ex.getMessage()));
 			ex.printStackTrace();						
 		}
-	}
+	}**/
 	
 	public void insertarDatos(Cliente... clientes ) {
 		//Se abre la conexión y se obtiene el Statement
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
 		     Statement stmt = con.createStatement()) {
 			//Se define la plantilla de la sentencia SQL
-			String sql = "INSERT INTO CLIENTE (NOMBREYAPELLIDOS, GMAIL, CONTRASENA, DIRECCION, TELEFONO) VALUES ('%s', '%s', '%s', '%s', '%s');";
+			String sql = "INSERT INTO CLIENTES (NOMBRE, GMAIL, CONTRASENA, DIRECCION, TELEFONO) VALUES ('%s', '%s', '%s', '%s', '%s');";
 			
 			System.out.println("- Insertando clientes...");
 			
@@ -114,7 +114,7 @@ public class GestorBD {
 		//Se abre la conexión y se obtiene el Statement
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
 		     Statement stmt = con.createStatement()) {
-			String sql = "SELECT * FROM CLIENTE WHERE ID >= 0";
+			String sql = "SELECT * FROM CLIENTES WHERE ID >= 0";
 			
 			//Se ejecuta la sentencia y se obtiene el ResultSet con los resutlados
 			ResultSet rs = stmt.executeQuery(sql);			
@@ -125,9 +125,9 @@ public class GestorBD {
 				cliente = new Cliente();
 				
 				cliente.setId(rs.getInt("ID"));
-				cliente.setNombreYApellidos("Nombre");
+				cliente.setNombreYApellidos(rs.getString("NOMBRE"));
 				cliente.setGmail(rs.getString("GMAIL"));
-				cliente.setContrasena(rs.getString("CONTRASEÑA"));
+				cliente.setContrasena(rs.getString("CONTRASENA"));
 				cliente.setDireccion(rs.getString("DIRECCION"));
 				cliente.setTelefono(rs.getString("TELEFONO"));
 				
@@ -152,7 +152,7 @@ public class GestorBD {
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
 		     Statement stmt = con.createStatement()) {
 			//Se ejecuta la sentencia de borrado de datos
-			String sql = "UPDATE CLIENTE SET PASSWORD = '%s' WHERE ID = %d;";
+			String sql = "UPDATE CLIENTES SET CONTRASENA = '%s' WHERE ID = %d;";
 			
 			int result = stmt.executeUpdate(String.format(sql, contrasenaNueva, cliente.getId()));
 			
@@ -163,12 +163,28 @@ public class GestorBD {
 		}		
 	}
 	
-	public void borrarDatos() {
+	public void borrarCliente(Cliente cliente) {
 		//Se abre la conexión y se obtiene el Statement
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
 		     Statement stmt = con.createStatement()) {
 			//Se ejecuta la sentencia de borrado de datos
-			String sql = "DELETE FROM CLIENTE;";			
+			String sql = "DELETE FROM CLIENTES WHERE ID = %d;";
+			
+			int result = stmt.executeUpdate(String.format(sql, cliente.getId()));
+			
+			System.out.println(String.format("- Se ha borrado %d clientes", result));
+		} catch (Exception ex) {
+			System.err.println(String.format("* Error borrando datos de la BBDD: %s", ex.getMessage()));
+			ex.printStackTrace();						
+		}		
+	}
+	
+	public void borrarDatos(String tabla) {
+		//Se abre la conexión y se obtiene el Statement
+		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+		     Statement stmt = con.createStatement()) {
+			//Se ejecuta la sentencia de borrado de datos
+			String sql = "DELETE FROM " + tabla + ";";			
 			int result = stmt.executeUpdate(sql);
 			
 			System.out.println(String.format("- Se han borrado %d clientes", result));

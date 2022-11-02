@@ -71,14 +71,14 @@ public class TestCliente {
 
 	@Test
 	public void testGetDireccion() {
-		assertEquals(cliente.getTelefono(), telefono);
+		assertEquals(cliente.getDireccion(), direccion);
 	}
 
 	@Test
 	public void testSetDireccion() {
-		String contrasena1 = "contrasena1";
-		cliente.setContrasena(contrasena1);
-		assertEquals(cliente.getContrasena(), contrasena1);
+		String direccion1 = "direccion1";
+		cliente.setDireccion(direccion1);
+		assertEquals(cliente.getDireccion(), direccion1);
 	}
 
 	@Test
