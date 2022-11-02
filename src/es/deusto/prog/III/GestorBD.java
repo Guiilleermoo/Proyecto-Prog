@@ -1,5 +1,9 @@
 package es.deusto.prog.III;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Connection;
@@ -8,17 +12,24 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 public class GestorBD {
-	protected static final String DRIVER_NAME = "org.sqlite.JDBC";
-	protected static final String DATABASE_FILE = "db/database.db";
-	protected static final String CONNECTION_STRING = "jdbc:sqlite:" + DATABASE_FILE;
+	protected static  String DRIVER_NAME ;
+	protected static  String DATABASE_FILE;
+	protected static  String CONNECTION_STRING;
 	
 	public GestorBD() {		
 		try {
+			Properties properties = new Properties();
+			properties.load(new FileInputStream(new File("properties/app.properties")));
+			DRIVER_NAME = (String) properties.get("driver");
+			DATABASE_FILE = (String) properties.get("file");
+			CONNECTION_STRING = (String) properties.get("connection");
+		
 			//Cargar el diver SQLite
 			Class.forName(DRIVER_NAME);
-		} catch (ClassNotFoundException ex) {
+		} catch (Exception ex) {
 			System.err.println(String.format("* Error al cargar el driver de BBDD: %s", ex.getMessage()));
 			ex.printStackTrace();
 		}
