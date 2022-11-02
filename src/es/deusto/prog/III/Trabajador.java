@@ -5,11 +5,11 @@ public class Trabajador {
 	protected String nombreYApellidos;
 	protected String gmail;
 	protected String contrasena;
-	protected Status status;
+	protected Estatus status;
 	protected double salario;
 	protected String telefono;
 	
-	public enum Status {
+	public enum Estatus {
 		JEFE,EMPLEADO;
 	}
 	
@@ -23,7 +23,7 @@ public class Trabajador {
 		this.telefono = null;
 	}
 
-	public Trabajador(String nombreYApellidos, String gmail, String contrasena, Status status, double salario,
+	public Trabajador(String nombreYApellidos, String gmail, String contrasena, Estatus status, double salario,
 			String telefono) {
 		super();
 		this.nombreYApellidos = nombreYApellidos;
@@ -68,11 +68,11 @@ public class Trabajador {
 		this.contrasena = contrasena;
 	}
 
-	public Status getStatus() {
+	public Estatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(Status status) {
+	public void setStatus(Estatus status) {
 		this.status = status;
 	}
 

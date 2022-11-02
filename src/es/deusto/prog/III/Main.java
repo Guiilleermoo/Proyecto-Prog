@@ -3,6 +3,8 @@ package es.deusto.prog.III;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.deusto.prog.III.Trabajador.Estatus;
+
 public class Main {
 	public static void main(String[] args) {
 		GestorBD gestorBD = new GestorBD();		
@@ -10,24 +12,38 @@ public class Main {
 		///////CREATE DATABASE: Se crea la BBDD
 		//gestorBD.crearBBDD();
 		
-		///////INSERT: Insertar datos en la BBDD		
+		///////INSERT: Insertar datos en la tabla CLIENTES		
 		List<Cliente> clientes = initClientes();
-		gestorBD.insertarDatos(clientes.toArray(new Cliente[clientes.size()]));
+		gestorBD.insertarClientes(clientes.toArray(new Cliente[clientes.size()]));
 		
-		///////SELECT: Se obtienen datos de la BBDD
-		clientes = gestorBD.obtenerDatos();
+		///////Insetar datos en la tabla EMPLEADOS
+		List<Trabajador> trabajadores = initTrabajadores();
+		gestorBD.insertarTrabajador(trabajadores.toArray(new Trabajador[trabajadores.size()]));
+		
+		///////SELECT: Se obtienen datos de la tabla CLIENTES
+		clientes = gestorBD.obtenerClientes();
 		printClientes(clientes);
 		
+		///////SELECT: Se obtienen datos de la tabla EMPLEADOS
+		trabajadores = gestorBD.obtenerTrabajadores();
+		printTrabajadores(trabajadores);
+		
 		///////UPDATE: Se actualiza la password de un cliente
-		//String newPassword = "hWaPvd6R28%1";
-		//gestorBD.actualizarPassword(clientes.get(0), newPassword);
+		String newPassword = "nueva";
+		gestorBD.actualizarContrasena(clientes.get(0), newPassword);
+		
+		///////UPDATE: se actualiza el salario de un trabajador
+		float nuevoSalario = 1400;
+		gestorBD.actualizarSalario(trabajadores.get(7), nuevoSalario);
+		trabajadores = gestorBD.obtenerTrabajadores();
+		printTrabajadores(trabajadores);
 
 		///////SELECT: Se obtienen datos de la BBDD
-		//clientes = gestorBD.obtenerDatos();
-		//printClientes(clientes);
+		clientes = gestorBD.obtenerClientes();
+		printClientes(clientes);
 
 		///////DELETE: Se borran datos de la BBDD de la tabla clientes
-		//gestorBD.borrarDatos("CLIENTES");
+		gestorBD.borrarDatos("CLIENTES");
 		
 		///////DROP DATABASE: Se borra la BBDD
 		//gestorBD.borrarBBDD();
@@ -41,6 +57,14 @@ public class Main {
 		if (!clientes.isEmpty()) {		
 			for(Cliente cliente : clientes) {
 				System.out.println(String.format(" - %s", cliente.toString()));
+			}
+		}		
+	}
+	
+	private static void printTrabajadores(List<Trabajador> trabajadores) {
+		if (!trabajadores.isEmpty()) {		
+			for(Trabajador trabajador : trabajadores) {
+				System.out.println(String.format(" - %s", trabajador.toString()));
 			}
 		}		
 	}
@@ -89,5 +113,29 @@ public class Main {
 		clientes.add(cliente4);
 		
 		return clientes;
+	}
+	
+	public static List<Trabajador> initTrabajadores() {
+		List<Trabajador> trabajadores = new ArrayList<>();
+		
+		Trabajador trabajador = new Trabajador();
+		trabajador.setNombreYApellidos("Bruce Banner");
+		trabajador.setGmail("hulk@gmail.com");
+		trabajador.setContrasena("NUcRn8h85RZZTjg6UBwa");
+		trabajador.setStatus(Estatus.EMPLEADO);
+		trabajador.setSalario(1000);
+		trabajador.setTelefono("678985456");
+		trabajadores.add(trabajador);
+		
+		Trabajador trabajador2 = new Trabajador();
+		trabajador2.setNombreYApellidos("Bruce Banner2");
+		trabajador2.setGmail("hulk@gmail.com2");
+		trabajador2.setContrasena("NUcRn8h85RZZTjg6UBwa");
+		trabajador2.setStatus(Estatus.JEFE);
+		trabajador2.setSalario(1000);
+		trabajador2.setTelefono("678985456");
+		trabajadores.add(trabajador2);
+		
+		return trabajadores;
 	}
 }

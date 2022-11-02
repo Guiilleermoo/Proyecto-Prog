@@ -14,6 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import javax.net.ssl.SSLEngineResult.Status;
+
+import es.deusto.prog.III.Trabajador.Estatus;
+
 public class GestorBD {
 	protected static  String DRIVER_NAME ;
 	protected static  String DATABASE_FILE;
@@ -85,7 +89,7 @@ public class GestorBD {
 		}
 	}**/
 	
-	public void insertarDatos(Cliente... clientes ) {
+	public void insertarClientes(Cliente... clientes ) {
 		//Se abre la conexión y se obtiene el Statement
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
 		     Statement stmt = con.createStatement()) {
@@ -108,7 +112,30 @@ public class GestorBD {
 		}				
 	}
 	
-	public List<Cliente> obtenerDatos() {
+	public void insertarTrabajador(Trabajador... trabajadores ) {
+		//Se abre la conexión y se obtiene el Statement
+		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+		     Statement stmt = con.createStatement()) {
+			//Se define la plantilla de la sentencia SQL
+			String sql = "INSERT INTO EMPLEADOS (NOMBRE, GMAIL, CONTRASENA, ESTATUS, SALARIO, TELEFONO) VALUES ('%s', '%s', '%s', '%s', '%s', '%s');";
+			
+			System.out.println("- Insertando Trabajadores...");
+			
+			//Se recorren los clientes y se insertan uno a uno
+			for (Trabajador t : trabajadores) {
+				if (1 == stmt.executeUpdate(String.format(sql, t.getNombreYApellidos(), t.getGmail(), t.getContrasena(), t.getStatus().toString(), t.getSalario(), t.getTelefono()))) {					
+					System.out.println(String.format(" - Trabajador insertado: %s", t.toString()));
+				} else {
+					System.out.println(String.format(" - No se ha insertado el Trabajador: %s", t.toString()));
+				}
+			}			
+		} catch (Exception ex) {
+			System.err.println(String.format("* Error al insertar datos de la BBDD: %s", ex.getMessage()));
+			ex.printStackTrace();						
+		}				
+	}
+	
+	public List<Cliente> obtenerClientes() {
 		List<Cliente> clientes = new ArrayList<>();
 		
 		//Se abre la conexión y se obtiene el Statement
@@ -146,8 +173,48 @@ public class GestorBD {
 		
 		return clientes;
 	}
+	
+	public List<Trabajador> obtenerTrabajadores() {
+		List<Trabajador> trabajadores = new ArrayList<>();
+		
+		//Se abre la conexión y se obtiene el Statement
+		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+		     Statement stmt = con.createStatement()) {
+			String sql = "SELECT * FROM EMPLEADOS WHERE ID >= 0";
+			
+			//Se ejecuta la sentencia y se obtiene el ResultSet con los resutlados
+			ResultSet rs = stmt.executeQuery(sql);			
+			Trabajador trabajador;
+			
+			//Se recorre el ResultSet y se crean objetos Cliente
+			while (rs.next()) {
+				trabajador = new Trabajador();
+				
+				trabajador.setId(rs.getInt("ID"));
+				trabajador.setNombreYApellidos(rs.getString("NOMBRE"));
+				trabajador.setGmail(rs.getString("GMAIL"));
+				trabajador.setContrasena(rs.getString("CONTRASENA"));
+				trabajador.setStatus(Estatus.valueOf(rs.getString("ESTATUS")));
+				trabajador.setSalario(rs.getFloat("SALARIO"));
+				trabajador.setTelefono(rs.getString("TELEFONO"));
+				
+				//Se inserta cada nuevo cliente en la lista de clientes
+				trabajadores.add(trabajador);
+			}
+			
+			//Se cierra el ResultSet
+			rs.close();
+			
+			System.out.println(String.format("- Se han recuperado %d trabajadores...", trabajadores.size()));			
+		} catch (Exception ex) {
+			System.err.println(String.format("* Error al obtener datos de la BBDD: %s", ex.getMessage()));
+			ex.printStackTrace();						
+		}		
+		
+		return trabajadores;
+	}
 
-	public void actualizarPassword(Cliente cliente, String contrasenaNueva) {
+	public void actualizarContrasena(Cliente cliente, String contrasenaNueva) {
 		//Se abre la conexión y se obtiene el Statement
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
 		     Statement stmt = con.createStatement()) {
@@ -155,6 +222,22 @@ public class GestorBD {
 			String sql = "UPDATE CLIENTES SET CONTRASENA = '%s' WHERE ID = %d;";
 			
 			int result = stmt.executeUpdate(String.format(sql, contrasenaNueva, cliente.getId()));
+			
+			System.out.println(String.format("- Se ha actulizado %d clientes", result));
+		} catch (Exception ex) {
+			System.err.println(String.format("* Error actualizando datos de la BBDD: %s", ex.getMessage()));
+			ex.printStackTrace();						
+		}		
+	}
+	
+	public void actualizarSalario(Trabajador trabajador, Float salario) {
+		//Se abre la conexión y se obtiene el Statement
+		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+		     Statement stmt = con.createStatement()) {
+			//Se ejecuta la sentencia de borrado de datos
+			String sql = "UPDATE EMPLEADOS SET SALARIO = '%s' WHERE ID = %d;";
+
+			int result = stmt.executeUpdate(String.format(sql, salario, trabajador.getId()));
 			
 			System.out.println(String.format("- Se ha actulizado %d clientes", result));
 		} catch (Exception ex) {
@@ -179,6 +262,24 @@ public class GestorBD {
 		}		
 	}
 	
+	public void borrarTrabajador(Trabajador trabajador) {
+		//Se abre la conexión y se obtiene el Statement
+		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+		     Statement stmt = con.createStatement()) {
+			//Se ejecuta la sentencia de borrado de datos
+			String sql = "DELETE FROM CLIENTES WHERE ID = %d;";
+			
+			int result = stmt.executeUpdate(String.format(sql, trabajador.getId()));
+			
+			System.out.println(String.format("- Se ha borrado %d trabajadores", result));
+		} catch (Exception ex) {
+			System.err.println(String.format("* Error borrando datos de la BBDD: %s", ex.getMessage()));
+			ex.printStackTrace();						
+		}		
+	}
+	
+	
+	
 	public void borrarDatos(String tabla) {
 		//Se abre la conexión y se obtiene el Statement
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
@@ -194,3 +295,4 @@ public class GestorBD {
 		}		
 	}	
 }
+ 

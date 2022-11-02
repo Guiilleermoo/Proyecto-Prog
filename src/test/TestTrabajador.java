@@ -6,7 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import es.deusto.prog.III.Trabajador;
-import es.deusto.prog.III.Trabajador.Status;
+import es.deusto.prog.III.Trabajador.Estatus;
 
 public class TestTrabajador {
 
@@ -15,7 +15,7 @@ public class TestTrabajador {
 	String nombreYApellidos = "NombreYApellidos";
 	String gmail = "gmail";
 	String contrasena = "contrasena";
-	Status status = Status.EMPLEADO;
+	Estatus status = Estatus.EMPLEADO;
 	double salario = 0;
 	String telefono = "666444555";
 	
@@ -85,7 +85,7 @@ public class TestTrabajador {
 
 	@Test
 	public void testSetStatus() {
-		Status status1 = Status.EMPLEADO;
+		Estatus status1 = Estatus.EMPLEADO;
 		trabajador.setStatus(status1);
 		assertEquals(trabajador.getStatus(), status1);
 	}
