@@ -91,6 +91,10 @@ public class Cliente {
 			this.telefono = telefono;
 		}
 	}
+	
+	public void comprobarCleinte(String gmail, String contrasena) {
+		
+	}
 
 	@Override
 	public String toString() {

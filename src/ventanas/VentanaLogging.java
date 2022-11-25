@@ -1,12 +1,19 @@
 package ventanas;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.*;
 
 import es.deusto.prog.III.Cliente;
+import es.deusto.prog.III.GestorBD;
+import es.deusto.prog.III.Producto;
 
 public class VentanaLogging extends JFrame{
 			
+	protected static GestorBD gestorBD;
+	
 	public static void main(String[] args) {
 		JFrame frame = new JFrame("Demo application");
 		frame.setSize(900, 450);
@@ -16,27 +23,13 @@ public class VentanaLogging extends JFrame{
 		frame.add(panel);
 		placeComponents(panel);
 
-		frame.setVisible(true);
-		
+		frame.setVisible(true);	
 	}
 	
 
 	private static void placeComponents(JPanel panel) {
-
-		//JLabel lbImage = new JLabel();
-		/**ImageIcon img = new ImageIcon(Cliente.class.getResource("/data/portada.jpg"));
-		ImageIcon imgIcon = new ImageIcon(getClass().getResource("/informatica.gif"));
-        Image imgEscalada = img.getImage().getScaledInstance(lbImage.getWidth(), lbImage.getHeight(), Image.SCALE_SMOOTH);
-        Icon iconoEscalado = new ImageIcon(imgEscalada);
-        lbImage.setIcon(iconoEscalado);**/
 		
 		panel.setLayout(null);
-		
-		
-		//lbImage.setIcon(new ImageIcon("/data/portada.jpg"));
-		
-		//lbImage.setBounds(340, 270, 80, 25);
-		//panel.add(lbImage);
 
 		JLabel foto = new JLabel();
 		foto.setIcon(new ImageIcon("data/portada.jpg"));
@@ -67,25 +60,23 @@ public class VentanaLogging extends JFrame{
 		panel.add(registroButton);
 		
 		
-		/*accesoButton.addActionListener(new ActionListener() {
+		accesoButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				for (Cliente cliente: clientes)  {
-					if (gmailText.toString() == cliente.getGmail() && contrasenaText.toString() == cliente.getContrasena()) {
-						ventanaCliente.setVisible(true);
-					} else {
-						System.err.println("Error: gmail y/o contraseña incorrectos");
-					}
-				}
+				String gmail = gmailText.getText();
+				String contrasena = contrasenaText.getText();
 				
+				if(gestorBD.comprobarCliente(gmail, contrasena)) {
+					ventanaCliente.setVisible(true);
+				} else if (gestorBD.comprobarTrabajador(gmail, contrasena)) {
+					//ventanaTrabajador.setVisible(true);
+				} else {
+					JOptionPane.showInputDialog("Error: gmail y/o contraseña incorrectos");
+				}
 			}
 		
-		});*/
+		});
 		
-	
-	
 	}
-
-	
 }

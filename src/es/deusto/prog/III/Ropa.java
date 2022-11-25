@@ -1,5 +1,7 @@
 package es.deusto.prog.III;
 
+import java.util.StringTokenizer;
+
 public class Ropa extends Producto{
 
 	protected String articulo;
@@ -36,11 +38,23 @@ public class Ropa extends Producto{
 	public void setTalla(Talla talla) {
 		this.talla = talla;
 	}
+	
+	public static Ropa parseCSV(String linea) {
+		StringTokenizer tokenizer = new StringTokenizer(linea, ",");
+		Ropa ropa = new Ropa();
+		
+		ropa.setDeporte(tokenizer.nextToken());
+		ropa.setMarca(tokenizer.nextToken());
+		//ropa.setGenero(tokenizer.nextToken());
+		//ropa.setPrecio(tokenizer.nextToken());
+		ropa.setArticulo(tokenizer.nextToken());
+		//ropa.setTalla(tokenizer.nextToken());
 
+		return ropa;
+	}
+	
 	@Override
 	public String toString() {
 		return "Ropa [articulo=" + articulo + ", talla=" + talla + "]";
 	}
-	
-	
 }

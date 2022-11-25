@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -15,17 +16,19 @@ import java.util.List;
 import java.util.Properties;
 
 import javax.net.ssl.SSLEngineResult.Status;
+import javax.swing.JOptionPane;
 
 import es.deusto.prog.III.Trabajador.Estatus;
 
 public class GestorBD {
-	protected static  String DRIVER_NAME ;
+	protected static  String DRIVER_NAME;
 	protected static  String DATABASE_FILE;
 	protected static  String CONNECTION_STRING;
 	
+	private Properties properties;
+	
 	public GestorBD() {		
 		try {
-			Properties properties = new Properties();
 			properties.load(new FileInputStream(new File("properties/app.properties")));
 			DRIVER_NAME = (String) properties.get("driver");
 			DATABASE_FILE = (String) properties.get("file");
@@ -244,6 +247,42 @@ public class GestorBD {
 			System.err.println(String.format("* Error actualizando datos de la BBDD: %s", ex.getMessage()));
 			ex.printStackTrace();						
 		}		
+	}
+	
+	public boolean comprobarCliente(String gmail, String contrasena) {
+		String sql = "SELECT GMAIL,CONTRASENA FROM CLIENTE WHERE GMAIL = ? and CONTRASENA = ? LIMIT 1";
+		
+		//Se abre la conexiÃ³n y se crea el PreparedStatement con la sentencia SQL
+		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+		     PreparedStatement pStmt = con.prepareStatement(sql)) {			
+			
+			//Se ejecuta la sentencia y se obtiene el ResultSet con los resutlados
+			ResultSet rs = pStmt.executeQuery();
+			if (rs.first()) {
+				return true;
+			}
+		} catch (Exception ex) {
+			JOptionPane.showInputDialog(String.format("Error en el correo y/o contraseña", ex.getMessage()));						
+		}
+		return false;		
+	}
+	
+	public boolean comprobarTrabajador(String gmail, String contrasena) {
+		String sql = "SELECT GMAIL,CONTRASENA FROM empleados WHERE GMAIL = ? and CONTRASENA = ? LIMIT 1";
+		
+		//Se abre la conexiÃ³n y se crea el PreparedStatement con la sentencia SQL
+		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+		     PreparedStatement pStmt = con.prepareStatement(sql)) {			
+			
+			//Se ejecuta la sentencia y se obtiene el ResultSet con los resutlados
+			ResultSet rs = pStmt.executeQuery();
+			if (rs.first()) {
+				return true;
+			}
+		} catch (Exception ex) {
+			JOptionPane.showInputDialog(String.format("Error en el correo y/o contraseña", ex.getMessage()));						
+		}
+		return false;		
 	}
 	
 	public void borrarCliente(Cliente cliente) {

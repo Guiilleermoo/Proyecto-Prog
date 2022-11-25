@@ -1,8 +1,12 @@
 package ventanas;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Arrays;
+import java.util.Vector;
 
 public class ventanaCliente {
 
@@ -19,7 +23,6 @@ public class ventanaCliente {
 		frame.setVisible(true);
 		
 		ventanaCliente v = new ventanaCliente();
-		
 	}
 
 	private static void placeComponents(JPanel panel) {
@@ -27,5 +30,4 @@ public class ventanaCliente {
 		gmailLabel.setBounds(340, 270, 80, 25);
 		panel.add(gmailLabel);
 	}
-	
 }
