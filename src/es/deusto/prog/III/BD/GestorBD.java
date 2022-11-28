@@ -1,4 +1,4 @@
-package es.deusto.prog.III;
+package es.deusto.prog.III.BD;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,22 +14,30 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
 
 import javax.net.ssl.SSLEngineResult.Status;
 import javax.swing.JOptionPane;
 
+import es.deusto.prog.III.*;
 import es.deusto.prog.III.Trabajador.Estatus;
 
 public class GestorBD {
+	private Properties properties;
 	protected static  String DRIVER_NAME;
 	protected static  String DATABASE_FILE;
 	protected static  String CONNECTION_STRING;
 	
-	private Properties properties;
+	private static Logger logger = Logger.getLogger(GestorBD.class.getName());
 	
 	public GestorBD() {		
-		try {
-			properties.load(new FileInputStream(new File("properties/app.properties")));
+		try (FileInputStream fis = new FileInputStream("conf/logger.properties")) {
+			//Inicializaci贸n del Logger
+			LogManager.getLogManager().readConfiguration(fis);
+			
+			properties = new Properties();
+			properties.load(new FileInputStream("conf/app.properties"));
 			DRIVER_NAME = (String) properties.get("driver");
 			DATABASE_FILE = (String) properties.get("file");
 			CONNECTION_STRING = (String) properties.get("connection");
@@ -37,8 +45,7 @@ public class GestorBD {
 			//Cargar el diver SQLite
 			Class.forName(DRIVER_NAME);
 		} catch (Exception ex) {
-			System.err.println(String.format("* Error al cargar el driver de BBDD: %s", ex.getMessage()));
-			ex.printStackTrace();
+			logger.warning(String.format("Error al cargar el driver de BBDD: %s", ex.getMessage()));
 		}
 	}
 		
@@ -93,58 +100,65 @@ public class GestorBD {
 	}**/
 	
 	public void insertarClientes(Cliente... clientes ) {
-		//Se abre la conexi贸n y se obtiene el Statement
-		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
-		     Statement stmt = con.createStatement()) {
-			//Se define la plantilla de la sentencia SQL
-			String sql = "INSERT INTO CLIENTES (NOMBRE, GMAIL, CONTRASENA, DIRECCION, TELEFONO) VALUES ('%s', '%s', '%s', '%s', '%s');";
-			
-			System.out.println("- Insertando clientes...");
-			
-			//Se recorren los clientes y se insertan uno a uno
-			for (Cliente c : clientes) {
-				if (1 == stmt.executeUpdate(String.format(sql, c.getNombreYApellidos(), c.getGmail(), c.getContrasena(), c.getDireccion(), c.getTelefono()))) {					
-					System.out.println(String.format(" - Cliente insertado: %s", c.toString()));
-				} else {
-					System.out.println(String.format(" - No se ha insertado el cliente: %s", c.toString()));
+		//Se define la plantilla de la sentencia SQL
+		String sql = "INSERT INTO CLIENTES (NOMBRE, GMAIL, CONTRASENA, DIRECCION, TELEFONO) VALUES (?, ?, ?, ?, ?');";
+				
+			//Se abre la conexi贸n y se crea el PreparedStatement con la sentencia SQL
+			try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+				 PreparedStatement pStmt = con.prepareStatement(sql)) {
+					
+				//Se recorren los clientes y se insertan uno a uno
+				for (Cliente c : clientes) {
+					//Se definen los par谩metros de la sentencia SQL
+					pStmt.setString(1, c.getNombreYApellidos());
+					pStmt.setString(2, c.getGmail());
+					pStmt.setString(3, c.getContrasena());
+					pStmt.setString(4, c.getDireccion());
+					pStmt.setString(5, c.getTelefono());
+						
+					if (pStmt.executeUpdate() != 1) {			
+						logger.warning(String.format("No se ha insertado el cliente: %s", c));
+					} else {
+						//Se actualiza el ID del comic haciendo un Select
+						//c.setId(this.getClienteByNombreYApellidos(c.getNombreYApellidos()).getId());				
+							
+						logger.info(String.format("Se ha insertado el cliente: %s", c));
+					}
 				}
-			}			
-		} catch (Exception ex) {
-			System.err.println(String.format("* Error al insertar datos de la BBDD: %s", ex.getMessage()));
-			ex.printStackTrace();						
-		}				
+					
+				logger.info(String.format("%d Clientes insertados en la BBDD", clientes.length));
+			} catch (Exception ex) {
+				logger.warning(String.format("Error al insertar clientes: %s", ex.getMessage()));
+			}		
 	}
 	
 	public void insertarTrabajador(Trabajador... trabajadores ) {
+		String sql = "INSERT INTO EMPLEADOS (NOMBRE, GMAIL, CONTRASENA, ESTATUS, SALARIO, TELEFONO) VALUES (?, ?, ?, ?, ?, ?);";
+		
 		//Se abre la conexi贸n y se obtiene el Statement
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
-		     Statement stmt = con.createStatement()) {
-			//Se define la plantilla de la sentencia SQL
-			String sql = "INSERT INTO EMPLEADOS (NOMBRE, GMAIL, CONTRASENA, ESTATUS, SALARIO, TELEFONO) VALUES ('%s', '%s', '%s', '%s', '%s', '%s');";
-			
-			System.out.println("- Insertando Trabajadores...");
+		     PreparedStatement pstmt = con.prepareStatement(sql)) {
 			
 			//Se recorren los clientes y se insertan uno a uno
 			for (Trabajador t : trabajadores) {
-				if (1 == stmt.executeUpdate(String.format(sql, t.getNombreYApellidos(), t.getGmail(), t.getContrasena(), t.getStatus().toString(), t.getSalario(), t.getTelefono()))) {					
-					System.out.println(String.format(" - Trabajador insertado: %s", t.toString()));
+				if (1 != pstmt.executeUpdate()) {					
+					logger.warning(String.format("No se ha insertado el trabajador: %s", t));
 				} else {
-					System.out.println(String.format(" - No se ha insertado el Trabajador: %s", t.toString()));
+					logger.info(String.format("Se ha insertado el trabajador: %s", t));
 				}
 			}			
 		} catch (Exception ex) {
-			System.err.println(String.format("* Error al insertar datos de la BBDD: %s", ex.getMessage()));
-			ex.printStackTrace();						
+			logger.warning(String.format("Error al insertar trabajadores: %s", ex.getMessage()));						
 		}				
 	}
 	
 	public List<Cliente> obtenerClientes() {
 		List<Cliente> clientes = new ArrayList<>();
+		String sql = "SELECT * FROM CLIENTES WHERE ID >= 0";
 		
 		//Se abre la conexi贸n y se obtiene el Statement
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
-		     Statement stmt = con.createStatement()) {
-			String sql = "SELECT * FROM CLIENTES WHERE ID >= 0";
+		     PreparedStatement stmt = con.prepareStatement(sql)) {
 			
 			//Se ejecuta la sentencia y se obtiene el ResultSet con los resutlados
 			ResultSet rs = stmt.executeQuery(sql);			
@@ -168,22 +182,59 @@ public class GestorBD {
 			//Se cierra el ResultSet
 			rs.close();
 			
-			System.out.println(String.format("- Se han recuperado %d clientes...", clientes.size()));			
+			logger.info(String.format("Se ha recuperado %d clientes...", clientes.size()));		
 		} catch (Exception ex) {
-			System.err.println(String.format("* Error al obtener datos de la BBDD: %s", ex.getMessage()));
-			ex.printStackTrace();						
+			logger.warning(String.format("Error al obtener datos de la BD: %s", ex.getMessage()));					
 		}		
 		
 		return clientes;
 	}
 	
+	public Cliente getClienteByNombreYApellidos(String nombreYApellidos) {
+		Cliente cliente = null;
+		String sql = "SELECT * FROM cliente WHERE nombreYApellidos = ? LIMIT 1";
+		
+		//Se abre la conexi贸n y se crea el PreparedStatement con la sentencia SQL
+		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+		     PreparedStatement pStmt = con.prepareStatement(sql)) {			
+			
+			//Se definen los par谩metros de la sentencia SQL
+			pStmt.setString(1, nombreYApellidos);
+			
+			//Se ejecuta la sentencia y se obtiene el ResultSet con los resutlados
+			ResultSet rs = pStmt.executeQuery();			
+
+			//Se procesa el unico resultado
+			if (rs.next()) {
+				cliente = new Cliente();
+				
+				cliente.setId(rs.getInt("ID"));
+				cliente.setNombreYApellidos(rs.getString("NOMBRE"));
+				cliente.setGmail(rs.getString("GMAIL"));
+				cliente.setContrasena(rs.getString("CONTRASENA"));
+				cliente.setDireccion(rs.getString("DIRECCION"));
+				cliente.setTelefono(rs.getString("TELEFONO"));
+			}
+			
+			//Se cierra el ResultSet
+			rs.close();
+			
+			logger.info(String.format("Se ha recuperado el cliente %s", cliente));			
+		} catch (Exception ex) {
+			logger.warning(String.format("Error al recuperar el cliente con nombre %s: %s", nombreYApellidos, ex.getMessage()));						
+		}		
+		
+		return cliente;
+	}
+	
 	public List<Trabajador> obtenerTrabajadores() {
 		List<Trabajador> trabajadores = new ArrayList<>();
+		String sql = "SELECT * FROM EMPLEADOS WHERE ID >= 0";
 		
 		//Se abre la conexi贸n y se obtiene el Statement
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
-		     Statement stmt = con.createStatement()) {
-			String sql = "SELECT * FROM EMPLEADOS WHERE ID >= 0";
+		     PreparedStatement stmt = con.prepareStatement(sql)) {
+			
 			
 			//Se ejecuta la sentencia y se obtiene el ResultSet con los resutlados
 			ResultSet rs = stmt.executeQuery(sql);			
@@ -208,12 +259,10 @@ public class GestorBD {
 			//Se cierra el ResultSet
 			rs.close();
 			
-			System.out.println(String.format("- Se han recuperado %d trabajadores...", trabajadores.size()));			
+			logger.info(String.format("Se han recuperado %d trabajadores...", trabajadores.size()));			
 		} catch (Exception ex) {
-			System.err.println(String.format("* Error al obtener datos de la BBDD: %s", ex.getMessage()));
-			ex.printStackTrace();						
+			logger.warning(String.format("Error al obtener datos de la BD: %s", ex.getMessage()));						
 		}		
-		
 		return trabajadores;
 	}
 
@@ -226,10 +275,9 @@ public class GestorBD {
 			
 			int result = stmt.executeUpdate(String.format(sql, contrasenaNueva, cliente.getId()));
 			
-			System.out.println(String.format("- Se ha actulizado %d clientes", result));
+			logger.info(String.format("Se ha actualizado la contrasena del cliente %d a %d", cliente, contrasenaNueva));
 		} catch (Exception ex) {
-			System.err.println(String.format("* Error actualizando datos de la BBDD: %s", ex.getMessage()));
-			ex.printStackTrace();						
+			logger.warning(String.format("Error actualizando datos de la BD: %s", ex.getMessage()));					
 		}		
 	}
 	
@@ -242,10 +290,9 @@ public class GestorBD {
 
 			int result = stmt.executeUpdate(String.format(sql, salario, trabajador.getId()));
 			
-			System.out.println(String.format("- Se ha actulizado %d clientes", result));
+			logger.info(String.format("Se ha actualizado el salario de %d", result));
 		} catch (Exception ex) {
-			System.err.println(String.format("* Error actualizando datos de la BBDD: %s", ex.getMessage()));
-			ex.printStackTrace();						
+			logger.warning(String.format("Error actualizando datos de la BD: %s", ex.getMessage()));					
 		}		
 	}
 	
@@ -262,7 +309,8 @@ public class GestorBD {
 				return true;
 			}
 		} catch (Exception ex) {
-			JOptionPane.showInputDialog(String.format("Error en el correo y/o contrase馻", ex.getMessage()));						
+			JOptionPane.showMessageDialog(null, ("Error: cliente inexistente"));
+			logger.warning(String.format("Error cliente inexistente en la BD: %s", ex.getMessage()));
 		}
 		return false;		
 	}
@@ -280,7 +328,8 @@ public class GestorBD {
 				return true;
 			}
 		} catch (Exception ex) {
-			JOptionPane.showInputDialog(String.format("Error en el correo y/o contrase馻", ex.getMessage()));						
+			JOptionPane.showMessageDialog(null, ("Error: trabajador inexistente"));					
+			logger.warning(String.format("Error trabajador inexistente en la BD: %s", ex.getMessage()));
 		}
 		return false;		
 	}
@@ -294,10 +343,9 @@ public class GestorBD {
 			
 			int result = stmt.executeUpdate(String.format(sql, cliente.getId()));
 			
-			System.out.println(String.format("- Se ha borrado %d clientes", result));
+			logger.info(String.format("Se ha borrado al cliente %d", result));
 		} catch (Exception ex) {
-			System.err.println(String.format("* Error borrando datos de la BBDD: %s", ex.getMessage()));
-			ex.printStackTrace();						
+			logger.warning(String.format("Error al borrar el cliente en la BD: %s", ex.getMessage()));					
 		}		
 	}
 	
@@ -310,10 +358,9 @@ public class GestorBD {
 			
 			int result = stmt.executeUpdate(String.format(sql, trabajador.getId()));
 			
-			System.out.println(String.format("- Se ha borrado %d trabajadores", result));
+			logger.info(String.format("Se ha borrado al trabajador %d", result));
 		} catch (Exception ex) {
-			System.err.println(String.format("* Error borrando datos de la BBDD: %s", ex.getMessage()));
-			ex.printStackTrace();						
+			logger.warning(String.format("Error al borrar el trabajador en la BD: %s", ex.getMessage()));						
 		}		
 	}
 	
@@ -327,10 +374,9 @@ public class GestorBD {
 			String sql = "DELETE FROM " + tabla + ";";			
 			int result = stmt.executeUpdate(sql);
 			
-			System.out.println(String.format("- Se han borrado %d clientes", result));
+			logger.info(String.format("Se ha borrado la tabla %d", tabla));
 		} catch (Exception ex) {
-			System.err.println(String.format("* Error al borrar datos de la BBDD: %s", ex.getMessage()));
-			ex.printStackTrace();						
+			logger.warning(String.format("Error al borrar datos de la BD: %s", ex.getMessage()));					
 		}		
 	}	
 }

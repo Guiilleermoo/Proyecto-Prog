@@ -1,8 +1,10 @@
-package es.deusto.prog.III;
+package es.deusto.prog.III.BD;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import es.deusto.prog.III.Cliente;
+import es.deusto.prog.III.Trabajador;
 import es.deusto.prog.III.Trabajador.Estatus;
 
 public class Main {
