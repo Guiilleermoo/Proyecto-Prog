@@ -85,11 +85,7 @@ public class Cliente {
 	}
 
 	public void setTelefono(String telefono) {
-		if (telefono.length() < 9 || telefono.length() > 9) {
-			System.err.println("Error guardando el teléfono");
-		} else {
 			this.telefono = telefono;
-		}
 	}
 
 	@Override

@@ -38,6 +38,7 @@ public class GestorBD {
 			
 			properties = new Properties();
 			properties.load(new FileInputStream("conf/app.properties"));
+			
 			DRIVER_NAME = (String) properties.get("driver");
 			DATABASE_FILE = (String) properties.get("file");
 			CONNECTION_STRING = (String) properties.get("connection");
@@ -101,12 +102,11 @@ public class GestorBD {
 	
 	public void insertarClientes(Cliente... clientes ) {
 		//Se define la plantilla de la sentencia SQL
-		String sql = "INSERT INTO CLIENTES (NOMBRE, GMAIL, CONTRASENA, DIRECCION, TELEFONO) VALUES (?, ?, ?, ?, ?');";
+		String sql = "INSERT INTO CLIENTES (NOMBRE, GMAIL, CONTRASENA, DIRECCION, TELEFONO) VALUES (?, ?, ?, ?, ?);";
 				
 			//Se abre la conexión y se crea el PreparedStatement con la sentencia SQL
 			try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
 				 PreparedStatement pStmt = con.prepareStatement(sql)) {
-					
 				//Se recorren los clientes y se insertan uno a uno
 				for (Cliente c : clientes) {
 					//Se definen los parámetros de la sentencia SQL
@@ -115,7 +115,7 @@ public class GestorBD {
 					pStmt.setString(3, c.getContrasena());
 					pStmt.setString(4, c.getDireccion());
 					pStmt.setString(5, c.getTelefono());
-						
+
 					if (pStmt.executeUpdate() != 1) {			
 						logger.warning(String.format("No se ha insertado el cliente: %s", c));
 					} else {
@@ -154,11 +154,13 @@ public class GestorBD {
 	
 	public List<Cliente> obtenerClientes() {
 		List<Cliente> clientes = new ArrayList<>();
-		String sql = "SELECT * FROM CLIENTES WHERE ID >= 0";
+		
 		
 		//Se abre la conexión y se obtiene el Statement
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
-		     PreparedStatement stmt = con.prepareStatement(sql)) {
+		     Statement stmt = con.createStatement()) {
+			
+			String sql = "SELECT * FROM CLIENTES WHERE ID >= 0";
 			
 			//Se ejecuta la sentencia y se obtiene el ResultSet con los resutlados
 			ResultSet rs = stmt.executeQuery(sql);			
@@ -229,12 +231,13 @@ public class GestorBD {
 	
 	public List<Trabajador> obtenerTrabajadores() {
 		List<Trabajador> trabajadores = new ArrayList<>();
-		String sql = "SELECT * FROM EMPLEADOS WHERE ID >= 0";
+		
 		
 		//Se abre la conexión y se obtiene el Statement
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
-		     PreparedStatement stmt = con.prepareStatement(sql)) {
+		     Statement stmt = con.createStatement()) {
 			
+			String sql = "SELECT * FROM EMPLEADOS WHERE ID >= 0";
 			
 			//Se ejecuta la sentencia y se obtiene el ResultSet con los resutlados
 			ResultSet rs = stmt.executeQuery(sql);			
@@ -297,26 +300,29 @@ public class GestorBD {
 	}
 	
 	public boolean comprobarCliente(String gmail, String contrasena) {
-		String sql = "SELECT GMAIL,CONTRASENA FROM CLIENTE WHERE GMAIL = ? and CONTRASENA = ? LIMIT 1";
+		
 		
 		//Se abre la conexión y se crea el PreparedStatement con la sentencia SQL
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
-		     PreparedStatement pStmt = con.prepareStatement(sql)) {			
+		     Statement pStmt = con.createStatement()) {		
+			String sql = "SELECT GMAIL,CONTRASENA FROM CLIENTES WHERE GMAIL = '" + gmail + "' and CONTRASENA = '" + contrasena + "' LIMIT 1";
 			
 			//Se ejecuta la sentencia y se obtiene el ResultSet con los resutlados
-			ResultSet rs = pStmt.executeQuery();
-			if (rs.first()) {
+			ResultSet rs = pStmt.executeQuery(sql);
+
+			if (rs.next()) {
+				logger.info("Cliente encontrado");
 				return true;
 			}
+			rs.close();
 		} catch (Exception ex) {
-			JOptionPane.showMessageDialog(null, ("Error: cliente inexistente"));
 			logger.warning(String.format("Error cliente inexistente en la BD: %s", ex.getMessage()));
 		}
 		return false;		
 	}
 	
 	public boolean comprobarTrabajador(String gmail, String contrasena) {
-		String sql = "SELECT GMAIL,CONTRASENA FROM empleados WHERE GMAIL = ? and CONTRASENA = ? LIMIT 1";
+		String sql = "SELECT GMAIL,CONTRASENA FROM empleados WHERE GMAIL = " + gmail + " and CONTRASENA = " + contrasena + " LIMIT 1";
 		
 		//Se abre la conexión y se crea el PreparedStatement con la sentencia SQL
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
@@ -324,11 +330,10 @@ public class GestorBD {
 			
 			//Se ejecuta la sentencia y se obtiene el ResultSet con los resutlados
 			ResultSet rs = pStmt.executeQuery();
-			if (rs.first()) {
+			if (rs.next()) {
 				return true;
 			}
-		} catch (Exception ex) {
-			JOptionPane.showMessageDialog(null, ("Error: trabajador inexistente"));					
+		} catch (Exception ex) {				
 			logger.warning(String.format("Error trabajador inexistente en la BD: %s", ex.getMessage()));
 		}
 		return false;		

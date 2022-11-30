@@ -103,10 +103,10 @@ public class VentanaLogging extends JFrame{
 		});
 		
 		// ventana estándar
-				this.setTitle("Ventana Logging");
-				this.setSize(800, 600);
-				this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-				this.setVisible(true);
+		this.setTitle("Ventana Logging");
+		this.setSize(800, 600);
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.setVisible(true);
 	}
 	public static void main(String[] args) {
 		VentanaLogging v = new VentanaLogging();

@@ -75,17 +75,22 @@ public class VentanaRegistro extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-			String nombreYApellidos = nombreYApellidoText.getText();
-			String gmail = gmailText.getText();
-			String contrasena = contrasenaText.getText();
-			String direccion = direccionText.getText();
-			String telefono = telefonoText.getText();
-				
-			Cliente nuevo = new Cliente(nombreYApellidos, gmail, contrasena, direccion, telefono);
-			gestorBD.insertarClientes(nuevo);
-			JOptionPane.showMessageDialog(null, "Cliente Registrado correctamente");
-			}
 			
+			if (nombreYApellidoText.getText().isEmpty() || gmailText.getText().isEmpty() || contrasenaText.getText().isEmpty() || direccionText.getText().isEmpty() || telefonoText.getText().isEmpty()) {
+				JOptionPane.showMessageDialog(null, "Error: completa los campos vacios");
+			} else if (telefonoText.getText().length() < 9 || telefonoText.getText().length() > 9) {
+				JOptionPane.showMessageDialog(null, "Error: teléfono no válido");
+			} else {
+				String nombreYApellidos = nombreYApellidoText.getText();
+				String gmail = gmailText.getText();
+				String contrasena = contrasenaText.getText();
+				String direccion = direccionText.getText();
+				String telefono = telefonoText.getText();
+				
+				Cliente nuevo = new Cliente(nombreYApellidos, gmail, contrasena, direccion, telefono);
+				gestorBD.insertarClientes(nuevo);
+			}
+			}
 		});
 		
 		volverboton.addActionListener(new ActionListener() {
@@ -97,10 +102,10 @@ public class VentanaRegistro extends JFrame {
 		});
 		
 		// ventana estándar
-				this.setTitle("Registro");
-				this.setSize(800, 600);
-				this.setDefaultCloseOperation(HIDE_ON_CLOSE);
-				this.setVisible(false);
+		this.setTitle("Registro");
+		this.setSize(800, 600);
+		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
+		this.setVisible(false);
 	}
 	
 }
