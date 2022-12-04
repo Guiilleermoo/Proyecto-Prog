@@ -1,5 +1,6 @@
 package ventanas;
 
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,8 +18,13 @@ public class VentanaRegistro extends JFrame {
 		
 		Container panel = this.getContentPane();
 		panel.setLayout(null);
+		panel.setBackground(Color.MAGENTA);
 		
 		// Creacion de los botones
+		JLabel registro = new JLabel("REGISTRO:");
+		registro.setBounds(200, 50, 80, 25);
+		panel.add(registro);
+		
 		JLabel nombreLabel = new JLabel("Nombre y");
 		nombreLabel.setBounds(100, 85, 80, 25);
 		panel.add(nombreLabel);
@@ -105,6 +111,7 @@ public class VentanaRegistro extends JFrame {
 		this.setTitle("Registro");
 		this.setSize(800, 600);
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
+		this.setLocationRelativeTo(null);
 		this.setVisible(false);
 	}
 	

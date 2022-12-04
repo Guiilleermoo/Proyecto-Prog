@@ -16,6 +16,7 @@ public class VentanaTrabajador extends JFrame {
 		this.setTitle("Trabajador");
 		this.setSize(800, 600);
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
+		this.setLocationRelativeTo(null);
 		this.setVisible(false);
 	}
 	

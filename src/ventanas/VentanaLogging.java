@@ -3,6 +3,7 @@ package ventanas;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.System.Logger;
 
 import javax.swing.*;
 
@@ -29,11 +30,13 @@ public class VentanaLogging extends JFrame{
 		
 		Container panel = this.getContentPane();
 		panel.setLayout(null);
+		panel.setBackground(Color.ORANGE);
 		
 		// Creacion de los botones
 		JLabel foto = new JLabel();
 		foto.setIcon(new ImageIcon("data/portada.jpg"));
-		foto.setBounds(0, 0, 80, 25);
+		foto.setBounds(50, 20, 700, 390);
+		panel.add(foto);
 		
 		JLabel gmailLabel = new JLabel("Gmail");
 		gmailLabel.setBounds(200, 450, 80, 25);
@@ -66,9 +69,9 @@ public class VentanaLogging extends JFrame{
 		jbg.add(cliente);
 		jbg.add(trabajador);
 		panel.add(cliente);
-		cliente.setBounds(200, 420, 80, 25);
+		cliente.setBounds(290, 420, 70, 25);
 		panel.add(trabajador);
-		trabajador.setBounds(290, 420, 160, 25);
+		trabajador.setBounds(360, 420, 90, 25);
 		
 		accesoButton.addActionListener(new ActionListener() {
 			
@@ -76,6 +79,8 @@ public class VentanaLogging extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				String gmail = gmailText.getText();
 				String contrasena = contrasenaText.getText();
+				// Trabajador: hulk@gmail.com, NUcRn8h85RZZTjg6UBwa 
+				// Cliente: guille, 123
 				
 				// Comprobar si el gmail/contrasena ingresado es de un cliente
 				if (cliente.isSelected()) {
@@ -106,6 +111,7 @@ public class VentanaLogging extends JFrame{
 		this.setTitle("Ventana Logging");
 		this.setSize(800, 600);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 	}
 	public static void main(String[] args) {

@@ -311,7 +311,7 @@ public class GestorBD {
 			ResultSet rs = pStmt.executeQuery(sql);
 
 			if (rs.next()) {
-				logger.info("Cliente encontrado");
+				logger.info("Cliente confirmado");
 				return true;
 			}
 			rs.close();
@@ -322,7 +322,7 @@ public class GestorBD {
 	}
 	
 	public boolean comprobarTrabajador(String gmail, String contrasena) {
-		String sql = "SELECT GMAIL,CONTRASENA FROM empleados WHERE GMAIL = " + gmail + " and CONTRASENA = " + contrasena + " LIMIT 1";
+		String sql = "SELECT GMAIL,CONTRASENA FROM empleados WHERE GMAIL = '" + gmail + "' and CONTRASENA = '" + contrasena + "' LIMIT 1";
 		
 		//Se abre la conexión y se crea el PreparedStatement con la sentencia SQL
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
@@ -331,6 +331,7 @@ public class GestorBD {
 			//Se ejecuta la sentencia y se obtiene el ResultSet con los resutlados
 			ResultSet rs = pStmt.executeQuery();
 			if (rs.next()) {
+				logger.info("Trabajador confirmado");
 				return true;
 			}
 		} catch (Exception ex) {				

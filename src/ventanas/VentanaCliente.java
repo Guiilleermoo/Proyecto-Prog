@@ -21,6 +21,7 @@ public class VentanaCliente extends JFrame{
 		this.setTitle("Cliente");
 		this.setSize(800, 600);
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
+		this.setLocationRelativeTo(null);
 		this.setVisible(false);
 
 	}
