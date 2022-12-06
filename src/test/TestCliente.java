@@ -99,7 +99,7 @@ public class TestCliente {
 
 	@Test
 	public void testToString() {
-		String salida = "Cliente [nombreYApellidos=" + nombreYApellidos + ",gmail=" + gmail + ", contrasena=" + contrasena + ", direccion=" + direccion + ", telefono=" + telefono + "]";
+		String salida = "Cliente [ID = " + -1 + " nombreYApellidos=" + nombreYApellidos + ",gmail=" + gmail + ", contrasena=" + contrasena + ", direccion=" + direccion + ", telefono=" + telefono + "]";
 		assertEquals(cliente.toString(), salida);
 	}
 

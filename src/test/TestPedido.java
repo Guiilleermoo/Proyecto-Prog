@@ -12,17 +12,13 @@ import org.junit.Test;
 
 import es.deusto.prog.III.*;
 import es.deusto.prog.III.Producto.Genero;
-import es.deusto.prog.III.Ropa;
-import es.deusto.prog.III.Ropa.Talla;
-import es.deusto.prog.III.Calzado;
 
 import es.deusto.prog.III.Pedido;
 import es.deusto.prog.III.Pedido.Estado;
 
 public class TestPedido {
 
-	Calzado calzado = new Calzado("deporte_calzado", "marca_calzado", Genero.HOMBRE, 0, "articulo_calzado", 38);
-	Ropa ropa = new Ropa("deporte_ropa", "marca_ropa", Genero.HOMBRE, 0, "articulo_ropa", Talla.M);
+	Producto producto = new Producto("Zapatillas", "Baloncesto", "Nike", Genero.HOMBRE, "M", 0);
 	
 	private Pedido pedido;
 	private String cliente = "cliente";
@@ -34,8 +30,6 @@ public class TestPedido {
 	
 	@Before
 	public void setUp() throws Exception {
-		productos.add(calzado);
-		productos.add(ropa);
 		pedido = new Pedido();
 		pedido.setCliente(cliente);
 		pedido.setFecha(fecha);
@@ -83,9 +77,8 @@ public class TestPedido {
 
 	@Test
 	public void testSetProductos() {
-		Ropa ropa1 = new Ropa("deporte_ropa1", "marca_ropa1", Genero.HOMBRE, 1, "articulo_ropa1", Talla.L);
 		ArrayList<Producto> productos1 = new ArrayList<Producto>();
-		productos1.add(ropa1);
+		productos1.add(producto);
 		pedido.setProductos(productos1);
 		assertEquals(pedido.getProductos(), productos1);
 	}

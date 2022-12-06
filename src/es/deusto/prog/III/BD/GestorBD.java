@@ -1,24 +1,13 @@
 package es.deusto.prog.III.BD;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.io.*;
+import java.nio.*;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
-
-import javax.net.ssl.SSLEngineResult.Status;
-import javax.swing.JOptionPane;
 
 import es.deusto.prog.III.*;
 import es.deusto.prog.III.Trabajador.Estatus;
@@ -100,6 +89,20 @@ public class GestorBD {
 		}
 	}**/
 	
+	/**
+	 * Inicializa la BBDD leyendo los datos de los ficheros CSV 
+	 */
+	public void initilizeFromCSV() {
+		//Sólo se inicializa la BBDD si la propiedad initBBDD es true.
+		if (properties.get("loadCSV").equals("true")) {
+			
+			//Se leen los productos del CSV
+			List<Producto> productos = this.loadCSVProductos();
+			//Se insertan los productos en la BBDD
+			this.insertarProducto(productos.toArray(new Producto[productos.size()]));			
+		}
+	}
+	
 	public void insertarClientes(Cliente... clientes ) {
 		//Se define la plantilla de la sentencia SQL
 		String sql = "INSERT INTO CLIENTES (NOMBRE, GMAIL, CONTRASENA, DIRECCION, TELEFONO) VALUES (?, ?, ?, ?, ?);";
@@ -149,6 +152,26 @@ public class GestorBD {
 			}			
 		} catch (Exception ex) {
 			logger.warning(String.format("Error al insertar trabajadores: %s", ex.getMessage()));						
+		}				
+	}
+	
+	public void insertarProducto(Producto... productos) {
+		String sql = "INSERT INTO PRODUCTOS (ARTICULO, DEPORTE, MARCA, GENERO, TALLA, PRECIO) VALUES (?, ?, ?, ?, ?, ?);";
+		
+		//Se abre la conexión y se obtiene el Statement
+		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+			
+			//Se recorren los clientes y se insertan uno a uno
+			for (Producto p : productos) {
+				if (1 != pstmt.executeUpdate()) {					
+					logger.warning(String.format("No se ha insertado el producto: %s", p));
+				} else {
+					logger.info(String.format("Se ha insertado el producto: %s", p));
+				}
+			}			
+		} catch (Exception ex) {
+			logger.warning(String.format("Error al insertar productos: %s", ex.getMessage()));						
 		}				
 	}
 	
@@ -243,7 +266,7 @@ public class GestorBD {
 			ResultSet rs = stmt.executeQuery(sql);			
 			Trabajador trabajador;
 			
-			//Se recorre el ResultSet y se crean objetos Cliente
+			//Se recorre el ResultSet y se crean objetos Trabajador
 			while (rs.next()) {
 				trabajador = new Trabajador();
 				
@@ -255,7 +278,7 @@ public class GestorBD {
 				trabajador.setSalario(rs.getFloat("SALARIO"));
 				trabajador.setTelefono(rs.getString("TELEFONO"));
 				
-				//Se inserta cada nuevo cliente en la lista de clientes
+				//Se inserta cada nuevo trabajador en la lista de trabajadores
 				trabajadores.add(trabajador);
 			}
 			
@@ -269,6 +292,38 @@ public class GestorBD {
 		return trabajadores;
 	}
 
+	public List<Producto> obtenerProductos() {
+		List<Producto> productos = new ArrayList<>();
+		
+		//Se abre la conexión y se obtiene el Statement
+		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+		     Statement stmt = con.createStatement()) {
+			
+			String sql = "SELECT * FROM PRODUCTOS WHERE ID >= 0";
+			
+			//Se ejecuta la sentencia y se obtiene el ResultSet con los resutlados
+			ResultSet rs = stmt.executeQuery(sql);			
+			Producto producto;
+			
+			//Se recorre el ResultSet y se crean objetos Producto (Calzado/Ropa)
+			while (rs.next()) {
+				producto = new Producto();
+				
+				
+				
+				productos.add(producto);
+			}
+			
+			//Se cierra el ResultSet
+			rs.close();
+			
+			logger.info(String.format("Se han recuperado %d productos...", productos.size()));			
+		} catch (Exception ex) {
+			logger.warning(String.format("Error al obtener datos de la BD: %s", ex.getMessage()));						
+		}		
+		return productos;
+	}
+	
 	public void actualizarContrasena(Cliente cliente, String contrasenaNueva) {
 		//Se abre la conexión y se obtiene el Statement
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
@@ -338,6 +393,26 @@ public class GestorBD {
 			logger.warning(String.format("Error trabajador inexistente en la BD: %s", ex.getMessage()));
 		}
 		return false;		
+	}
+	
+	public List<Producto> loadCSVProductos() {
+		List<Producto> productos = new ArrayList<>();
+		
+		try (BufferedReader in = new BufferedReader(new FileReader("PRODUCTOS.csv"))) {
+			String linea = null;
+			
+			//Omitir la cabecera
+			in.readLine();			
+			
+			while ((linea = in.readLine()) != null) {
+				productos.add(Producto.parseCSV(linea));
+			}			
+			
+		} catch (Exception ex) {
+			logger.warning(String.format("Error leyendo productos del CSV: %s", ex.getMessage()));
+		}
+		
+		return productos;
 	}
 	
 	public void borrarCliente(Cliente cliente) {

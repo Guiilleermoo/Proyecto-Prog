@@ -120,7 +120,7 @@ public class TestTrabajador {
 
 	@Test
 	public void testToString() {
-		String salida = "Trabajador [id=" + id + ", nombreYApellidos=" + nombreYApellidos + ", gmail=" + gmail + ", contrasena="
+		String salida = "Trabajador [id=" + -1 + ", nombreYApellidos=" + nombreYApellidos + ", gmail=" + gmail + ", contrasena="
 				+ contrasena + ", status=" + status + ", salario=" + salario + ", telefono=" + telefono + "]";
 		assertEquals(trabajador.toString(), salida);
 	}

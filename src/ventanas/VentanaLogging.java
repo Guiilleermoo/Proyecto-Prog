@@ -96,6 +96,7 @@ public class VentanaLogging extends JFrame{
 					}
 				}
 			}
+			
 		});
 		
 		registroButton.addActionListener(new ActionListener() {
