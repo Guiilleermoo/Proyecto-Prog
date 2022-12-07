@@ -71,14 +71,14 @@ public class TestCliente {
 
 	@Test
 	public void testGetDireccion() {
-		assertEquals(cliente.getTelefono(), telefono);
+		assertEquals(cliente.getDireccion(), direccion);
 	}
 
 	@Test
 	public void testSetDireccion() {
-		String contrasena1 = "contrasena1";
-		cliente.setContrasena(contrasena1);
-		assertEquals(cliente.getContrasena(), contrasena1);
+		String direccion1 = "direccion1";
+		cliente.setDireccion(direccion1);
+		assertEquals(cliente.getDireccion(), direccion1);
 	}
 
 	@Test
@@ -99,7 +99,7 @@ public class TestCliente {
 
 	@Test
 	public void testToString() {
-		String salida = "Cliente [nombreYApellidos=" + nombreYApellidos + ",gmail=" + gmail + ", contrasena=" + contrasena + ", direccion=" + direccion + ", telefono=" + telefono + "]";
+		String salida = "Cliente [ID = " + -1 + " nombreYApellidos=" + nombreYApellidos + ",gmail=" + gmail + ", contrasena=" + contrasena + ", direccion=" + direccion + ", telefono=" + telefono + "]";
 		assertEquals(cliente.toString(), salida);
 	}
 

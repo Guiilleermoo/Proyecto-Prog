@@ -1,0 +1,84 @@
+Articulo;Deporte;Marca;Genero;Talla;Precio
+Zapatillas;Running;Nike ;Hombre;47;132,00 €
+Zapatillas;Running;Adidas;Mujer;43;128,00 €
+Zapatillas;Running;Asics;Niño ;30;86,00 €
+Zapatillas;Running;Nike ;Niña;28;53,00 €
+Zapatillas;Running;Adidas;Hombre;37;186,00 €
+Zapatillas;Running;Puma;Mujer;38;162,00 €
+Zapatillas;Running;Asics;Niño ;28;138,00 €
+Zapatillas;Running;Nike ;Niña;34;128,00 €
+Zapatillas;Running;Adidas;Hombre;42;155,00 €
+Zapatillas;Running;Puma;Mujer;45;117,00 €
+Zapatillas;Running;Asics;Niño ;32;133,00 €
+Zapatillas;Running;Nike ;Niña;28;58,00 €
+Zapatillas;Running;Adidas;Hombre;43;96,00 €
+Zapatillas;Running;Puma;Mujer;41;112,00 €
+Zapatillas;Running;Asics;Niño ;33;104,00 €
+Zapatillas;Running;Nike ;Niña;30;83,00 €
+Zapatillas;Running;Adidas;Hombre;37;121,00 €
+Zapatillas;Running;Puma;Mujer;41;71,00 €
+Zapatillas;Running;Nike ;Niño ;31;160,00 €
+Camiseta;Running;Joma;Niña;XS;23,00 €
+Camiseta;Running;Adidas;Hombre;XS;44,00 €
+Camiseta;Running;Nike ;Mujer;XXL;5,00 €
+Camiseta;Running;Puma;Niño ;S;20,00 €
+Camiseta;Running;Joma;Niña;XS;5,00 €
+Camiseta;Running;Adidas;Hombre;XXL;6,00 €
+Camiseta;Running;Nike ;Mujer;S;24,00 €
+Camiseta;Running;Puma;Niño ;XS;37,00 €
+Camiseta;Running;Joma;Niña;XS;30,00 €
+Camiseta;Running;Adidas;Hombre;XL;46,00 €
+Camiseta;Running;Nike ;Mujer;XS;9,00 €
+Camiseta;Running;Puma;Niño ;S;10,00 €
+Camiseta;Running;Joma;Niña;XS;18,00 €
+Camiseta;Running;Adidas;Hombre;S;44,00 €
+Camiseta;Running;Nike ;Mujer;S;46,00 €
+Zapatillas;Futbol;Nike ;Unisex;42;80,00 €
+Zapatillas;Futbol;Adidas;Unisex;44;114,00 €
+Zapatillas;Futbol;Joma;Niño ;30;140,00 €
+Zapatillas;Futbol;Nike ;Niño ;32;53,00 €
+Zapatillas;Futbol;Adidas;Unisex;36;131,00 €
+Zapatillas;Futbol;Puma;Unisex;45;216,00 €
+Zapatillas;Futbol;New Balance;Niño ;31;29,00 €
+Zapatillas;Futbol;Nike ;Niño ;35;96,00 €
+Zapatillas;Futbol;Adidas;Unisex;46;218,00 €
+Zapatillas;Futbol;Puma;Unisex;46;40,00 €
+Zapatillas;Futbol;New Balance;Niño ;35;77,00 €
+Zapatillas;Futbol;Nike ;Niño ;34;80,00 €
+Zapatillas;Futbol;Adidas;Unisex;45;154,00 €
+Zapatillas;Futbol;Puma;Unisex;47;239,00 €
+Zapatillas;Futbol;New Balance;Niño ;30;84,00 €
+Zapatillas;Futbol;Nike ;Niño ;34;145,00 €
+Zapatillas;Futbol;Adidas;Unisex;46;173,00 €
+Zapatillas;Futbol;Puma;Unisex;43;107,00 €
+Zapatillas;Futbol;Nike ;Niño ;34;129,00 €
+Camiseta;Futbol;Joma;Niña;S;27,00 €
+Camiseta;Futbol;Adidas;Hombre;S;77,00 €
+Camiseta;Futbol;Nike ;Mujer;M;72,00 €
+Camiseta;Futbol;Puma;Niño ;XS;53,00 €
+Camiseta;Futbol;Joma;Niña;XS;61,00 €
+Camiseta;Futbol;Adidas;Hombre;XL;70,00 €
+Camiseta;Futbol;Nike ;Mujer;XS;72,00 €
+Camiseta;Futbol;Puma;Niño ;XS;74,00 €
+Camiseta;Futbol;Joma;Niña;XS;76,00 €
+Camiseta;Futbol;Adidas;Hombre;L;34,00 €
+Camiseta;Futbol;Nike ;Mujer;M;51,00 €
+Camiseta;Futbol;Puma;Niño ;XS;71,00 €
+Camiseta;Futbol;Joma;Niña;S;61,00 €
+Camiseta;Futbol;Adidas;Hombre;XXL;66,00 €
+Camiseta;Futbol;Nike ;Mujer;M;86,00 €
+Pantalon;Futbol;Joma;Niña;XS;33,00 €
+Pantalon;Futbol;Adidas;Hombre;XXL;34,00 €
+Pantalon;Futbol;Nike ;Mujer;S;36,00 €
+Pantalon;Futbol;Puma;Niño ;XS;17,00 €
+Pantalon;Futbol;Joma;Niña;XS;16,00 €
+Pantalon;Futbol;Adidas;Hombre;M;19,00 €
+Pantalon;Futbol;Nike ;Mujer;L;18,00 €
+Pantalon;Futbol;Puma;Niño ;XS;22,00 €
+Pantalon;Futbol;Joma;Niña;S;20,00 €
+Pantalon;Futbol;Adidas;Hombre;S;34,00 €
+Accesorios;Futbol;Nike ;Mujer;XXL;23,00 €
+Accesorios;Futbol;Puma;Niño ;S;29,00 €
+Accesorios;Futbol;Joma;Niña;XS;24,00 €
+Accesorios;Futbol;Adidas;Hombre;M;23,00 €
+Accesorios;Futbol;Nike ;Mujer;XS;24,00 €

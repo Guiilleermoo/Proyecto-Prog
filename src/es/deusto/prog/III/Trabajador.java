@@ -1,21 +1,20 @@
 package es.deusto.prog.III;
 
 public class Trabajador {
-	protected int id;
+	protected int id = -1;
 	protected String nombreYApellidos;
 	protected String gmail;
 	protected String contrasena;
-	protected Status status;
+	protected Estatus status;
 	protected double salario;
 	protected String telefono;
 	
-	public enum Status {
+	public enum Estatus {
 		JEFE,EMPLEADO;
 	}
 	
 	public Trabajador() {
 		super();
-		this.id = id++;
 		this.nombreYApellidos = null;
 		this.gmail = null;
 		this.contrasena = null;
@@ -24,16 +23,25 @@ public class Trabajador {
 		this.telefono = null;
 	}
 
-	public Trabajador(String nombreYApellidos, String gmail, String contrasena, Status status, double salario,
+	public Trabajador(String nombreYApellidos, String gmail, String contrasena, Estatus status, double salario,
 			String telefono) {
 		super();
-		this.id = id++;
 		this.nombreYApellidos = nombreYApellidos;
 		this.gmail = gmail;
 		this.contrasena = contrasena;
 		this.status = status;
 		this.salario = salario;
 		this.telefono = telefono;
+	}
+
+	
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getNombreYApellidos() {
@@ -60,11 +68,11 @@ public class Trabajador {
 		this.contrasena = contrasena;
 	}
 
-	public Status getStatus() {
+	public Estatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(Status status) {
+	public void setStatus(Estatus status) {
 		this.status = status;
 	}
 

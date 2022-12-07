@@ -85,16 +85,12 @@ public class Cliente {
 	}
 
 	public void setTelefono(String telefono) {
-		if (telefono.length() < 9 || telefono.length() > 9) {
-			System.err.println("Error guardando el teléfono");
-		} else {
 			this.telefono = telefono;
-		}
 	}
 
 	@Override
 	public String toString() {
-		return "Cliente [nombreYApellidos=" + nombreYApellidos + ",gmail=" + gmail + ", contrasena="
+		return "Cliente [ID = " + id + " nombreYApellidos=" + nombreYApellidos + ",gmail=" + gmail + ", contrasena="
 				+ contrasena + ", direccion=" + direccion + ", telefono=" + telefono + "]";
 	}
 	
