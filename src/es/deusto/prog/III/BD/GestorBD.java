@@ -1,15 +1,17 @@
-package es.deusto.prog.III.BD;
+ package es.deusto.prog.III.BD;
 
 import java.io.*;
 import java.nio.*;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 import es.deusto.prog.III.*;
+import es.deusto.prog.III.Producto.Genero;
 import es.deusto.prog.III.Trabajador.Estatus;
 
 public class GestorBD {
@@ -144,6 +146,12 @@ public class GestorBD {
 			
 			//Se recorren los clientes y se insertan uno a uno
 			for (Trabajador t : trabajadores) {
+				pstmt.setString(1, t.getNombreYApellidos());
+				pstmt.setString(2, t.getGmail());
+				pstmt.setString(3, t.getContrasena());
+				pstmt.setString(4, t.getStatus().toString());
+				pstmt.setDouble(5, t.getSalario());
+				pstmt.setString(6, t.getTelefono());
 				if (1 != pstmt.executeUpdate()) {					
 					logger.warning(String.format("No se ha insertado el trabajador: %s", t));
 				} else {
@@ -156,7 +164,10 @@ public class GestorBD {
 	}
 	
 	public void insertarProducto(Producto... productos) {
+		
+		int i = 0;
 		String sql = "INSERT INTO PRODUCTOS (ARTICULO, DEPORTE, MARCA, GENERO, TALLA, PRECIO) VALUES (?, ?, ?, ?, ?, ?);";
+		
 		
 		//Se abre la conexión y se obtiene el Statement
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
@@ -164,6 +175,13 @@ public class GestorBD {
 			
 			//Se recorren los clientes y se insertan uno a uno
 			for (Producto p : productos) {
+				pstmt.setString(1, p.getArticulo());
+				pstmt.setString(2, p.getDeporte());
+				pstmt.setString(3, p.getMarca());
+				pstmt.setString(4, p.getGenero().toString());
+				pstmt.setString(5, p.getTalla());
+				pstmt.setDouble(6, p.getPrecio());
+				System.out.println(i);
 				if (1 != pstmt.executeUpdate()) {					
 					logger.warning(String.format("No se ha insertado el producto: %s", p));
 				} else {
@@ -397,16 +415,39 @@ public class GestorBD {
 	
 	public List<Producto> loadCSVProductos() {
 		List<Producto> productos = new ArrayList<>();
+		Producto producto = new Producto();
+		String[] producto_previo;
 		
-		try (BufferedReader in = new BufferedReader(new FileReader("PRODUCTOS.csv"))) {
+		
+		
+		try (BufferedReader in = new BufferedReader(new FileReader("data/PRODUCTOS_2.csv"))) {
 			String linea = null;
+			int i = 0;
 			
 			//Omitir la cabecera
 			in.readLine();			
 			
 			while ((linea = in.readLine()) != null) {
-				productos.add(Producto.parseCSV(linea));
-			}			
+				
+//				System.out.println("vuelta " + i);
+				producto_previo = linea.split(";");
+				producto.setArticulo(producto_previo[0]);
+				producto.setDeporte(producto_previo[1]);
+				producto.setMarca(producto_previo[2]);
+				producto.setGenero(Genero.valueOf(producto_previo[3].toUpperCase()));
+				producto.setTalla(producto_previo[4]);
+				producto.setPrecio(Double.parseDouble(producto_previo[5]));
+				//System.out.println(producto.toString());
+				productos.add(new Producto());
+				productos.set(i, producto);
+				//System.out.println(productos.toString());
+				i ++;
+				
+				//productos.add(Producto.parseCSV(linea));
+			}	
+			for (int j = 0; j < productos.size(); j++) {
+				System.out.println(productos.get(j).toString());
+			}
 			
 		} catch (Exception ex) {
 			logger.warning(String.format("Error leyendo productos del CSV: %s", ex.getMessage()));

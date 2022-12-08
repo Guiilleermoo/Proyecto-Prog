@@ -18,11 +18,9 @@ public class Producto {
 	
 	
 	public enum Genero {
-<<<<<<< HEAD
-		HOMBRE,MUJER,NIÑO,NIÑA,UNISEX;
-=======
+
 		HOMBRE,MUJER,NINO,NINA,UNISEX;
->>>>>>> refs/remotes/origin/V10
+
 	}
 
 	public Producto(String articulo, String deporte, String marca, Genero genero, String talla, double precio) {

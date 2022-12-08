@@ -9,6 +9,8 @@ import javax.swing.*;
 
 import es.deusto.prog.III.Cliente;
 import es.deusto.prog.III.Producto;
+import es.deusto.prog.III.Trabajador;
+import es.deusto.prog.III.Trabajador.Estatus;
 import es.deusto.prog.III.BD.GestorBD;
 
 public class VentanaLogging extends JFrame{
@@ -62,7 +64,7 @@ public class VentanaLogging extends JFrame{
 		registroButton.setBounds(350, 520, 120, 25);
 		panel.add(registroButton);
 		
-		// Crear los JRadioButton de cliente/trabajador y añadirlos a un grupo de botones
+		// Crear los JRadioButton de cliente/trabajador y aï¿½adirlos a un grupo de botones
 		JRadioButton cliente = new JRadioButton("Cliente", true);
 		JRadioButton trabajador = new JRadioButton("Trabajador", false);
 		ButtonGroup jbg = new ButtonGroup();
@@ -108,7 +110,7 @@ public class VentanaLogging extends JFrame{
 			}
 		});
 		
-		// ventana estándar
+		// ventana estï¿½ndar
 		this.setTitle("Ventana Logging");
 		this.setSize(800, 600);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -117,5 +119,22 @@ public class VentanaLogging extends JFrame{
 	}
 	public static void main(String[] args) {
 		VentanaLogging v = new VentanaLogging();
+		gestorBD.initilizeFromCSV();
+		Trabajador nuevo = new Trabajador();
+		nuevo.setGmail("456");
+		nuevo.setNombreYApellidos("456");
+		nuevo.setContrasena("456");
+		nuevo.setSalario(1000);
+		nuevo.setStatus(Estatus.EMPLEADO);
+		nuevo.setTelefono("456456456");
+		gestorBD.insertarTrabajador(nuevo);
+		Trabajador nuevo2 = new Trabajador();
+		nuevo2.setGmail("789");
+		nuevo2.setNombreYApellidos("789");
+		nuevo2.setContrasena("789");
+		nuevo2.setSalario(2000);
+		nuevo2.setStatus(Estatus.JEFE);
+		nuevo2.setTelefono("456456456");
+		gestorBD.insertarTrabajador(nuevo2);
 	}
 }

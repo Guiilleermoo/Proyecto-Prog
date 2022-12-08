@@ -42,8 +42,8 @@ public class GestionEmpleados extends JFrame{
 		JTextField NomYApell_1 = new JTextField();
 		JLabel gmail = new JLabel("Gmail:");
 		JTextField gmail_1 = new JTextField();
-		JLabel contraseña = new JLabel("Contraseña:");
-		JTextField contraseña_1 = new JTextField();
+		JLabel contrasena = new JLabel("Contraseï¿½a:");
+		JTextField contrasena_1 = new JTextField();
 		JLabel estatus = new JLabel("Estatus:");
 		JComboBox estatus_1 = new JComboBox();
 		estatus_1.addItem("Jefe");
@@ -57,8 +57,8 @@ public class GestionEmpleados extends JFrame{
 		derecha.add(NomYApell_1);
 		derecha.add(gmail);
 		derecha.add(gmail_1);
-		derecha.add(contraseña);
-		derecha.add(contraseña_1);
+		derecha.add(contrasena);
+		derecha.add(contrasena_1);
 		derecha.add(estatus);
 		derecha.add(estatus_1);
 		derecha.add(salario);
@@ -74,7 +74,7 @@ public class GestionEmpleados extends JFrame{
 		scroll.setViewportView(listaE);
 		
 		JButton ver = new JButton("Ver");
-		JButton anyadir = new JButton("Añadir");
+		JButton anyadir = new JButton("Aï¿½adir");
 		
 		abajo.add(ver);
 		abajo.add(anyadir);

@@ -44,7 +44,7 @@ public class VentanaTrabajador extends JFrame {
 			}
 		});
 		
-		// ventana estándar
+		// ventana estï¿½ndar
 		this.setTitle("Menu");
 		this.setSize(800, 600);
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
@@ -52,4 +52,5 @@ public class VentanaTrabajador extends JFrame {
 		this.setVisible(false);
 	}
 	
+
 }

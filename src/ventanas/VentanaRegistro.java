@@ -85,7 +85,7 @@ public class VentanaRegistro extends JFrame {
 			if (nombreYApellidoText.getText().isEmpty() || gmailText.getText().isEmpty() || contrasenaText.getText().isEmpty() || direccionText.getText().isEmpty() || telefonoText.getText().isEmpty()) {
 				JOptionPane.showMessageDialog(null, "Error: completa los campos vacios");
 			} else if (telefonoText.getText().length() < 9 || telefonoText.getText().length() > 9) {
-				JOptionPane.showMessageDialog(null, "Error: teléfono no válido");
+				JOptionPane.showMessageDialog(null, "Error: telï¿½fono no vï¿½lido");
 			} else {
 				String nombreYApellidos = nombreYApellidoText.getText();
 				String gmail = gmailText.getText();
@@ -95,6 +95,8 @@ public class VentanaRegistro extends JFrame {
 				
 				Cliente nuevo = new Cliente(nombreYApellidos, gmail, contrasena, direccion, telefono);
 				gestorBD.insertarClientes(nuevo);
+				
+				dispose();
 			}
 			}
 		});
@@ -107,7 +109,7 @@ public class VentanaRegistro extends JFrame {
 			}
 		});
 		
-		// ventana estándar
+		// ventana estï¿½ndar
 		this.setTitle("Registro");
 		this.setSize(800, 600);
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
