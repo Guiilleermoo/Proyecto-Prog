@@ -42,7 +42,7 @@ public class GestionEmpleados extends JFrame{
 		JTextField NomYApell_1 = new JTextField();
 		JLabel gmail = new JLabel("Gmail:");
 		JTextField gmail_1 = new JTextField();
-		JLabel contrasena = new JLabel("Contrase�a:");
+		JLabel contrasena = new JLabel("Contrasena:");
 		JTextField contrasena_1 = new JTextField();
 		JLabel estatus = new JLabel("Estatus:");
 		JComboBox estatus_1 = new JComboBox();
@@ -74,7 +74,7 @@ public class GestionEmpleados extends JFrame{
 		scroll.setViewportView(listaE);
 		
 		JButton ver = new JButton("Ver");
-		JButton anyadir = new JButton("A�adir");
+		JButton anyadir = new JButton("Anadir");
 		
 		abajo.add(ver);
 		abajo.add(anyadir);

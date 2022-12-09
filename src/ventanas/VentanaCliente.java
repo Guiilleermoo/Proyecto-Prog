@@ -20,7 +20,7 @@ public class VentanaCliente extends JFrame{
 	
 	private static final long serialVersionUID = 1L;
 	
-	//Lista de objetos comic
+	//Lista de objetos productos
 	private List<Producto> productos;
 	
 	//Definicionn de las tablas y modelos de datos de cada una
@@ -35,6 +35,120 @@ public class VentanaCliente extends JFrame{
 	
 	public VentanaCliente(GestorBD gestorBD) {
 		this.gestorBD = gestorBD;
+		Container cp = this.getContentPane();
+		
+		JPanel arriba = new JPanel();
+		
+		cp.add(arriba, BorderLayout.NORTH);
+		
+		
+		//Categorias del filtrado
+		
+		
+		JLabel Articulo = new JLabel("Articulo: ");
+		JLabel Deporte = new JLabel("Deporte: ");
+		JLabel Marca = new JLabel("Marca: ");
+		JLabel Genero = new JLabel("Genero: ");
+		JLabel Talla = new JLabel("Talla: ");
+		JLabel Precio = new JLabel("Precio: ");
+		JButton buscar = new JButton("Buscar");
+		
+		//Filtrado Articulo
+		JComboBox<String> articulo = new JComboBox<String>();
+		articulo.addItem("Cualquiera");
+		articulo.addItem("Zapatillas");
+		articulo.addItem("Camiseta");
+		articulo.addItem("Pantalon");
+		articulo.addItem("Accesorios");
+		
+		//Filtrado Deporte
+		JComboBox<String> deporte = new JComboBox<String>();
+		deporte.addItem("Cualquiera");
+		deporte.addItem("Futbol");
+		deporte.addItem("Running");
+		
+		//Filtrado Marca
+		JComboBox<String> marca = new JComboBox<String>();
+		marca.addItem("Cualquiera");
+		marca.addItem("Nike");
+		marca.addItem("Adidas");
+		marca.addItem("Asics");
+		marca.addItem("Puma");
+		marca.addItem("Joma");
+		marca.addItem("New Balance");
+		
+		//Filtrado Genero
+		JComboBox<String> genero = new JComboBox<String>();
+		genero.addItem("Cualquiera");
+		genero.addItem("Unisex");
+		genero.addItem("Hombre");
+		genero.addItem("Mujer");
+		genero.addItem("Nino");
+		genero.addItem("Nina");
+
+		
+		//Filtrado Talla
+		JRadioButton XS = new JRadioButton("XS", false);
+		JRadioButton S = new JRadioButton("S", false);
+		JRadioButton M = new JRadioButton("M", false);
+		JRadioButton L = new JRadioButton("L", false);
+		JRadioButton XL = new JRadioButton("XL", false);
+		JRadioButton XXL = new JRadioButton("XXL", false);
+		JRadioButton cualquiera = new JRadioButton("Cualquiera", true);
+		JRadioButton numero = new JRadioButton("Numero Talla: ", false);
+		
+		SpinnerNumberModel spinner = new SpinnerNumberModel(28, 28, 47, 1);
+		JSpinner talla2 = new JSpinner(spinner);
+		
+		ButtonGroup grupo = new ButtonGroup();
+		grupo.add(XS);
+		grupo.add(S);
+		grupo.add(M);
+		grupo.add(L);
+		grupo.add(XL);
+		grupo.add(XXL);
+		grupo.add(cualquiera);
+		grupo.add(numero);
+		
+		
+		
+		
+		//Filtro de precio
+		JSlider precio = new JSlider(0,300, 30);
+		precio.setMajorTickSpacing(50);
+		precio.setMinorTickSpacing(5);
+		precio.setPaintTicks(true);
+		precio.setPaintLabels(true);
+		precio.setFont(new Font("Arial", Font.BOLD, 13));
+		
+		
+		//Añadir las cosas al JPanel
+		arriba.add(Articulo);
+		arriba.add(articulo);
+		arriba.add(Deporte);
+		arriba.add(deporte);
+		arriba.add(Marca);
+		arriba.add(marca);
+		arriba.add(Genero);
+		arriba.add(genero);
+		arriba.add(Talla);
+		arriba.add(XS);
+		arriba.add(S);
+		arriba.add(M);
+		arriba.add(L);
+		arriba.add(XL);
+		arriba.add(XXL);
+		arriba.add(cualquiera);
+		arriba.add(numero);
+		arriba.add(talla2);
+		arriba.add(Precio);
+		arriba.add(precio);
+		
+		
+		
+		arriba.add(buscar);
+		
+		
 
 		//Se inicializan las tablas y sus modelos de datos
 		this.initTables();
@@ -51,7 +165,7 @@ public class VentanaCliente extends JFrame{
 		this.getContentPane().setLayout(new GridLayout(2, 1));
 		this.getContentPane().add(scrollPaneProductos);
 		
-		// ventana est�ndar
+		// ventana est�ndar
 		this.setTitle("Cliente");
 		this.setSize(800, 600);
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
@@ -131,6 +245,7 @@ public class VentanaCliente extends JFrame{
 				int row = tablaProductos.rowAtPoint(e.getPoint());
 				int col = tablaProductos.columnAtPoint(e.getPoint());
 				
+				//Tiene que ir al logger			
 				System.out.println(String.format("Se ha pulsado el botón %d en la fila %d, columna %d", e.getButton(), row+1, col+1));
 			}
 			
@@ -138,7 +253,7 @@ public class VentanaCliente extends JFrame{
 			public void mouseReleased(MouseEvent e) {
 				int row = tablaProductos.rowAtPoint(e.getPoint());
 				int col = tablaProductos.columnAtPoint(e.getPoint());
-
+				
 				System.out.println(String.format("Se ha liverado el botón %d en la fila %d, columna %d", e.getButton(), row+1, col+1));
 			}
 			
@@ -206,7 +321,7 @@ public class VentanaCliente extends JFrame{
 		
 		// Se anade al modelo una fila de datos por cada comic
 		for (Producto p : this.productos) {
-			this.modeloDatosProductos.addRow( new Object[] {p.getId(), p.getArticulo(), p.getDeporte(), p.getMarca(), p.getGenero(),p.getMarca(), p.getPrecio(),} );
+			this.modeloDatosProductos.addRow( new Object[] {p.getId(), p.getArticulo(), p.getDeporte(), p.getMarca(), p.getGenero(),p.getTalla(), p.getPrecio(),} );
 		}		
 	}
 }

@@ -107,7 +107,7 @@ public class Producto {
 				producto.setArticulo(tokenizer.nextToken());
 				producto.setDeporte(tokenizer.nextToken());
 				producto.setMarca(tokenizer.nextToken());
-				producto.setGenero(Genero.valueOf(tokenizer.nextToken().toUpperCase()));
+				producto.setGenero(Genero.valueOf(tokenizer.nextToken().trim().toUpperCase()));
 				producto.setTalla(tokenizer.nextToken());
 				producto.setPrecio(Double.parseDouble(tokenizer.nextToken()));
 

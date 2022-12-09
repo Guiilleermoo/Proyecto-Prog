@@ -114,7 +114,7 @@ public class GestorBD {
 				 PreparedStatement pStmt = con.prepareStatement(sql)) {
 				//Se recorren los clientes y se insertan uno a uno
 				for (Cliente c : clientes) {
-					// Si el cliente no existe que se añada el cliente a la BD
+					// Si el cliente no existe que se aï¿½ada el cliente a la BD
 					if (comprobarCliente(c.getGmail(), c.getContrasena()) == false) {
 						//Se definen los parÃ¡metros de la sentencia SQL
 						pStmt.setString(1, c.getNombreYApellidos());
@@ -147,7 +147,7 @@ public class GestorBD {
 			
 			//Se recorren los clientes y se insertan uno a uno
 			for (Trabajador t : trabajadores) {
-				// Si el trabajador no existe que se añada el trabajador a la BD
+				// Si el trabajador no existe que se aï¿½ada el trabajador a la BD
 				if(comprobarTrabajador(t.getGmail(), t.getContrasena()) == false) {
 					pstmt.setString(1, t.getNombreYApellidos());
 					pstmt.setString(2, t.getGmail());
@@ -427,6 +427,7 @@ public class GestorBD {
 			
 			while ((linea = in.readLine()) != null) {
 				productos.add(Producto.parseCSV(linea));
+				
 			}	
 			
 		} catch (Exception ex) {
