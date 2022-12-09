@@ -18,9 +18,7 @@ public class Producto {
 	
 	
 	public enum Genero {
-
 		HOMBRE,MUJER,NINO,NINA,UNISEX;
-
 	}
 
 	public Producto(String articulo, String deporte, String marca, Genero genero, String talla, double precio) {
@@ -109,9 +107,9 @@ public class Producto {
 				producto.setArticulo(tokenizer.nextToken());
 				producto.setDeporte(tokenizer.nextToken());
 				producto.setMarca(tokenizer.nextToken());
-				producto.setGenero(Genero.valueOf(tokenizer.nextToken()));
+				producto.setGenero(Genero.valueOf(tokenizer.nextToken().toUpperCase()));
 				producto.setTalla(tokenizer.nextToken());
-				//producto.setPrecio(tokenizer.nextToken());
+				producto.setPrecio(Double.parseDouble(tokenizer.nextToken()));
 
 				return producto;
 			} else {

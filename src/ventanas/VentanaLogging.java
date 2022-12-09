@@ -25,6 +25,9 @@ public class VentanaLogging extends JFrame{
 	public VentanaLogging() {
 		gestorBD = new GestorBD();
 		
+		// Inicializamos la tabla Productos de la BD desde un fichero CSV
+		gestorBD.initilizeFromCSV();
+		
 		// Ventanas Secundarias (inicializacion)
 		ventanaRegistro = new VentanaRegistro(gestorBD);
 		ventanaCliente = new VentanaCliente(gestorBD);
@@ -119,22 +122,6 @@ public class VentanaLogging extends JFrame{
 	}
 	public static void main(String[] args) {
 		VentanaLogging v = new VentanaLogging();
-		gestorBD.initilizeFromCSV();
-		Trabajador nuevo = new Trabajador();
-		nuevo.setGmail("456");
-		nuevo.setNombreYApellidos("456");
-		nuevo.setContrasena("456");
-		nuevo.setSalario(1000);
-		nuevo.setStatus(Estatus.EMPLEADO);
-		nuevo.setTelefono("456456456");
-		gestorBD.insertarTrabajador(nuevo);
-		Trabajador nuevo2 = new Trabajador();
-		nuevo2.setGmail("789");
-		nuevo2.setNombreYApellidos("789");
-		nuevo2.setContrasena("789");
-		nuevo2.setSalario(2000);
-		nuevo2.setStatus(Estatus.JEFE);
-		nuevo2.setTelefono("456456456");
-		gestorBD.insertarTrabajador(nuevo2);
+		
 	}
 }

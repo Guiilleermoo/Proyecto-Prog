@@ -7,6 +7,7 @@ import javax.swing.table.DefaultTableModel;
 
 import es.deusto.prog.III.Producto;
 import es.deusto.prog.III.BD.GestorBD;
+import es.deusto.prog.III.Producto.Genero;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -42,7 +43,7 @@ public class VentanaCliente extends JFrame{
 		
 		//La tabla de productos se inserta en un panel con scroll
 		JScrollPane scrollPaneProductos = new JScrollPane(this.tablaProductos);
-		scrollPaneProductos.setBorder(new TitledBorder("Comics"));
+		scrollPaneProductos.setBorder(new TitledBorder("Productos"));
 		this.tablaProductos.setFillsViewportHeight(true);
 	
 		
@@ -63,7 +64,11 @@ public class VentanaCliente extends JFrame{
 		//Cabecera del modelo de datos
 		Vector<String> cabeceraProductos = new Vector<String>(Arrays.asList( "ID", "ARTICULO", "DEPORTE", "MARCA", "GENERO", "TALLA", "PRECIO"));
 		//Se crea el modelo de datos para la tabla de productos solo con la cabecera		
-		this.modeloDatosProductos = new DefaultTableModel(new Vector<Vector<Object>>(), cabeceraProductos);
+		this.modeloDatosProductos = new DefaultTableModel(new Vector<Vector<Object>>(), cabeceraProductos) {
+			public boolean isCellEditable (int row, int column) {
+				return false;
+			}
+		};
 		//Se crea la tabla de comics con el modelo de datos		
 		this.tablaProductos = new JTable(this.modeloDatosProductos);	
 				
@@ -77,7 +82,7 @@ public class VentanaCliente extends JFrame{
 				label.setHorizontalAlignment(JLabel.CENTER);
 						
 				//Si la celda esta seleccionada se asocia un color de fondo y letra
-				if (mouseRow == row && mouseCol == column) {
+				if (mouseRow == row) {
 					label.setBackground(Color.PINK);
 					label.setForeground(Color.WHITE);
 				}
@@ -104,12 +109,18 @@ public class VentanaCliente extends JFrame{
 		this.tablaProductos.getTableHeader().getColumnModel().getColumn(1).setHeaderRenderer(centerHeadRenderer);
 		this.tablaProductos.getTableHeader().getColumnModel().getColumn(2).setHeaderRenderer(centerHeadRenderer);
 		this.tablaProductos.getTableHeader().getColumnModel().getColumn(3).setHeaderRenderer(centerHeadRenderer);
+		this.tablaProductos.getTableHeader().getColumnModel().getColumn(4).setHeaderRenderer(centerHeadRenderer);
+		this.tablaProductos.getTableHeader().getColumnModel().getColumn(5).setHeaderRenderer(centerHeadRenderer);
+		this.tablaProductos.getTableHeader().getColumnModel().getColumn(6).setHeaderRenderer(centerHeadRenderer);
 		
 		//Se modifica el Renderer de las columnas		
 		this.tablaProductos.getColumnModel().getColumn(0).setCellRenderer(renderSencillo);
 		this.tablaProductos.getColumnModel().getColumn(1).setCellRenderer(renderSencillo);
 		this.tablaProductos.getColumnModel().getColumn(2).setCellRenderer(renderSencillo);
 		this.tablaProductos.getColumnModel().getColumn(3).setCellRenderer(renderSencillo);
+		this.tablaProductos.getColumnModel().getColumn(4).setCellRenderer(renderSencillo);
+		this.tablaProductos.getColumnModel().getColumn(5).setCellRenderer(renderSencillo);
+		this.tablaProductos.getColumnModel().getColumn(6).setCellRenderer(renderSencillo);
 		
 		//Se modifica el modelo de seleccion de la tabla para que se pueda selecciona unicamente una fila
 		this.tablaProductos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -120,7 +131,7 @@ public class VentanaCliente extends JFrame{
 				int row = tablaProductos.rowAtPoint(e.getPoint());
 				int col = tablaProductos.columnAtPoint(e.getPoint());
 				
-				System.out.println(String.format("Se ha pulsado el botón %d en la fila %d, columna %d", e.getButton(), row, col));
+				System.out.println(String.format("Se ha pulsado el botón %d en la fila %d, columna %d", e.getButton(), row+1, col+1));
 			}
 			
 			@Override
@@ -128,7 +139,7 @@ public class VentanaCliente extends JFrame{
 				int row = tablaProductos.rowAtPoint(e.getPoint());
 				int col = tablaProductos.columnAtPoint(e.getPoint());
 
-				System.out.println(String.format("Se ha liverado el botón %d en la fila %d, columna %d", e.getButton(), row, col));
+				System.out.println(String.format("Se ha liverado el botón %d en la fila %d, columna %d", e.getButton(), row+1, col+1));
 			}
 			
 			@Override
@@ -136,7 +147,7 @@ public class VentanaCliente extends JFrame{
 				int row = tablaProductos.rowAtPoint(e.getPoint());
 				int col = tablaProductos.columnAtPoint(e.getPoint());
 				
-				System.out.println(String.format("Se ha hecho click con el botón %d en la fila %d, columna %d", e.getButton(), row, col));
+				System.out.println(String.format("Se ha hecho click con el botón %d en la fila %d, columna %d", e.getButton(), row+1, col+1));
 			}
 			
 			@Override
@@ -144,7 +155,7 @@ public class VentanaCliente extends JFrame{
 				int row = tablaProductos.rowAtPoint(e.getPoint());
 				int col = tablaProductos.columnAtPoint(e.getPoint());
 				
-				System.out.println(String.format("Se ha entrado en la fila %d, columna %d", e.getButton(), row, col));
+				System.out.println(String.format("Se ha entrado en la fila %d, columna %d", e.getButton(), row+1, col+1));
 			}
 			
 			@Override
@@ -152,7 +163,7 @@ public class VentanaCliente extends JFrame{
 				int row = tablaProductos.rowAtPoint(e.getPoint());
 				int col = tablaProductos.columnAtPoint(e.getPoint());
 
-				System.out.println(String.format("Se ha salido de la fila %d, columna %d", e.getButton(), row, col));
+				System.out.println(String.format("Se ha salido de la fila %d, columna %d", e.getButton(), row+1, col+1));
 
 				//Cuando el ratón sale de la tabla, se resetea la columna/fila sobre la que está el ratón				
 				mouseRow = -1;
@@ -183,7 +194,7 @@ public class VentanaCliente extends JFrame{
 				int row = tablaProductos.rowAtPoint(e.getPoint());
 				int col = tablaProductos.columnAtPoint(e.getPoint());
 
-				System.out.println(String.format("Se está arrastrando con el botón %d pulsado sobre la fila %d, columna %d", e.getButton(), row, col));
+				System.out.println(String.format("Se está arrastrando con el botón %d pulsado sobre la fila %d, columna %d", e.getButton(), row+1, col+1));
 			}			
 		});
 	}
@@ -195,7 +206,7 @@ public class VentanaCliente extends JFrame{
 		
 		// Se anade al modelo una fila de datos por cada comic
 		for (Producto p : this.productos) {
-			this.modeloDatosProductos.addRow( new Object[] {p.getDeporte(), p.getMarca(), p.getGenero(), p.getPrecio(),} );
+			this.modeloDatosProductos.addRow( new Object[] {p.getId(), p.getArticulo(), p.getDeporte(), p.getMarca(), p.getGenero(),p.getMarca(), p.getPrecio(),} );
 		}		
 	}
 }

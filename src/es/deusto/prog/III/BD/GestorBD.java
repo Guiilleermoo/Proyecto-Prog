@@ -101,7 +101,7 @@ public class GestorBD {
 			//Se leen los productos del CSV
 			List<Producto> productos = this.loadCSVProductos();
 			//Se insertan los productos en la BBDD
-			this.insertarProducto(productos.toArray(new Producto[productos.size()]));			
+			this.insertarProducto(productos.toArray(new Producto[productos.size()]));	
 		}
 	}
 	
@@ -114,24 +114,25 @@ public class GestorBD {
 				 PreparedStatement pStmt = con.prepareStatement(sql)) {
 				//Se recorren los clientes y se insertan uno a uno
 				for (Cliente c : clientes) {
-					//Se definen los parámetros de la sentencia SQL
-					pStmt.setString(1, c.getNombreYApellidos());
-					pStmt.setString(2, c.getGmail());
-					pStmt.setString(3, c.getContrasena());
-					pStmt.setString(4, c.getDireccion());
-					pStmt.setString(5, c.getTelefono());
+					// Si el cliente no existe que se a�ada el cliente a la BD
+					if (comprobarCliente(c.getGmail(), c.getContrasena()) == false) {
+						//Se definen los parámetros de la sentencia SQL
+						pStmt.setString(1, c.getNombreYApellidos());
+						pStmt.setString(2, c.getGmail());
+						pStmt.setString(3, c.getContrasena());
+						pStmt.setString(4, c.getDireccion());
+						pStmt.setString(5, c.getTelefono());
 
-					if (pStmt.executeUpdate() != 1) {			
-						logger.warning(String.format("No se ha insertado el cliente: %s", c));
-					} else {
-						//Se actualiza el ID del comic haciendo un Select
-						//c.setId(this.getClienteByNombreYApellidos(c.getNombreYApellidos()).getId());				
-							
-						logger.info(String.format("Se ha insertado el cliente: %s", c));
-					}
+						if (pStmt.executeUpdate() != 1) {			
+							logger.warning(String.format("No se ha insertado el cliente: %s", c));
+						} else {
+							//Se actualiza el ID del comic haciendo un Select
+							//c.setId(this.getClienteByNombreYApellidos(c.getNombreYApellidos()).getId());				
+							logger.info(String.format("Se ha insertado el cliente: %s", c));
+						}
+					}	
+					logger.info(String.format("%d Clientes insertados en la BBDD", clientes.length));
 				}
-					
-				logger.info(String.format("%d Clientes insertados en la BBDD", clientes.length));
 			} catch (Exception ex) {
 				logger.warning(String.format("Error al insertar clientes: %s", ex.getMessage()));
 			}		
@@ -146,28 +147,29 @@ public class GestorBD {
 			
 			//Se recorren los clientes y se insertan uno a uno
 			for (Trabajador t : trabajadores) {
-				pstmt.setString(1, t.getNombreYApellidos());
-				pstmt.setString(2, t.getGmail());
-				pstmt.setString(3, t.getContrasena());
-				pstmt.setString(4, t.getStatus().toString());
-				pstmt.setDouble(5, t.getSalario());
-				pstmt.setString(6, t.getTelefono());
-				if (1 != pstmt.executeUpdate()) {					
-					logger.warning(String.format("No se ha insertado el trabajador: %s", t));
-				} else {
-					logger.info(String.format("Se ha insertado el trabajador: %s", t));
+				// Si el trabajador no existe que se a�ada el trabajador a la BD
+				if(comprobarTrabajador(t.getGmail(), t.getContrasena()) == false) {
+					pstmt.setString(1, t.getNombreYApellidos());
+					pstmt.setString(2, t.getGmail());
+					pstmt.setString(3, t.getContrasena());
+					pstmt.setString(4, t.getStatus().toString());
+					pstmt.setDouble(5, t.getSalario());
+					pstmt.setString(6, t.getTelefono());
+					if (1 != pstmt.executeUpdate()) {					
+						logger.warning(String.format("No se ha insertado el trabajador: %s", t));
+					} else {
+						logger.info(String.format("Se ha insertado el trabajador: %s", t));
+					}
 				}
-			}			
+				logger.info(String.format("%d Clientes insertados en la BBDD", trabajadores.length));
+			}		
 		} catch (Exception ex) {
 			logger.warning(String.format("Error al insertar trabajadores: %s", ex.getMessage()));						
 		}				
 	}
 	
 	public void insertarProducto(Producto... productos) {
-		
-		int i = 0;
 		String sql = "INSERT INTO PRODUCTOS (ARTICULO, DEPORTE, MARCA, GENERO, TALLA, PRECIO) VALUES (?, ?, ?, ?, ?, ?);";
-		
 		
 		//Se abre la conexión y se obtiene el Statement
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
@@ -181,7 +183,6 @@ public class GestorBD {
 				pstmt.setString(4, p.getGenero().toString());
 				pstmt.setString(5, p.getTalla());
 				pstmt.setDouble(6, p.getPrecio());
-				System.out.println(i);
 				if (1 != pstmt.executeUpdate()) {					
 					logger.warning(String.format("No se ha insertado el producto: %s", p));
 				} else {
@@ -273,7 +274,6 @@ public class GestorBD {
 	public List<Trabajador> obtenerTrabajadores() {
 		List<Trabajador> trabajadores = new ArrayList<>();
 		
-		
 		//Se abre la conexión y se obtiene el Statement
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
 		     Statement stmt = con.createStatement()) {
@@ -299,7 +299,6 @@ public class GestorBD {
 				//Se inserta cada nuevo trabajador en la lista de trabajadores
 				trabajadores.add(trabajador);
 			}
-			
 			//Se cierra el ResultSet
 			rs.close();
 			
@@ -327,11 +326,16 @@ public class GestorBD {
 			while (rs.next()) {
 				producto = new Producto();
 				
-				
+				producto.setId(rs.getInt("ID"));
+				producto.setArticulo(rs.getString("ARTICULO"));
+				producto.setDeporte(rs.getString("DEPORTE"));
+				producto.setMarca(rs.getString("MARCA"));
+				producto.setGenero(Genero.valueOf(rs.getString("GENERO")));
+				producto.setTalla(rs.getString("TALLA"));
+				producto.setPrecio(rs.getDouble("PRECIO"));
 				
 				productos.add(producto);
 			}
-			
 			//Se cierra el ResultSet
 			rs.close();
 			
@@ -374,7 +378,6 @@ public class GestorBD {
 	
 	public boolean comprobarCliente(String gmail, String contrasena) {
 		
-		
 		//Se abre la conexión y se crea el PreparedStatement con la sentencia SQL
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
 		     Statement pStmt = con.createStatement()) {		
@@ -415,39 +418,16 @@ public class GestorBD {
 	
 	public List<Producto> loadCSVProductos() {
 		List<Producto> productos = new ArrayList<>();
-		Producto producto = new Producto();
-		String[] producto_previo;
 		
-		
-		
-		try (BufferedReader in = new BufferedReader(new FileReader("data/PRODUCTOS_2.csv"))) {
+		try (BufferedReader in = new BufferedReader(new FileReader("data/PRODUCTOS.csv"))) {
 			String linea = null;
-			int i = 0;
 			
 			//Omitir la cabecera
 			in.readLine();			
 			
 			while ((linea = in.readLine()) != null) {
-				
-//				System.out.println("vuelta " + i);
-				producto_previo = linea.split(";");
-				producto.setArticulo(producto_previo[0]);
-				producto.setDeporte(producto_previo[1]);
-				producto.setMarca(producto_previo[2]);
-				producto.setGenero(Genero.valueOf(producto_previo[3].toUpperCase()));
-				producto.setTalla(producto_previo[4]);
-				producto.setPrecio(Double.parseDouble(producto_previo[5]));
-				//System.out.println(producto.toString());
-				productos.add(new Producto());
-				productos.set(i, producto);
-				//System.out.println(productos.toString());
-				i ++;
-				
-				//productos.add(Producto.parseCSV(linea));
+				productos.add(Producto.parseCSV(linea));
 			}	
-			for (int j = 0; j < productos.size(); j++) {
-				System.out.println(productos.get(j).toString());
-			}
 			
 		} catch (Exception ex) {
 			logger.warning(String.format("Error leyendo productos del CSV: %s", ex.getMessage()));
