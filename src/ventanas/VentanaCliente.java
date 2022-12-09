@@ -18,6 +18,10 @@ import java.util.Vector;
 public class VentanaCliente extends JFrame{
 	protected GestorBD gestorBD;
 	
+	// Guardamos el gmail y contrasena en variables
+	protected String gmail;
+	protected String contrasena;
+	
 	private static final long serialVersionUID = 1L;
 	
 	//Lista de objetos productos
@@ -33,8 +37,11 @@ public class VentanaCliente extends JFrame{
 	protected int mouseRow = -1;
 	protected int mouseCol = -1;
 	
-	public VentanaCliente(GestorBD gestorBD) {
+	public VentanaCliente(GestorBD gestorBD, String gmail, String contrasena) {
 		this.gestorBD = gestorBD;
+		this.gmail = gmail;
+		this.contrasena = contrasena;
+		
 		Container cp = this.getContentPane();
 		
 		JPanel arriba = new JPanel();
@@ -170,7 +177,7 @@ public class VentanaCliente extends JFrame{
 		this.setSize(800, 600);
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
 		this.setLocationRelativeTo(null);
-		this.setVisible(false);
+		this.setVisible(true);
 
 	}
 	

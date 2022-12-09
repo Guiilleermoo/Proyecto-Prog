@@ -10,6 +10,8 @@ import java.util.Properties;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
+import javax.net.ssl.SSLEngineResult.Status;
+
 import es.deusto.prog.III.*;
 import es.deusto.prog.III.Producto.Genero;
 import es.deusto.prog.III.Trabajador.Estatus;
@@ -271,6 +273,42 @@ public class GestorBD {
 		return cliente;
 	}
 	
+	public Cliente getClienteByGmail(String gmail) {
+		Cliente cliente = null;
+		String sql = "SELECT * FROM cliente WHERE gmail = ? LIMIT 1";
+		
+		//Se abre la conexión y se crea el PreparedStatement con la sentencia SQL
+		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+		     PreparedStatement pStmt = con.prepareStatement(sql)) {			
+			
+			//Se definen los parámetros de la sentencia SQL
+			pStmt.setString(1, gmail);
+			
+			//Se ejecuta la sentencia y se obtiene el ResultSet con los resutlados
+			ResultSet rs = pStmt.executeQuery();			
+
+			//Se procesa el unico resultado
+			if (rs.next()) {
+				cliente = new Cliente();
+				
+				cliente.setId(rs.getInt("ID"));
+				cliente.setNombreYApellidos(rs.getString("NOMBRE"));
+				cliente.setGmail(rs.getString("GMAIL"));
+				cliente.setContrasena(rs.getString("CONTRASENA"));
+				cliente.setDireccion(rs.getString("DIRECCION"));
+				cliente.setTelefono(rs.getString("TELEFONO"));
+			}
+			
+			//Se cierra el ResultSet
+			rs.close();
+			
+			logger.info(String.format("Se ha recuperado el cliente %s", cliente));			
+		} catch (Exception ex) {
+			logger.warning(String.format("Error al recuperar el cliente con nombre %s: %s", gmail, ex.getMessage()));						
+		}		
+		return cliente;
+	}
+	
 	public List<Trabajador> obtenerTrabajadores() {
 		List<Trabajador> trabajadores = new ArrayList<>();
 		
@@ -309,6 +347,43 @@ public class GestorBD {
 		return trabajadores;
 	}
 
+	public Trabajador getTrabajadorByGmail(String gmail) {
+		Trabajador trabajador = null;
+		String sql = "SELECT * FROM EMPLEADOS WHERE gmail = ? LIMIT 1";
+		
+		//Se abre la conexión y se crea el PreparedStatement con la sentencia SQL
+		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+		     PreparedStatement pStmt = con.prepareStatement(sql)) {			
+			
+			//Se definen los parámetros de la sentencia SQL
+			pStmt.setString(1, gmail);
+			
+			//Se ejecuta la sentencia y se obtiene el ResultSet con los resutlados
+			ResultSet rs = pStmt.executeQuery();			
+
+			//Se procesa el unico resultado
+			if (rs.next()) {
+				trabajador = new Trabajador();
+				
+				trabajador.setId(rs.getInt("ID"));
+				trabajador.setNombreYApellidos(rs.getString("NOMBRE"));
+				trabajador.setGmail(rs.getString("GMAIL"));
+				trabajador.setContrasena(rs.getString("CONTRASENA"));
+				trabajador.setStatus(Estatus.valueOf(rs.getString("ESTATUS")));
+				trabajador.setSalario(rs.getDouble("SALARIO"));
+				trabajador.setTelefono(rs.getString("TELEFONO"));
+			}
+			
+			//Se cierra el ResultSet
+			rs.close();
+			
+			logger.info(String.format("Se ha recuperado el cliente %s", trabajador));			
+		} catch (Exception ex) {
+			logger.warning(String.format("Error al recuperar el cliente con nombre %s: %s", gmail, ex.getMessage()));						
+		}		
+		return trabajador;
+	}
+	
 	public List<Producto> obtenerProductos() {
 		List<Producto> productos = new ArrayList<>();
 		

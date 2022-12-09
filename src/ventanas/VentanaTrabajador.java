@@ -11,15 +11,24 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import es.deusto.prog.III.Trabajador.Estatus;
 import es.deusto.prog.III.BD.GestorBD;
 
 public class VentanaTrabajador extends JFrame {
 	protected GestorBD gestorBD;
-	protected GestionEmpleados gestion1;
 	
-	public VentanaTrabajador(GestorBD gestorBD) {
+	// Guardamos el gmail y contrasena en variables
+	protected String gmail;
+	protected String contrasena;
+	
+	protected GestionEmpleados gestion;
+	
+	public VentanaTrabajador(GestorBD gestorBD, String gmail, String contrasena) {
 		this.gestorBD = gestorBD;
-		gestion1 = new GestionEmpleados(gestorBD);
+		this.gmail = gmail;
+		this.contrasena = contrasena;
+		System.out.println(gmail);
+		gestion = new GestionEmpleados(gestorBD);
 		Container cp = this.getContentPane();
 		
 		JPanel centro = new JPanel();
@@ -39,8 +48,9 @@ public class VentanaTrabajador extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				gestion1.setVisible(true);
-				
+				if (gestorBD.getTrabajadorByGmail(gmail).getStatus() == Estatus.JEFE) {
+					gestion.setVisible(true);
+				}
 			}
 		});
 		
@@ -49,7 +59,7 @@ public class VentanaTrabajador extends JFrame {
 		this.setSize(800, 600);
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
 		this.setLocationRelativeTo(null);
-		this.setVisible(false);
+		this.setVisible(true);
 	}
 	
 

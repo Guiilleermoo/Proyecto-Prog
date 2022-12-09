@@ -17,10 +17,12 @@ public class VentanaLogging extends JFrame{
 	
 	protected static GestorBD gestorBD;
 	
+	// Guardamos el gmail y contrasena en variables
+	protected String gmail;
+	protected String contrasena;
+	
 	// Ventanas Secundarias
 	protected VentanaRegistro ventanaRegistro;
-	protected VentanaCliente ventanaCliente;
-	protected VentanaTrabajador ventanaTrabajador;
 	
 	public VentanaLogging() {
 		gestorBD = new GestorBD();
@@ -30,8 +32,6 @@ public class VentanaLogging extends JFrame{
 		
 		// Ventanas Secundarias (inicializacion)
 		ventanaRegistro = new VentanaRegistro(gestorBD);
-		ventanaCliente = new VentanaCliente(gestorBD);
-		ventanaTrabajador = new VentanaTrabajador(gestorBD);
 		
 		Container panel = this.getContentPane();
 		panel.setLayout(null);
@@ -82,22 +82,22 @@ public class VentanaLogging extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String gmail = gmailText.getText();
-				String contrasena = contrasenaText.getText();
+				gmail = gmailText.getText();
+				contrasena = contrasenaText.getText();
 				// Trabajador: hulk@gmail.com, NUcRn8h85RZZTjg6UBwa 
 				// Cliente: guille, 123
 				
 				// Comprobar si el gmail/contrasena ingresado es de un cliente
 				if (cliente.isSelected()) {
 					if (gestorBD.comprobarCliente(gmail, contrasena)) {
-						ventanaCliente.setVisible(true);
+						VentanaCliente ventanaCliente = new VentanaCliente(gestorBD, gmail, contrasena);
 					}
 				}
 				
 				// Comprobar si el gmail/contrasena ingresado es de un trabajador
 				if (trabajador.isSelected()) {
 					if (gestorBD.comprobarTrabajador(gmail, contrasena)) {
-						ventanaTrabajador.setVisible(true);
+						VentanaTrabajador ventanaTrabajador = new VentanaTrabajador(gestorBD, gmail, contrasena);
 					}
 				}
 			}
@@ -122,6 +122,5 @@ public class VentanaLogging extends JFrame{
 	}
 	public static void main(String[] args) {
 		VentanaLogging v = new VentanaLogging();
-		
 	}
 }
