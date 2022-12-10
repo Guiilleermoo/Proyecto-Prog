@@ -36,125 +36,97 @@ public class VentanaCliente extends JFrame{
 	//cuando el raton pasa sobre una celda de la tabla
 	protected int mouseRow = -1;
 	protected int mouseCol = -1;
+	private JTable table_1;
+	private JTable table_2;
 	
 	public VentanaCliente(GestorBD gestorBD, String gmail, String contrasena) {
 		this.gestorBD = gestorBD;
 		this.gmail = gmail;
 		this.contrasena = contrasena;
 		
-		Container cp = this.getContentPane();
 		
-		JPanel arriba = new JPanel();
-		
-		cp.add(arriba, BorderLayout.NORTH);
+		getContentPane().setLayout(new GridLayout(3, 0));
 		
 		
-		//Categorias del filtrado
+		JPanel panel_1 = new JPanel();
+		getContentPane().add(panel_1);
+		panel_1.setLayout(new GridLayout(2, 0, 0, 0));
+		
+		JPanel panel_4 = new JPanel();
+		panel_1.add(panel_4);
+		panel_4.setLayout(new GridLayout(2, 0, 0, 0));
+		
+		JPanel panel_5 = new JPanel();
+		panel_4.add(panel_5);
+		panel_5.setLayout(new GridLayout(1, 6, 0, 0));
+		
+		JLabel Articulo = new JLabel("Articulo:");
+		panel_5.add(Articulo);
+		
+		JComboBox articulo = new JComboBox();
+		articulo.setModel(new DefaultComboBoxModel(new String[] {"Zapatillas", "Camiseta", "Pantalon", "Accesorios"}));
+		panel_5.add(articulo);
+		
+		JLabel Deporte = new JLabel("Deporte:");
+		Deporte.setEnabled(true);
+		panel_5.add(Deporte);
+		
+		JComboBox deporte = new JComboBox();
+		deporte.setModel(new DefaultComboBoxModel(new String[] {"Running", "Futbol"}));
+		panel_5.add(deporte);
+		
+		JLabel Marca = new JLabel("Marca:");
+		panel_5.add(Marca);
+		
+		JComboBox marca = new JComboBox();
+		marca.setModel(new DefaultComboBoxModel(new String[] {"Nike", "Adidas", "Asics", "New Balance", "Puma", "Joma"}));
+		panel_5.add(marca);
+		
+		JLabel Genero = new JLabel("Genero:");
+		panel_5.add(Genero);
+		
+		JComboBox comboBox = new JComboBox();
+		panel_5.add(comboBox);
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Hombre", "Mujer", "Unisex", "Niño ", "Niña"}));
+		
+		JPanel panel = new JPanel();
+		panel_4.add(panel);
 		
 		
-		JLabel Articulo = new JLabel("Articulo: ");
-		JLabel Deporte = new JLabel("Deporte: ");
-		JLabel Marca = new JLabel("Marca: ");
-		JLabel Genero = new JLabel("Genero: ");
-		JLabel Talla = new JLabel("Talla: ");
-		JLabel Precio = new JLabel("Precio: ");
-		JButton buscar = new JButton("Buscar");
+		JLabel Precio = new JLabel("Precio:");
+		panel.add(Precio);
 		
-		//Filtrado Articulo
-		JComboBox<String> articulo = new JComboBox<String>();
-		articulo.addItem("Cualquiera");
-		articulo.addItem("Zapatillas");
-		articulo.addItem("Camiseta");
-		articulo.addItem("Pantalon");
-		articulo.addItem("Accesorios");
+		JSlider slider = new JSlider();
+		slider.setPaintTicks(true);
+		slider.setPaintLabels(true);
+		slider.setValue(30);
+		slider.setMinorTickSpacing(5);
+		slider.setMaximum(300);
+		slider.setMajorTickSpacing(50);
+		panel.add(slider);
 		
-		//Filtrado Deporte
-		JComboBox<String> deporte = new JComboBox<String>();
-		deporte.addItem("Cualquiera");
-		deporte.addItem("Futbol");
-		deporte.addItem("Running");
+		JPanel panel_3 = new JPanel();
+		panel_1.add(panel_3);
 		
-		//Filtrado Marca
-		JComboBox<String> marca = new JComboBox<String>();
-		marca.addItem("Cualquiera");
-		marca.addItem("Nike");
-		marca.addItem("Adidas");
-		marca.addItem("Asics");
-		marca.addItem("Puma");
-		marca.addItem("Joma");
-		marca.addItem("New Balance");
+		JButton Buscar = new JButton("Buscar");
+		Buscar.setBackground(new Color(177, 205, 248));
+		panel_3.add(Buscar);
 		
-		//Filtrado Genero
-		JComboBox<String> genero = new JComboBox<String>();
-		genero.addItem("Cualquiera");
-		genero.addItem("Unisex");
-		genero.addItem("Hombre");
-		genero.addItem("Mujer");
-		genero.addItem("Nino");
-		genero.addItem("Nina");
-
+		JButton Carrito = new JButton("Carrito");
+		Carrito.setBackground(new Color(177, 205, 248));
+		panel_3.add(Carrito);
 		
-		//Filtrado Talla
-		JRadioButton XS = new JRadioButton("XS", false);
-		JRadioButton S = new JRadioButton("S", false);
-		JRadioButton M = new JRadioButton("M", false);
-		JRadioButton L = new JRadioButton("L", false);
-		JRadioButton XL = new JRadioButton("XL", false);
-		JRadioButton XXL = new JRadioButton("XXL", false);
-		JRadioButton cualquiera = new JRadioButton("Cualquiera", true);
-		JRadioButton numero = new JRadioButton("Numero Talla: ", false);
+		JPanel panel_2 = new JPanel();
+		getContentPane().add(panel_2);
+		panel_2.setLayout(new GridLayout(1, 2, 0, 0));
 		
-		SpinnerNumberModel spinner = new SpinnerNumberModel(28, 28, 47, 1);
-		JSpinner talla2 = new JSpinner(spinner);
-		
-		ButtonGroup grupo = new ButtonGroup();
-		grupo.add(XS);
-		grupo.add(S);
-		grupo.add(M);
-		grupo.add(L);
-		grupo.add(XL);
-		grupo.add(XXL);
-		grupo.add(cualquiera);
-		grupo.add(numero);
-		
-		
-		
-		
-		//Filtro de precio
-		JSlider precio = new JSlider(0,300, 30);
-		precio.setMajorTickSpacing(50);
-		precio.setMinorTickSpacing(5);
-		precio.setPaintTicks(true);
-		precio.setPaintLabels(true);
-		precio.setFont(new Font("Arial", Font.BOLD, 13));
-		
-		
-		//Añadir las cosas al JPanel
-		arriba.add(Articulo);
-		arriba.add(articulo);
-		arriba.add(Deporte);
-		arriba.add(deporte);
-		arriba.add(Marca);
-		arriba.add(marca);
-		arriba.add(Genero);
-		arriba.add(genero);
-		arriba.add(Talla);
-		arriba.add(XS);
-		arriba.add(S);
-		arriba.add(M);
-		arriba.add(L);
-		arriba.add(XL);
-		arriba.add(XXL);
-		arriba.add(cualquiera);
-		arriba.add(numero);
-		arriba.add(talla2);
-		arriba.add(Precio);
-		arriba.add(precio);
+		tablaProductos = new JTable(modeloDatosProductos);
+		panel_2.add(tablaProductos);
 		
 		
 		
-		arriba.add(buscar);
 		
+		//panel_2.add(scrollPaneProductos);
 		
 
 		//Se inicializan las tablas y sus modelos de datos
@@ -169,14 +141,17 @@ public class VentanaCliente extends JFrame{
 	
 		
 		//El Layout del panel principal es un matriz con 2 filas y 1 columna
-		this.getContentPane().setLayout(new GridLayout(2, 1));
-		this.getContentPane().add(scrollPaneProductos);
+//		this.getContentPane().setLayout(new GridLayout(2, 1));
+		//this.getContentPane().add(scrollPaneProductos, BorderLayout.WEST);
+		
+	
 		
 		// ventana est�ndar
 		this.setTitle("Cliente");
 		this.setSize(800, 600);
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
 		this.setLocationRelativeTo(null);
+		
 		this.setVisible(true);
 
 	}
@@ -191,7 +166,7 @@ public class VentanaCliente extends JFrame{
 			}
 		};
 		//Se crea la tabla de comics con el modelo de datos		
-		this.tablaProductos = new JTable(this.modeloDatosProductos);	
+		tablaProductos = new JTable(this.modeloDatosProductos);	
 				
 		//Render para las celdas numéricas ajuste de colores y texto centrado
 		DefaultTableCellRenderer renderSencillo = new DefaultTableCellRenderer() {
