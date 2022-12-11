@@ -19,6 +19,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import es.deusto.prog.III.Trabajador;
+import es.deusto.prog.III.Trabajador.Estatus;
 import es.deusto.prog.III.BD.GestorBD;
 
 public class GestionEmpleados extends JFrame{
@@ -79,10 +80,33 @@ public class GestionEmpleados extends JFrame{
 		abajo.add(ver);
 		abajo.add(anyadir);
 		
+		
+		
 		List<Trabajador> trabajadores = gestorBD.obtenerTrabajadores();
 		trabajadores.forEach(t ->
 		listaEmpleados.addElement(t.getNombreYApellidos())
 		);
+		
+		anyadir.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	if (telefono_1.getText().length() != 9) {
+            		System.out.println("-----El telefono introducido no es correcto-----");
+            	} else if (NomYApell_1.getText() != "" &&  gmail_1.getText() != "" &&  contrasena_1.getText() != "" &&  salario_1.getText() != "" && telefono_1.getText() != "") {
+            		insertarNuevoTrabajador(NomYApell_1.getText(), gmail_1.getText(), contrasena_1.getText(), estatus_1.getSelectedItem().toString(), salario_1.getText(), telefono_1.getText());
+            	}else {
+            		System.out.println("-----Para introducir un nuevo trabajador hay que rellenar todos los datos-----");
+            	}
+                
+            	listaEmpleados.clear();
+            	
+            	List<Trabajador> trabajadores = gestorBD.obtenerTrabajadores();
+        		trabajadores.forEach(t ->
+        		listaEmpleados.addElement(t.getNombreYApellidos())
+        		);
+            	
+            }
+        });
 		
 		ver.addActionListener(new ActionListener() {
 			
@@ -100,6 +124,24 @@ public class GestionEmpleados extends JFrame{
 		this.pack();
 	}
 	
-	
+	private void insertarNuevoTrabajador(String nombre, String gmail, String contrasena, String estatus, String salario, String telefono) {
+		System.out.println("-----------" + nombre);
+		System.out.println("-----------" + gmail);
+		System.out.println("-----------" + contrasena);
+		System.out.println("-----------" + estatus);
+		System.out.println("-----------" + salario);
+		System.out.println("-----------" + telefono);
+		double salario_double = Double.parseDouble(salario);
+//		Trabajador t = new Trabajador();
+//		t.setNombreYApellidos(nombre);
+//		t.setGmail(gmail);
+//		t.setContrasena(contrasena);
+//		t.setStatus(Estatus.valueOf(estatus.toUpperCase()));
+//		t.setSalario(salario_double);
+//		t.setTelefono(telefono);
+		Trabajador t = new Trabajador(nombre, gmail, contrasena, Estatus.valueOf(estatus.toUpperCase()), salario_double, telefono);
+		gestorBD.insertarTrabajador(t);
+		
+	}
 
 }
