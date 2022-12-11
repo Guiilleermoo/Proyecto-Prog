@@ -85,9 +85,9 @@ public class VentanaCliente extends JFrame{
 		JLabel Genero = new JLabel("Genero:");
 		panel_5.add(Genero);
 		
-		JComboBox comboBox = new JComboBox();
-		panel_5.add(comboBox);
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Hombre", "Mujer", "Unisex", "Niño ", "Niña"}));
+		JComboBox genero = new JComboBox();
+		panel_5.add(genero);
+		genero.setModel(new DefaultComboBoxModel(new String[] {"Hombre", "Mujer", "Unisex", "Niño ", "Niña"}));
 		
 		JPanel panel = new JPanel();
 		panel_4.add(panel);
@@ -138,7 +138,7 @@ public class VentanaCliente extends JFrame{
 		JScrollPane scrollPaneProductos = new JScrollPane(this.tablaProductos);
 		scrollPaneProductos.setBorder(new TitledBorder("Productos"));
 		this.tablaProductos.setFillsViewportHeight(true);
-	
+		panel_2.add(scrollPaneProductos);
 		
 		//El Layout del panel principal es un matriz con 2 filas y 1 columna
 //		this.getContentPane().setLayout(new GridLayout(2, 1));
@@ -153,6 +153,13 @@ public class VentanaCliente extends JFrame{
 		this.setLocationRelativeTo(null);
 		
 		this.setVisible(true);
+		
+		Buscar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadProductosFiltro(articulo.getSelectedItem().toString(), deporte.getSelectedItem().toString(), marca.getSelectedItem().toString(), genero.getSelectedItem().toString(), slider.getValue());
+            }
+        });
 
 	}
 	
@@ -294,6 +301,19 @@ public class VentanaCliente extends JFrame{
 				System.out.println(String.format("Se está arrastrando con el botón %d pulsado sobre la fila %d, columna %d", e.getButton(), row+1, col+1));
 			}			
 		});
+		
+		
+	}
+	
+	private void loadProductosFiltro(String articulo, String deporte, String marca, String genero, double precio) {
+		this.productos = gestorBD.obtenerProductosFiltro(articulo, deporte, marca, genero, precio);
+		//Se borran los datos del modelo de datos
+		this.modeloDatosProductos.setRowCount(0);
+		
+		// Se anade al modelo una fila de datos por cada comic
+		for (Producto p : this.productos) {
+			this.modeloDatosProductos.addRow( new Object[] {p.getId(), p.getArticulo(), p.getDeporte(), p.getMarca(), p.getGenero(),p.getTalla(), p.getPrecio(),} );
+		}
 	}
 	
 	private void loadproductos() {

@@ -122,5 +122,7 @@ public class VentanaLogging extends JFrame{
 	}
 	public static void main(String[] args) {
 		VentanaLogging v = new VentanaLogging();
+		//gestorBD.borrarDatos();
+		//gestorBD.loadCSVProductos();
 	}
 }

@@ -421,6 +421,44 @@ public class GestorBD {
 		return productos;
 	}
 	
+	public List<Producto> obtenerProductosFiltro(String articulo, String deporte, String marca, String genero, double precio) {
+		List<Producto> productos = new ArrayList<>();
+
+		String sql = "SELECT * FROM PRODUCTOS WHERE ID >= 0 AND ARTICULO = '" + articulo + "' AND DEPORTE = '" + deporte +"' AND MARCA = '" + marca + "' AND GENERO = '" + genero.toUpperCase() + "' AND PRECIO <= " + precio;
+		//Se abre la conexión y se obtiene el Statement
+		System.out.println("Esta es la sql ----------" + sql);
+		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+		     Statement stmt = con.createStatement()) {
+	
+			
+			//Se ejecuta la sentencia y se obtiene el ResultSet con los resutlados
+			ResultSet rs = stmt.executeQuery(sql);			
+			Producto producto;
+			
+			//Se recorre el ResultSet y se crean objetos Producto (Calzado/Ropa)
+			while (rs.next()) {
+				producto = new Producto();
+				
+				producto.setId(rs.getInt("ID"));
+				producto.setArticulo(rs.getString("ARTICULO"));
+				producto.setDeporte(rs.getString("DEPORTE"));
+				producto.setMarca(rs.getString("MARCA"));
+				producto.setGenero(Genero.valueOf(rs.getString("GENERO")));
+				producto.setTalla(rs.getString("TALLA"));
+				producto.setPrecio(rs.getDouble("PRECIO"));
+				
+				productos.add(producto);
+			}
+			//Se cierra el ResultSet
+			rs.close();
+			
+			logger.info(String.format("Se han recuperado %d productos...", productos.size()));			
+		} catch (Exception ex) {
+			logger.warning(String.format("Error al obtener datos de la BD: %s", ex.getMessage()));						
+		}		
+		return productos;
+	}
+	
 	public void actualizarContrasena(Cliente cliente, String contrasenaNueva) {
 		//Se abre la conexión y se obtiene el Statement
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
