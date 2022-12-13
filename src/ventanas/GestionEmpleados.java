@@ -49,9 +49,9 @@ public class GestionEmpleados extends JFrame{
 		JComboBox estatus_1 = new JComboBox();
 		estatus_1.addItem("Jefe");
 		estatus_1.addItem("Empleado");
-		JLabel salario = new JLabel("Salario");
+		JLabel salario = new JLabel("Salario:");
 		JTextField salario_1 = new JTextField();
-		JLabel telefono = new JLabel("Telefono");
+		JLabel telefono = new JLabel("Telefono:");
 		JTextField telefono_1 = new JTextField();
 		
 		derecha.add(NomYApell);
@@ -125,20 +125,9 @@ public class GestionEmpleados extends JFrame{
 	}
 	
 	private void insertarNuevoTrabajador(String nombre, String gmail, String contrasena, String estatus, String salario, String telefono) {
-		System.out.println("-----------" + nombre);
-		System.out.println("-----------" + gmail);
-		System.out.println("-----------" + contrasena);
-		System.out.println("-----------" + estatus);
-		System.out.println("-----------" + salario);
-		System.out.println("-----------" + telefono);
+			
 		double salario_double = Double.parseDouble(salario);
-//		Trabajador t = new Trabajador();
-//		t.setNombreYApellidos(nombre);
-//		t.setGmail(gmail);
-//		t.setContrasena(contrasena);
-//		t.setStatus(Estatus.valueOf(estatus.toUpperCase()));
-//		t.setSalario(salario_double);
-//		t.setTelefono(telefono);
+
 		Trabajador t = new Trabajador(nombre, gmail, contrasena, Estatus.valueOf(estatus.toUpperCase()), salario_double, telefono);
 		gestorBD.insertarTrabajador(t);
 		

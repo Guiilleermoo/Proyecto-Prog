@@ -1,6 +1,7 @@
 package ventanas;
 
 import javax.swing.*;
+
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -9,9 +10,11 @@ import es.deusto.prog.III.Producto;
 import es.deusto.prog.III.BD.GestorBD;
 import es.deusto.prog.III.Producto.Genero;
 
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
@@ -21,6 +24,7 @@ public class VentanaCliente extends JFrame{
 	// Guardamos el gmail y contrasena en variables
 	protected String gmail;
 	protected String contrasena;
+	protected VentanaProgreso ventanaProgreso;
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -44,6 +48,7 @@ public class VentanaCliente extends JFrame{
 		this.gestorBD = gestorBD;
 		this.gmail = gmail;
 		this.contrasena = contrasena;
+		this.ventanaProgreso = new VentanaProgreso(gestorBD);
 		
 		
 		getContentPane().setLayout(new GridLayout(3, 0));
@@ -164,7 +169,65 @@ public class VentanaCliente extends JFrame{
 		JButton Anyadir = new JButton("Añadir");
 		Anyadir.setBackground(new Color(177, 205, 248));
 		panel_7.add(Anyadir);
-
+		
+		tablaProductos.addKeyListener(new KeyAdapter() {
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				
+				if(e.isControlDown() && e.getKeyCode() == KeyEvent.VK_PLUS) {
+					Anyadir.doClick();
+				}
+				
+				
+			}
+		});
+		
+		tablaSeleccionados.addKeyListener(new KeyAdapter() {
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				
+				if(e.isControlDown() && e.getKeyCode() == KeyEvent.VK_MINUS) {
+					Borrar.doClick();
+				}
+				
+				
+			}
+		});
+		
+		//Preguntar 
+		tablaSeleccionados.addKeyListener(new KeyAdapter() {
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				
+				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+					Buscar.doClick();
+				}
+				
+				
+			}
+		});
+		Carrito.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(tablaSeleccionados.getRowCount()== 0) {
+					JOptionPane.showMessageDialog(null, "Tu carrito esta vacio", "Advertencia", JOptionPane.WARNING_MESSAGE);
+					
+				}else {
+					ventanaProgreso.setVisible(true);
+					System.out.println(tablaSeleccionados.getRowCount()); 
+					for (int i = 0; i < tablaSeleccionados.getRowCount(); i++) {
+						modeloDatosSeleccionados.removeRow(i);
+						
+					}
+					
+				}
+				
+			}
+		});
 		
 		// ventana est�ndar
 		this.setTitle("Cliente");

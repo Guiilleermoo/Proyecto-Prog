@@ -3,6 +3,9 @@ package ventanas;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.lang.System.Logger;
 
 import javax.swing.*;
@@ -78,10 +81,35 @@ public class VentanaLogging extends JFrame{
 		panel.add(trabajador);
 		trabajador.setBounds(360, 420, 90, 25);
 		
+		KeyListener keyListener = new KeyAdapter() {			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				
+				//Se esta clickando el enter
+				if (e.isControlDown() && e.getKeyCode() == KeyEvent.VK_PLUS) { 
+					System.out.println("HOLA");
+					accesoButton.doClick();
+				}
+			}
+		};
+		
+		accesoButton.addKeyListener(new KeyAdapter() {
+		
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+					accesoButton.doClick();
+				}
+				
+			}
+		});
+		
 		accesoButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
 				gmail = gmailText.getText();
 				contrasena = contrasenaText.getText();
 				// Trabajador: hulk@gmail.com, NUcRn8h85RZZTjg6UBwa 
