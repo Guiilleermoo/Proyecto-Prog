@@ -17,6 +17,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
+import java.util.logging.Level;
 
 public class VentanaCliente extends JFrame{
 	protected GestorBD gestorBD;
@@ -93,7 +94,7 @@ public class VentanaCliente extends JFrame{
 		
 		JComboBox genero = new JComboBox();
 		panel_5.add(genero);
-		genero.setModel(new DefaultComboBoxModel(new String[] {"Cualquiera", "Hombre", "Mujer", "Unisex", "Niño ", "Niña"}));
+		genero.setModel(new DefaultComboBoxModel(new String[] {"Cualquiera", "Hombre", "Mujer", "Unisex", "NiÃ±o ", "NiÃ±a"}));
 		
 		JPanel panel = new JPanel();
 		panel_4.add(panel);
@@ -148,9 +149,9 @@ public class VentanaCliente extends JFrame{
 		panel_6.add(scrollPaneProductos);
 		
 		JScrollPane scrollPaneSeleccionados = new JScrollPane(this.tablaSeleccionados);
-		scrollPaneSeleccionados.setBorder(new TitledBorder("Carrito"));
+		scrollPaneSeleccionados.setBorder(new TitledBorder("Carrito\tTotal: " + 0.0 + "€"));
 		this.tablaSeleccionados.setFillsViewportHeight(true);
-		panel_2.add(scrollPaneSeleccionados, BorderLayout.CENTER);
+		panel_2.add(scrollPaneSeleccionados);
 		
 		JPanel panel_8 = new JPanel();
 		panel_2.add(panel_8);
@@ -166,7 +167,7 @@ public class VentanaCliente extends JFrame{
 		JPanel panel_7 = new JPanel();
 		panel_6.add(panel_7);
 		
-		JButton Anyadir = new JButton("Añadir");
+		JButton Anyadir = new JButton("Anadir");
 		Anyadir.setBackground(new Color(177, 205, 248));
 		panel_7.add(Anyadir);
 		
@@ -178,8 +179,6 @@ public class VentanaCliente extends JFrame{
 				if(e.isControlDown() && e.getKeyCode() == KeyEvent.VK_PLUS) {
 					Anyadir.doClick();
 				}
-				
-				
 			}
 		});
 		
@@ -190,13 +189,10 @@ public class VentanaCliente extends JFrame{
 				
 				if(e.isControlDown() && e.getKeyCode() == KeyEvent.VK_MINUS) {
 					Borrar.doClick();
-				}
-				
-				
+				}	
 			}
 		});
-		
-		//Preguntar 
+
 		tablaSeleccionados.addKeyListener(new KeyAdapter() {
 			
 			@Override
@@ -204,11 +200,10 @@ public class VentanaCliente extends JFrame{
 				
 				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
 					Buscar.doClick();
-				}
-				
-				
+				}	
 			}
 		});
+		
 		Carrito.addActionListener(new ActionListener() {
 			
 			@Override
@@ -221,27 +216,22 @@ public class VentanaCliente extends JFrame{
 					System.out.println(tablaSeleccionados.getRowCount()); 
 					for (int i = 0; i < tablaSeleccionados.getRowCount(); i++) {
 						modeloDatosSeleccionados.removeRow(i);
-						
 					}
-					
 				}
-				
 			}
 		});
 		
-		// ventana est�ndar
+		// ventana estï¿½ndar
 		this.setTitle("Cliente");
 		this.pack();
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
 		this.setLocationRelativeTo(null);
-		
 		this.setVisible(true);
 		
 		Buscar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 loadProductosFiltro(articulo.getSelectedItem().toString(), deporte.getSelectedItem().toString(), marca.getSelectedItem().toString(), genero.getSelectedItem().toString(), slider.getValue());
-            
             }
         });
 		
@@ -250,9 +240,8 @@ public class VentanaCliente extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				loadSeleccionados();
-				
-				
-				
+				Double dinero = calcularTotal(modeloDatosSeleccionados);
+				scrollPaneSeleccionados.setBorder(new TitledBorder("Carrito\nTotal: " + dinero + "€"));
 			}
 		});
 		
@@ -263,7 +252,8 @@ public class VentanaCliente extends JFrame{
 				int seleccionado = tablaSeleccionados.getSelectedRow();
 				modeloDatosSeleccionados.removeRow(seleccionado);
 				tablaSeleccionados.repaint();
-				
+				Double dinero = calcularTotal(modeloDatosSeleccionados);
+				scrollPaneSeleccionados.setBorder(new TitledBorder("Carrito\nTotal: " + dinero + "€"));
 			}
 			
 		});
@@ -289,19 +279,20 @@ public class VentanaCliente extends JFrame{
 		//Se crea la tabla de comics con el modelo de datos		
 		tablaProductos = new JTable(this.modeloDatosProductos);	
 		tablaSeleccionados = new JTable(this.modeloDatosSeleccionados);	
-				
-		//Render para las celdas numéricas ajuste de colores y texto centrado
-		DefaultTableCellRenderer renderSencillo = new DefaultTableCellRenderer() {
+		
+		DefaultTableCellRenderer render = new DefaultTableCellRenderer() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
 				JLabel label = new JLabel(value.toString());					
 				label.setHorizontalAlignment(JLabel.CENTER);
-						
+
+				System.out.println(row);
+				System.out.println(mouseRow);
 				//Si la celda esta seleccionada se asocia un color de fondo y letra
 				if (mouseRow == row) {
-					label.setBackground(Color.PINK);
+					label.setBackground(Color.BLUE);
 					label.setForeground(Color.WHITE);
 				}
 						
@@ -325,10 +316,12 @@ public class VentanaCliente extends JFrame{
 			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
 				JLabel label = new JLabel(value.toString());					
 				label.setHorizontalAlignment(JLabel.CENTER);
-						
+
+				System.out.println(row);
+				System.out.println(mouseRow);
 				//Si la celda esta seleccionada se asocia un color de fondo y letra
 				if (mouseRow == row) {
-					label.setBackground(Color.BLUE);
+					label.setBackground(Color.PINK);
 					label.setForeground(Color.WHITE);
 				}
 						
@@ -367,14 +360,15 @@ public class VentanaCliente extends JFrame{
 		this.tablaSeleccionados.getTableHeader().getColumnModel().getColumn(6).setHeaderRenderer(centerHeadRenderer);
 		
 		//Se modifica el Renderer de las columnas		
-		this.tablaProductos.getColumnModel().getColumn(0).setCellRenderer(renderSencillo);
-		this.tablaProductos.getColumnModel().getColumn(1).setCellRenderer(renderSencillo);
-		this.tablaProductos.getColumnModel().getColumn(2).setCellRenderer(renderSencillo);
-		this.tablaProductos.getColumnModel().getColumn(3).setCellRenderer(renderSencillo);
-		this.tablaProductos.getColumnModel().getColumn(4).setCellRenderer(renderSencillo);
-		this.tablaProductos.getColumnModel().getColumn(5).setCellRenderer(renderSencillo);
-		this.tablaProductos.getColumnModel().getColumn(6).setCellRenderer(renderSencillo);
+		this.tablaProductos.getColumnModel().getColumn(0).setCellRenderer(render);
+		this.tablaProductos.getColumnModel().getColumn(1).setCellRenderer(render);
+		this.tablaProductos.getColumnModel().getColumn(2).setCellRenderer(render);
+		this.tablaProductos.getColumnModel().getColumn(3).setCellRenderer(render);
+		this.tablaProductos.getColumnModel().getColumn(4).setCellRenderer(render);
+		this.tablaProductos.getColumnModel().getColumn(5).setCellRenderer(render);
+		this.tablaProductos.getColumnModel().getColumn(6).setCellRenderer(render);
 		
+		//Se modifica el Renderer de las columnas		
 		this.tablaSeleccionados.getColumnModel().getColumn(0).setCellRenderer(render2);
 		this.tablaSeleccionados.getColumnModel().getColumn(1).setCellRenderer(render2);
 		this.tablaSeleccionados.getColumnModel().getColumn(2).setCellRenderer(render2);
@@ -391,9 +385,8 @@ public class VentanaCliente extends JFrame{
 			public void mousePressed(MouseEvent e) {
 				int row = tablaProductos.rowAtPoint(e.getPoint());
 				int col = tablaProductos.columnAtPoint(e.getPoint());
-				
-				//Tiene que ir al logger			
-				System.out.println(String.format("Se ha pulsado el botón %d en la fila %d, columna %d", e.getButton(), row+1, col+1));
+					
+				gestorBD.log(Level.INFO, "Tabla Productos: Se ha pulsado el boton " + e.getButton() + " en la fila " + row+1 + ", columna " + col+1, null);
 			}
 			
 			@Override
@@ -401,7 +394,7 @@ public class VentanaCliente extends JFrame{
 				int row = tablaProductos.rowAtPoint(e.getPoint());
 				int col = tablaProductos.columnAtPoint(e.getPoint());
 				
-				System.out.println(String.format("Se ha liverado el botón %d en la fila %d, columna %d", e.getButton(), row+1, col+1));
+				gestorBD.log(Level.INFO, "Tabla Productos: Se ha liverado el boton " + e.getButton() + " en la fila " + row+1 + ", columna " + col+1, null);
 			}
 			
 			@Override
@@ -409,7 +402,7 @@ public class VentanaCliente extends JFrame{
 				int row = tablaProductos.rowAtPoint(e.getPoint());
 				int col = tablaProductos.columnAtPoint(e.getPoint());
 				
-				System.out.println(String.format("Se ha hecho click con el botón %d en la fila %d, columna %d", e.getButton(), row+1, col+1));
+				gestorBD.log(Level.INFO, "Tabla Productos: Se ha hecho click con el boton " + e.getButton() + "en la fila " + row+1 + ", columna " + col+1, null);
 			}
 			
 			@Override
@@ -417,17 +410,17 @@ public class VentanaCliente extends JFrame{
 				int row = tablaProductos.rowAtPoint(e.getPoint());
 				int col = tablaProductos.columnAtPoint(e.getPoint());
 				
-				System.out.println(String.format("Se ha entrado en la fila %d, columna %d", e.getButton(), row+1, col+1));
+				gestorBD.log(Level.INFO, "Tabla Productos: Se ha entrado en la fila " + row+1 + ", columna " + col+1, null);
 			}
 			
 			@Override
 			public void mouseExited(MouseEvent e) {
 				int row = tablaProductos.rowAtPoint(e.getPoint());
 				int col = tablaProductos.columnAtPoint(e.getPoint());
+				
+				gestorBD.log(Level.INFO, "Tabla Productos: Se ha salido de la fila " + row+1 + ", columna " + col+1, null);
 
-				System.out.println(String.format("Se ha salido de la fila %d, columna %d", e.getButton(), row+1, col+1));
-
-				//Cuando el ratón sale de la tabla, se resetea la columna/fila sobre la que está el ratón				
+				//Cuando el ratÃ³n sale de la tabla, se resetea la columna/fila sobre la que estÃ¡ el ratÃ³n				
 				mouseRow = -1;
 				mouseCol = -1;
 			}
@@ -440,8 +433,7 @@ public class VentanaCliente extends JFrame{
 				int row = tablaSeleccionados.rowAtPoint(e.getPoint());
 				int col = tablaSeleccionados.columnAtPoint(e.getPoint());
 				
-				//Tiene que ir al logger			
-				System.out.println(String.format("Se ha pulsado el botón %d en la fila %d, columna %d", e.getButton(), row+1, col+1));
+				gestorBD.log(Level.INFO, "Tabla Seleccionados: Se ha pulsado el boton " + e.getButton() + " en la fila " + row+1 + ", columna " + col+1, null);
 			}
 			
 			@Override
@@ -449,7 +441,7 @@ public class VentanaCliente extends JFrame{
 				int row = tablaSeleccionados.rowAtPoint(e.getPoint());
 				int col = tablaSeleccionados.columnAtPoint(e.getPoint());
 				
-				System.out.println(String.format("Se ha liverado el botón %d en la fila %d, columna %d", e.getButton(), row+1, col+1));
+				gestorBD.log(Level.INFO, "Tabla Seleccionados: Se ha liverado el boton " + e.getButton() + " en la fila " + row+1 + ", columna " + col+1, null);
 			}
 			
 			@Override
@@ -457,7 +449,7 @@ public class VentanaCliente extends JFrame{
 				int row = tablaSeleccionados.rowAtPoint(e.getPoint());
 				int col = tablaSeleccionados.columnAtPoint(e.getPoint());
 				
-				System.out.println(String.format("Se ha hecho click con el botón %d en la fila %d, columna %d", e.getButton(), row+1, col+1));
+				gestorBD.log(Level.INFO, "Tabla Seleccionados: Se ha hecho click con el boton " + e.getButton() + "en la fila " + row+1 + ", columna " + col+1, null);
 			}
 			
 			@Override
@@ -465,77 +457,75 @@ public class VentanaCliente extends JFrame{
 				int row = tablaSeleccionados.rowAtPoint(e.getPoint());
 				int col = tablaSeleccionados.columnAtPoint(e.getPoint());
 				
-				System.out.println(String.format("Se ha entrado en la fila %d, columna %d", e.getButton(), row+1, col+1));
+				gestorBD.log(Level.INFO, "Tabla Seleccionados: Se ha entrado en la fila " + row+1 + ", columna " + col+1, null);
 			}
 			
 			@Override
 			public void mouseExited(MouseEvent e) {
 				int row = tablaSeleccionados.rowAtPoint(e.getPoint());
 				int col = tablaSeleccionados.columnAtPoint(e.getPoint());
+				
+				gestorBD.log(Level.INFO, "Tabla Seleccionados: Se ha salido de la fila " + row+1 + ", columna " + col+1, null);
 
-				System.out.println(String.format("Se ha salido de la fila %d, columna %d", e.getButton(), row+1, col+1));
-
-				//Cuando el ratón sale de la tabla, se resetea la columna/fila sobre la que está el ratón				
+				//Cuando el ratÃ³n sale de la tabla, se resetea la columna/fila sobre la que estÃ¡ el ratÃ³n				
 				mouseRow = -1;
 				mouseCol = -1;
 			}
 			
 		});
-				
-		//Se define el comportamiento de los eventos de movimiento del ratón: MOVED DRAGGED
-		this.tablaSeleccionados.addMouseMotionListener(new MouseMotionAdapter() {
+		
+		//Se define el comportamiento de los eventos de movimiento del ratÃ³n: MOVED DRAGGED
+		this.tablaProductos.addMouseMotionListener(new MouseMotionAdapter() {
 			@Override
 			public void mouseMoved(MouseEvent e) {
-				//Se obtiene la fila/columna sobre la que están el ratón mientras se mueve
-				int row = tablaSeleccionados.rowAtPoint(e.getPoint());
-				int col = tablaSeleccionados.columnAtPoint(e.getPoint());
+				//Se obtiene la fila/columna sobre la que estÃ¡n el ratÃ³n mientras se mueve
+				int row = tablaProductos.rowAtPoint(e.getPoint());
+				int col = tablaProductos.columnAtPoint(e.getPoint());
 
-				//Cuando el ratón se mueve sobre tabla, actualiza la fila/columna sobre la que está el ratón
+				//Cuando el ratÃ³n se mueve sobre tabla, actualiza la fila/columna sobre la que estÃ¡ el ratÃ³n
 				//de esta forma se puede modificar el color de renderizado de la celda.				
 				mouseRow = row;
 				mouseCol = col;
 						
-				//Se fuerza el redibujado de la tabla para modificar el color de la celda sobre la que está el ratón.
-				tablaSeleccionados.repaint();
+				//Se fuerza el redibujado de la tabla para modificar el color de la celda sobre la que estÃ¡ el ratÃ³n.
+				tablaProductos.repaint();
 			}
 					
 			@Override
 			public void mouseDragged(MouseEvent e) { 
-				int row = tablaSeleccionados.rowAtPoint(e.getPoint());
-				int col = tablaSeleccionados.columnAtPoint(e.getPoint());
+				int row = tablaProductos.rowAtPoint(e.getPoint());
+				int col = tablaProductos.columnAtPoint(e.getPoint());
 
-				System.out.println(String.format("Se está arrastrando con el botón %d pulsado sobre la fila %d, columna %d", e.getButton(), row+1, col+1));
+				gestorBD.log(Level.INFO, "Tabla Productos: Se estÃ¡ arrastrando con el botÃ³n " + e.getButton() +  " pulsado sobre la fila " + row+1 + ", columna " + col+1, null);
 			}			
 		});
 		
-		//Se define el comportamiento de los eventos de movimiento del ratón: MOVED DRAGGED
-				this.tablaSeleccionados.addMouseMotionListener(new MouseMotionAdapter() {
-					@Override
-					public void mouseMoved(MouseEvent e) {
-						//Se obtiene la fila/columna sobre la que están el ratón mientras se mueve
-						int row = tablaSeleccionados.rowAtPoint(e.getPoint());
-						int col = tablaSeleccionados.columnAtPoint(e.getPoint());
+		//Se define el comportamiento de los eventos de movimiento del ratÃ³n: MOVED DRAGGED
+		this.tablaSeleccionados.addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				//Se obtiene la fila/columna sobre la que estÃ¡n el ratÃ³n mientras se mueve
+				int row = tablaSeleccionados.rowAtPoint(e.getPoint());
+				int col = tablaSeleccionados.columnAtPoint(e.getPoint());
 
-						//Cuando el ratón se mueve sobre tabla, actualiza la fila/columna sobre la que está el ratón
-						//de esta forma se puede modificar el color de renderizado de la celda.				
-						mouseRow = row;
-						mouseCol = col;
+				//Cuando el ratÃ³n se mueve sobre tabla, actualiza la fila/columna sobre la que estÃ¡ el ratÃ³n
+				//de esta forma se puede modificar el color de renderizado de la celda.				
+				mouseRow = row;
+				mouseCol = col;
 								
-						//Se fuerza el redibujado de la tabla para modificar el color de la celda sobre la que está el ratón.
-						tablaSeleccionados.repaint();
-					}
+				//Se fuerza el redibujado de la tabla para modificar el color de la celda sobre la que estÃ¡ el ratÃ³n.
+				tablaSeleccionados.repaint();
+			}
 							
-					@Override
-					public void mouseDragged(MouseEvent e) { 
-						int row = tablaSeleccionados.rowAtPoint(e.getPoint());
-						int col = tablaSeleccionados.columnAtPoint(e.getPoint());
+			@Override
+			public void mouseDragged(MouseEvent e) { 
+			int row = tablaSeleccionados.rowAtPoint(e.getPoint());
+			int col = tablaSeleccionados.columnAtPoint(e.getPoint());
 
-						System.out.println(String.format("Se está arrastrando con el botón %d pulsado sobre la fila %d, columna %d", e.getButton(), row+1, col+1));
-					}			
-				});
-				
-		
-		
+			
+			gestorBD.log(Level.INFO, "Tabla Seleccionados: Se estÃ¡ arrastrando con el botÃ³n " + e.getButton() +  " pulsado sobre la fila " + row+1 + ", columna " + col+1, null);
+				}			
+		});
 	}
 	
 	private void loadProductosFiltro(String articulo, String deporte, String marca, String genero, double precio) {
@@ -568,7 +558,7 @@ public class VentanaCliente extends JFrame{
 		  */
 		 // Si tienes filas seleccionadas en la tabla de origen:
 		 if(tablaProductos.getSelectedRowCount() > 0) {
-			 // 1) Obtén los índices de las filas seleccionadas.
+			 // 1) ObtÃ©n los Ã­ndices de las filas seleccionadas.
 			 int[] indices = tablaProductos.getSelectedRows();
 			 // 2) Para cada fila, crea un Array para guardar los valores... 
 			 for(int i : indices) {
@@ -581,5 +571,16 @@ public class VentanaCliente extends JFrame{
 				 tmD.addRow(fila);
 			 }
 		 }
-		}
 	}
+	
+	private Double calcularTotal(DefaultTableModel carrito) {
+		//carrito.getDataVector();
+		Double total = 0.0;
+		for (int j = 0; j < carrito.getRowCount(); j++) {
+			total = total + (Double) carrito.getValueAt(j, 6);
+
+		}
+		System.out.println(total);
+		return total;
+	}
+}
