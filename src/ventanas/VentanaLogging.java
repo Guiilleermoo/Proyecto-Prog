@@ -38,7 +38,7 @@ public class VentanaLogging extends JFrame{
 		
 		Container panel = this.getContentPane();
 		panel.setLayout(null);
-		panel.setBackground(Color.MAGENTA);
+		panel.setBackground(Color.CYAN);
 		
 		// Creacion de los botones
 		JLabel foto = new JLabel();
@@ -93,18 +93,7 @@ public class VentanaLogging extends JFrame{
 			}
 		};
 		
-		accesoButton.addKeyListener(new KeyAdapter() {
-		
-			
-			@Override
-			public void keyPressed(KeyEvent e) {
-				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
-					accesoButton.doClick();
-				}
 				
-			}
-		});
-		
 		accesoButton.addActionListener(new ActionListener() {
 			
 			@Override
@@ -132,6 +121,19 @@ public class VentanaLogging extends JFrame{
 			
 		});
 		
+		panel.addKeyListener(new KeyAdapter() {
+		
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+					accesoButton.doClick();
+				}
+				
+			}
+		});
+		
+		
 		registroButton.addActionListener(new ActionListener() {
 			
 			@Override
@@ -148,9 +150,9 @@ public class VentanaLogging extends JFrame{
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 	}
+
+	
 	public static void main(String[] args) {
 		VentanaLogging v = new VentanaLogging();
-		//gestorBD.borrarDatos();
-		//gestorBD.loadCSVProductos();
 	}
 }

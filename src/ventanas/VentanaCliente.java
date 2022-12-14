@@ -241,6 +241,7 @@ public class VentanaCliente extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 loadProductosFiltro(articulo.getSelectedItem().toString(), deporte.getSelectedItem().toString(), marca.getSelectedItem().toString(), genero.getSelectedItem().toString(), slider.getValue());
+            
             }
         });
 		

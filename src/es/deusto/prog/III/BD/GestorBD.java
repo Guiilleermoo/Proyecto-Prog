@@ -7,8 +7,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
-import java.util.logging.LogManager;
-import java.util.logging.Logger;
+import java.util.logging.*;
 
 import javax.net.ssl.SSLEngineResult.Status;
 
@@ -22,10 +21,10 @@ public class GestorBD {
 	protected static  String DATABASE_FILE;
 	protected static  String CONNECTION_STRING;
 	
-	private static Logger logger = Logger.getLogger(GestorBD.class.getName());
+	private static Logger logger = null;
 	
 	public GestorBD() {		
-		try (FileInputStream fis = new FileInputStream("conf/logger.properties")) {
+		try (FileInputStream fis = new FileInputStream("log/logger.properties")) {
 			//Inicialización del Logger
 			LogManager.getLogManager().readConfiguration(fis);
 			
@@ -39,7 +38,7 @@ public class GestorBD {
 			//Cargar el diver SQLite
 			Class.forName(DRIVER_NAME);
 		} catch (Exception ex) {
-			logger.warning(String.format("Error al cargar el driver de BBDD: %s", ex.getMessage()));
+			log(Level.SEVERE, "Error al cargar el driver de BBDD", ex);
 		}
 	}
 		
@@ -126,17 +125,17 @@ public class GestorBD {
 						pStmt.setString(5, c.getTelefono());
 
 						if (pStmt.executeUpdate() != 1) {			
-							logger.warning(String.format("No se ha insertado el cliente: %s", c));
+							log(Level.INFO, "No se ha insertado el cliente", null);
 						} else {
-							//Se actualiza el ID del comic haciendo un Select
-							//c.setId(this.getClienteByNombreYApellidos(c.getNombreYApellidos()).getId());				
-							logger.info(String.format("Se ha insertado el cliente: %s", c));
+							//Se actualiza el ID del cliente haciendo un Select
+							c.setId(this.getClienteByNombreYApellidos(c.getNombreYApellidos()).getId());
+							log(Level.INFO, "Se ha insertado el cliente", null);
 						}
-					}	
-					logger.info(String.format("%d Clientes insertados en la BBDD", clientes.length));
+					}
+					log(Level.INFO, clientes.length + "Clientes insertados en la BBDD", null);
 				}
 			} catch (Exception ex) {
-				logger.warning(String.format("Error al insertar clientes: %s", ex.getMessage()));
+				log(Level.SEVERE, "Error al insertar clientes", ex);
 			}		
 	}
 	
@@ -157,16 +156,16 @@ public class GestorBD {
 					pstmt.setString(4, t.getStatus().toString());
 					pstmt.setDouble(5, t.getSalario());
 					pstmt.setString(6, t.getTelefono());
-					if (1 != pstmt.executeUpdate()) {					
-						logger.warning(String.format("No se ha insertado el trabajador: %s", t));
+					if (1 != pstmt.executeUpdate()) {
+						log(Level.SEVERE, "No se ha insertado el trabajador" + t, null);
 					} else {
-						logger.info(String.format("Se ha insertado el trabajador: %s", t));
+						log(Level.INFO, "Se ha insertado el trabajador" + t, null);
 					}
 				}
-				logger.info(String.format("%d Clientes insertados en la BBDD", trabajadores.length));
+				log(Level.INFO, trabajadores.length + "	Trabajadores insertados en la BBDD", null);
 			}		
 		} catch (Exception ex) {
-			logger.warning(String.format("Error al insertar trabajadores: %s", ex.getMessage()));						
+			log(Level.SEVERE, "Error al insertar trabajadores", ex);						
 		}				
 	}
 	
@@ -185,14 +184,14 @@ public class GestorBD {
 				pstmt.setString(4, p.getGenero().toString());
 				pstmt.setString(5, p.getTalla());
 				pstmt.setDouble(6, p.getPrecio());
-				if (1 != pstmt.executeUpdate()) {					
-					logger.warning(String.format("No se ha insertado el producto: %s", p));
+				if (1 != pstmt.executeUpdate()) {	
+					log(Level.SEVERE, "No se ha insertado el producto" + p, null);
 				} else {
-					logger.info(String.format("Se ha insertado el producto: %s", p));
+					log(Level.INFO, "Se ha insertado el producto" + p, null);
 				}
 			}			
 		} catch (Exception ex) {
-			logger.warning(String.format("Error al insertar productos: %s", ex.getMessage()));						
+			log(Level.SEVERE, "Error al insertar productos", ex);						
 		}				
 	}
 	
@@ -228,9 +227,9 @@ public class GestorBD {
 			//Se cierra el ResultSet
 			rs.close();
 			
-			logger.info(String.format("Se ha recuperado %d clientes...", clientes.size()));		
+			log(Level.INFO, "Se ha recuperado " + clientes.size() + " clientes", null);	
 		} catch (Exception ex) {
-			logger.warning(String.format("Error al obtener datos de la BD: %s", ex.getMessage()));					
+			log(Level.SEVERE, "Error al obtener los clientes de la BD", ex);					
 		}		
 		
 		return clientes;
@@ -265,11 +264,10 @@ public class GestorBD {
 			//Se cierra el ResultSet
 			rs.close();
 			
-			logger.info(String.format("Se ha recuperado el cliente %s", cliente));			
+			log(Level.INFO, "Se ha recuperado el cliente" + cliente, null);				
 		} catch (Exception ex) {
-			logger.warning(String.format("Error al recuperar el cliente con nombre %s: %s", nombreYApellidos, ex.getMessage()));						
+			log(Level.SEVERE, "Error al recuperar el cliente" + cliente, ex);					
 		}		
-		
 		return cliente;
 	}
 	
@@ -302,9 +300,9 @@ public class GestorBD {
 			//Se cierra el ResultSet
 			rs.close();
 			
-			logger.info(String.format("Se ha recuperado el cliente %s", cliente));			
+			log(Level.INFO, "Se ha recuperado el cliente" + cliente, null);		
 		} catch (Exception ex) {
-			logger.warning(String.format("Error al recuperar el cliente con nombre %s: %s", gmail, ex.getMessage()));						
+			log(Level.SEVERE, "Error al recuperar el cliente" + cliente, ex);						
 		}		
 		return cliente;
 	}
@@ -340,9 +338,9 @@ public class GestorBD {
 			//Se cierra el ResultSet
 			rs.close();
 			
-			logger.info(String.format("Se han recuperado %d trabajadores...", trabajadores.size()));			
+			log(Level.INFO, "Se han recuperado " + trabajadores.size() + " trabajadores", null);			
 		} catch (Exception ex) {
-			logger.warning(String.format("Error al obtener datos de la BD: %s", ex.getMessage()));						
+			log(Level.SEVERE, "Error al obtener los trabajadores de la BD", ex);					
 		}		
 		return trabajadores;
 	}
@@ -377,9 +375,9 @@ public class GestorBD {
 			//Se cierra el ResultSet
 			rs.close();
 			
-			logger.info(String.format("Se ha recuperado el cliente %s", trabajador));			
+			log(Level.INFO, "Se ha recuperado el trabajador", null);			
 		} catch (Exception ex) {
-			logger.warning(String.format("Error al recuperar el cliente con nombre %s: %s", gmail, ex.getMessage()));						
+			log(Level.SEVERE, "Error al recuperar el cliente", ex);					
 		}		
 		return trabajador;
 	}
@@ -414,9 +412,10 @@ public class GestorBD {
 			//Se cierra el ResultSet
 			rs.close();
 			
-			logger.info(String.format("Se han recuperado %d productos...", productos.size()));			
+			
+			log(Level.INFO, "Se han recuperado " + productos.size() +  " productos", null);			
 		} catch (Exception ex) {
-			logger.warning(String.format("Error al obtener datos de la BD: %s", ex.getMessage()));						
+			log(Level.SEVERE, "Error al obtener productos de la BD", ex);						
 		}		
 		return productos;
 	}
@@ -452,9 +451,9 @@ public class GestorBD {
 			//Se cierra el ResultSet
 			rs.close();
 			
-			logger.info(String.format("Se han recuperado %d productos...", productos.size()));			
+			log(Level.INFO, "Se han recuperado " + productos.size() +  " productos", null);				
 		} catch (Exception ex) {
-			logger.warning(String.format("Error al obtener datos de la BD: %s", ex.getMessage()));						
+			log(Level.SEVERE, "Error al obtener productos de la BD", ex);						
 		}		
 		return productos;
 	}
@@ -483,9 +482,9 @@ public class GestorBD {
 
 			int result = stmt.executeUpdate(String.format(sql, salario, trabajador.getId()));
 			
-			logger.info(String.format("Se ha actualizado el salario de %d", result));
+			log(Level.INFO, "Se ha actualizado el salario de " + trabajador, null);	
 		} catch (Exception ex) {
-			logger.warning(String.format("Error actualizando datos de la BD: %s", ex.getMessage()));					
+			log(Level.SEVERE, "Error actualizando el salario del trabajador " + trabajador, ex);					
 		}		
 	}
 	
@@ -500,12 +499,12 @@ public class GestorBD {
 			ResultSet rs = pStmt.executeQuery(sql);
 
 			if (rs.next()) {
-				logger.info("Cliente confirmado");
+				log(Level.INFO, "Cliente confirmado", null);	
 				return true;
 			}
 			rs.close();
 		} catch (Exception ex) {
-			logger.warning(String.format("Error cliente inexistente en la BD: %s", ex.getMessage()));
+			log(Level.SEVERE, "Error cliente inexistente en la BD", ex );
 		}
 		return false;		
 	}
@@ -520,11 +519,11 @@ public class GestorBD {
 			//Se ejecuta la sentencia y se obtiene el ResultSet con los resutlados
 			ResultSet rs = pStmt.executeQuery();
 			if (rs.next()) {
-				logger.info("Trabajador confirmado");
+				log(Level.INFO, "Trabajador confirmado", null );
 				return true;
 			}
 		} catch (Exception ex) {				
-			logger.warning(String.format("Error trabajador inexistente en la BD: %s", ex.getMessage()));
+			log(Level.SEVERE, "Error trabajador inexistente en la BD", ex );
 		}
 		return false;		
 	}
@@ -540,14 +539,33 @@ public class GestorBD {
 			
 			while ((linea = in.readLine()) != null) {
 				productos.add(Producto.parseCSV(linea));
-				
 			}	
-			
+			log(Level.INFO, "Productos cargados", null );
 		} catch (Exception ex) {
-			logger.warning(String.format("Error leyendo productos del CSV: %s", ex.getMessage()));
+			log(Level.SEVERE, "Error leyendo productos del CSV", ex );
 		}
-		
 		return productos;
+	}
+	
+	private void setLogger( Logger logger ) {
+		this.logger = logger;
+	}
+	
+	private void log(Level level, String msg, Throwable excepcion) {
+		if (logger == null) {
+			logger = logger.getLogger("BD-local");
+			logger.setLevel(Level.ALL);
+			try {
+				logger.addHandler(new FileHandler("log/bd.log.xml", true));
+			} catch(Exception e) {
+				logger.log(Level.SEVERE, "No se pudo crear el fichero de log", e);
+			}
+		}
+		if (excepcion == null) {
+			logger.log(level, msg);
+		} else {
+			logger.log(level, msg, excepcion);
+		}
 	}
 	
 	public void borrarCliente(Cliente cliente) {
@@ -559,9 +577,9 @@ public class GestorBD {
 			
 			int result = stmt.executeUpdate(String.format(sql, cliente.getId()));
 			
-			logger.info(String.format("Se ha borrado al cliente %d", result));
+			log(Level.INFO, "Se ha borrado al cliente" + cliente, null );
 		} catch (Exception ex) {
-			logger.warning(String.format("Error al borrar el cliente en la BD: %s", ex.getMessage()));					
+			log(Level.SEVERE, "Error al borrar el cliente en la BD", ex );				
 		}		
 	}
 	
@@ -574,9 +592,9 @@ public class GestorBD {
 			
 			int result = stmt.executeUpdate(String.format(sql, trabajador.getId()));
 			
-			logger.info(String.format("Se ha borrado al trabajador %d", result));
+			log(Level.INFO, "Se ha borrado al cliente" + trabajador, null );
 		} catch (Exception ex) {
-			logger.warning(String.format("Error al borrar el trabajador en la BD: %s", ex.getMessage()));						
+			log(Level.SEVERE, "Error al borrar el trabajador en la BD", ex );						
 		}		
 	}
 	
@@ -590,9 +608,9 @@ public class GestorBD {
 			String sql = "DELETE FROM " + tabla + ";";			
 			int result = stmt.executeUpdate(sql);
 			
-			logger.info(String.format("Se ha borrado la tabla %d", tabla));
+			log(Level.INFO, "Se ha borrado la tabla " + tabla, null );
 		} catch (Exception ex) {
-			logger.warning(String.format("Error al borrar datos de la BD: %s", ex.getMessage()));					
+			log(Level.SEVERE, "Error al borrar la tabla " + tabla + " de la BD", ex );					
 		}		
 	}	
 }
