@@ -5,11 +5,12 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 
 import es.deusto.prog.III.Producto;
 import es.deusto.prog.III.BD.GestorBD;
 import es.deusto.prog.III.Producto.Genero;
-
 
 import java.awt.*;
 import java.awt.event.*;
@@ -34,10 +35,10 @@ public class VentanaCliente extends JFrame{
 	
 	//Definicionn de las tablas y modelos de datos de cada una
 	protected JTable tablaProductos;
-	protected JTable tablaSeleccionados;
-	protected DefaultTableModel modeloDatosSeleccionados;
 	protected DefaultTableModel modeloDatosProductos;
 	protected JScrollPane scrollPaneProductos;
+	protected JTable tablaSeleccionados;
+	protected DefaultTableModel modeloDatosSeleccionados;
 
 	//Valores para implementar la modificacion del renderizado
 	//cuando el raton pasa sobre una celda de la tabla
@@ -94,7 +95,7 @@ public class VentanaCliente extends JFrame{
 		
 		JComboBox genero = new JComboBox();
 		panel_5.add(genero);
-		genero.setModel(new DefaultComboBoxModel(new String[] {"Cualquiera", "Hombre", "Mujer", "Unisex", "NiÃ±o ", "NiÃ±a"}));
+		genero.setModel(new DefaultComboBoxModel(new String[] {"Cualquiera", "Hombre", "Mujer", "Unisex", "Nino", "Nina"}));
 		
 		JPanel panel = new JPanel();
 		panel_4.add(panel);
@@ -149,7 +150,7 @@ public class VentanaCliente extends JFrame{
 		panel_6.add(scrollPaneProductos);
 		
 		JScrollPane scrollPaneSeleccionados = new JScrollPane(this.tablaSeleccionados);
-		scrollPaneSeleccionados.setBorder(new TitledBorder("Carrito\tTotal: " + 0.0 + "€"));
+		scrollPaneSeleccionados.setBorder(new TitledBorder("Carrito\tTotal: " + 0.0 + "�"));
 		this.tablaSeleccionados.setFillsViewportHeight(true);
 		panel_2.add(scrollPaneSeleccionados);
 		
@@ -221,7 +222,7 @@ public class VentanaCliente extends JFrame{
 			}
 		});
 		
-		// ventana estï¿½ndar
+		// ventana est�ndar
 		this.setTitle("Cliente");
 		this.pack();
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
@@ -235,13 +236,41 @@ public class VentanaCliente extends JFrame{
             }
         });
 		
+		articulo.addActionListener( new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	loadProductosFiltro(articulo.getSelectedItem().toString(), deporte.getSelectedItem().toString(), marca.getSelectedItem().toString(), genero.getSelectedItem().toString(), slider.getValue());
+            }
+        });
+		
+		deporte.addActionListener( new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	loadProductosFiltro(articulo.getSelectedItem().toString(), deporte.getSelectedItem().toString(), marca.getSelectedItem().toString(), genero.getSelectedItem().toString(), slider.getValue());
+            }
+        });
+		
+		marca.addActionListener( new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	loadProductosFiltro(articulo.getSelectedItem().toString(), deporte.getSelectedItem().toString(), marca.getSelectedItem().toString(), genero.getSelectedItem().toString(), slider.getValue());
+            }
+        });
+		
+		genero.addActionListener( new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	loadProductosFiltro(articulo.getSelectedItem().toString(), deporte.getSelectedItem().toString(), marca.getSelectedItem().toString(), genero.getSelectedItem().toString(), slider.getValue());
+            }
+        });
+		
 		Anyadir.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				loadSeleccionados();
 				Double dinero = calcularTotal(modeloDatosSeleccionados);
-				scrollPaneSeleccionados.setBorder(new TitledBorder("Carrito\nTotal: " + dinero + "€"));
+				scrollPaneSeleccionados.setBorder(new TitledBorder("Carrito\nTotal: " + dinero + "�"));
 			}
 		});
 		
@@ -253,7 +282,7 @@ public class VentanaCliente extends JFrame{
 				modeloDatosSeleccionados.removeRow(seleccionado);
 				tablaSeleccionados.repaint();
 				Double dinero = calcularTotal(modeloDatosSeleccionados);
-				scrollPaneSeleccionados.setBorder(new TitledBorder("Carrito\nTotal: " + dinero + "€"));
+				scrollPaneSeleccionados.setBorder(new TitledBorder("Carrito\nTotal: " + dinero + "�"));
 			}
 			
 		});
@@ -267,6 +296,9 @@ public class VentanaCliente extends JFrame{
 		//Se crea el modelo de datos para la tabla de productos solo con la cabecera		
 		this.modeloDatosProductos = new DefaultTableModel(new Vector<Vector<Object>>(), cabeceraProductos) {
 			public boolean isCellEditable (int row, int column) {
+				if(column == 4 || column == 5) {
+					return true;
+				}
 				return false;
 			}
 		};
@@ -280,6 +312,23 @@ public class VentanaCliente extends JFrame{
 		tablaProductos = new JTable(this.modeloDatosProductos);	
 		tablaSeleccionados = new JTable(this.modeloDatosSeleccionados);	
 		
+//		String[] tallas = {"XS","S","M","L","XL","XXL"};
+//		JComboBox<String> jComboTalla = new JComboBox<>(tallas);		
+//		DefaultCellEditor tallaEditor = new DefaultCellEditor(jComboTalla) {
+//			private static final long serialVersionUID = 1L;
+//		};
+
+		
+//		JComboBox<Genero> jComboGenero = new JComboBox<>(Genero.values());		
+//		DefaultCellEditor generoEditor = new DefaultCellEditor(jComboGenero) {
+//			private static final long serialVersionUID = 1L;
+//		};
+		
+//		JComboBox<String> jComboGenero = new JComboBox<>(prueba);		
+//		DefaultCellEditor generoEditor = new DefaultCellEditor(jComboGenero) {
+//			private static final long serialVersionUID = 1L;
+//		};
+		
 		DefaultTableCellRenderer render = new DefaultTableCellRenderer() {
 			private static final long serialVersionUID = 1L;
 
@@ -288,8 +337,6 @@ public class VentanaCliente extends JFrame{
 				JLabel label = new JLabel(value.toString());					
 				label.setHorizontalAlignment(JLabel.CENTER);
 
-				System.out.println(row);
-				System.out.println(mouseRow);
 				//Si la celda esta seleccionada se asocia un color de fondo y letra
 				if (mouseRow == row) {
 					label.setBackground(Color.BLUE);
@@ -379,6 +426,8 @@ public class VentanaCliente extends JFrame{
 		
 		//Se modifica el modelo de seleccion de la tabla para que se pueda selecciona unicamente una fila
 		this.tablaProductos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		//this.tablaProductos.getColumnModel().getColumn(5).setCellEditor(tallaEditor);
+		//this.tablaProductos.getColumnModel().getColumn(4).setCellEditor(generoEditor);
 		
 		this.tablaProductos.addMouseListener(new MouseAdapter() {						
 			@Override
@@ -420,7 +469,7 @@ public class VentanaCliente extends JFrame{
 				
 				gestorBD.log(Level.INFO, "Tabla Productos: Se ha salido de la fila " + row+1 + ", columna " + col+1, null);
 
-				//Cuando el ratÃ³n sale de la tabla, se resetea la columna/fila sobre la que estÃ¡ el ratÃ³n				
+				//Cuando el ratón sale de la tabla, se resetea la columna/fila sobre la que está el ratón				
 				mouseRow = -1;
 				mouseCol = -1;
 			}
@@ -467,27 +516,27 @@ public class VentanaCliente extends JFrame{
 				
 				gestorBD.log(Level.INFO, "Tabla Seleccionados: Se ha salido de la fila " + row+1 + ", columna " + col+1, null);
 
-				//Cuando el ratÃ³n sale de la tabla, se resetea la columna/fila sobre la que estÃ¡ el ratÃ³n				
+				//Cuando el ratón sale de la tabla, se resetea la columna/fila sobre la que está el ratón				
 				mouseRow = -1;
 				mouseCol = -1;
 			}
 			
 		});
 		
-		//Se define el comportamiento de los eventos de movimiento del ratÃ³n: MOVED DRAGGED
+		//Se define el comportamiento de los eventos de movimiento del ratón: MOVED DRAGGED
 		this.tablaProductos.addMouseMotionListener(new MouseMotionAdapter() {
 			@Override
 			public void mouseMoved(MouseEvent e) {
-				//Se obtiene la fila/columna sobre la que estÃ¡n el ratÃ³n mientras se mueve
+				//Se obtiene la fila/columna sobre la que están el ratón mientras se mueve
 				int row = tablaProductos.rowAtPoint(e.getPoint());
 				int col = tablaProductos.columnAtPoint(e.getPoint());
 
-				//Cuando el ratÃ³n se mueve sobre tabla, actualiza la fila/columna sobre la que estÃ¡ el ratÃ³n
+				//Cuando el ratón se mueve sobre tabla, actualiza la fila/columna sobre la que está el ratón
 				//de esta forma se puede modificar el color de renderizado de la celda.				
 				mouseRow = row;
 				mouseCol = col;
 						
-				//Se fuerza el redibujado de la tabla para modificar el color de la celda sobre la que estÃ¡ el ratÃ³n.
+				//Se fuerza el redibujado de la tabla para modificar el color de la celda sobre la que está el ratón.
 				tablaProductos.repaint();
 			}
 					
@@ -496,24 +545,24 @@ public class VentanaCliente extends JFrame{
 				int row = tablaProductos.rowAtPoint(e.getPoint());
 				int col = tablaProductos.columnAtPoint(e.getPoint());
 
-				gestorBD.log(Level.INFO, "Tabla Productos: Se estÃ¡ arrastrando con el botÃ³n " + e.getButton() +  " pulsado sobre la fila " + row+1 + ", columna " + col+1, null);
+				gestorBD.log(Level.INFO, "Tabla Productos: Se está arrastrando con el botón " + e.getButton() +  " pulsado sobre la fila " + row+1 + ", columna " + col+1, null);
 			}			
 		});
 		
-		//Se define el comportamiento de los eventos de movimiento del ratÃ³n: MOVED DRAGGED
+		//Se define el comportamiento de los eventos de movimiento del ratón: MOVED DRAGGED
 		this.tablaSeleccionados.addMouseMotionListener(new MouseMotionAdapter() {
 			@Override
 			public void mouseMoved(MouseEvent e) {
-				//Se obtiene la fila/columna sobre la que estÃ¡n el ratÃ³n mientras se mueve
+				//Se obtiene la fila/columna sobre la que están el ratón mientras se mueve
 				int row = tablaSeleccionados.rowAtPoint(e.getPoint());
 				int col = tablaSeleccionados.columnAtPoint(e.getPoint());
 
-				//Cuando el ratÃ³n se mueve sobre tabla, actualiza la fila/columna sobre la que estÃ¡ el ratÃ³n
+				//Cuando el ratón se mueve sobre tabla, actualiza la fila/columna sobre la que está el ratón
 				//de esta forma se puede modificar el color de renderizado de la celda.				
 				mouseRow = row;
 				mouseCol = col;
 								
-				//Se fuerza el redibujado de la tabla para modificar el color de la celda sobre la que estÃ¡ el ratÃ³n.
+				//Se fuerza el redibujado de la tabla para modificar el color de la celda sobre la que está el ratón.
 				tablaSeleccionados.repaint();
 			}
 							
@@ -523,7 +572,7 @@ public class VentanaCliente extends JFrame{
 			int col = tablaSeleccionados.columnAtPoint(e.getPoint());
 
 			
-			gestorBD.log(Level.INFO, "Tabla Seleccionados: Se estÃ¡ arrastrando con el botÃ³n " + e.getButton() +  " pulsado sobre la fila " + row+1 + ", columna " + col+1, null);
+			gestorBD.log(Level.INFO, "Tabla Seleccionados: Se está arrastrando con el botón " + e.getButton() +  " pulsado sobre la fila " + row+1 + ", columna " + col+1, null);
 				}			
 		});
 	}
@@ -533,20 +582,44 @@ public class VentanaCliente extends JFrame{
 		//Se borran los datos del modelo de datos
 		this.modeloDatosProductos.setRowCount(0);
 		
-		// Se anade al modelo una fila de datos por cada comic
-		for (Producto p : this.productos) {
-			this.modeloDatosProductos.addRow( new Object[] {p.getId(), p.getArticulo(), p.getDeporte(), p.getMarca(), p.getGenero(),p.getTalla(), p.getPrecio(),} );
-		}
-	}
-	
-	private void loadproductos() {
-		this.productos = gestorBD.obtenerProductos();
-		//Se borran los datos del modelo de datos
-		this.modeloDatosProductos.setRowCount(0);
 		
 		// Se anade al modelo una fila de datos por cada comic
 		for (Producto p : this.productos) {
+			JComboBox<String> jComboGenero = new JComboBox<>(gestorBD.obtenerGenero(p.getArticulo(), p.getDeporte(), p.getMarca()));
+			DefaultCellEditor generoEditor = new DefaultCellEditor(jComboGenero) {
+				private static final long serialVersionUID = 1L;
+			};
+			JComboBox<String> jComboTalla = new JComboBox<>(gestorBD.obtenerTalla(p.getArticulo(), p.getDeporte(), p.getMarca()));
+			DefaultCellEditor tallaEditor = new DefaultCellEditor(jComboTalla) {
+				private static final long serialVersionUID = 1L;
+			};
+			
+			this.modeloDatosProductos.addRow( new Object[] {p.getId(), p.getArticulo(), p.getDeporte(), p.getMarca(), p.getGenero() ,p.getTalla(), p.getPrecio(),} );
+			this.tablaProductos.getColumnModel().getColumn(4).setCellEditor(generoEditor);
+			this.tablaProductos.getColumnModel().getColumn(5).setCellEditor(tallaEditor);
+		}
+		
+	}
+	
+	private void loadproductos() {
+		this.productos = gestorBD.obtenerProductosPrueba();
+		//Se borran los datos del modelo de datos
+		this.modeloDatosProductos.setRowCount(0);
+
+		// Se anade al modelo una fila de datos por cada comic
+		for (Producto p : this.productos) {
+			JComboBox<String> jComboGenero = new JComboBox<>(gestorBD.obtenerGenero(p.getArticulo(), p.getDeporte(), p.getMarca()));
+			DefaultCellEditor generoEditor = new DefaultCellEditor(jComboGenero) {
+				private static final long serialVersionUID = 1L;
+			};
+			JComboBox<String> jComboTalla = new JComboBox<>(gestorBD.obtenerTalla(p.getArticulo(), p.getDeporte(), p.getMarca())) ;
+			DefaultCellEditor tallaEditor = new DefaultCellEditor(jComboTalla) {
+				private static final long serialVersionUID = 1L;
+			};
 			this.modeloDatosProductos.addRow( new Object[] {p.getId(), p.getArticulo(), p.getDeporte(), p.getMarca(), p.getGenero(),p.getTalla(), p.getPrecio(),} );
+
+			this.tablaProductos.getColumnModel().getColumn(4).setCellEditor(generoEditor);
+			this.tablaProductos.getColumnModel().getColumn(5).setCellEditor(tallaEditor);
 		}		
 	}
 	
@@ -558,7 +631,7 @@ public class VentanaCliente extends JFrame{
 		  */
 		 // Si tienes filas seleccionadas en la tabla de origen:
 		 if(tablaProductos.getSelectedRowCount() > 0) {
-			 // 1) ObtÃ©n los Ã­ndices de las filas seleccionadas.
+			 // 1) Obtén los índices de las filas seleccionadas.
 			 int[] indices = tablaProductos.getSelectedRows();
 			 // 2) Para cada fila, crea un Array para guardar los valores... 
 			 for(int i : indices) {
@@ -583,4 +656,5 @@ public class VentanaCliente extends JFrame{
 		System.out.println(total);
 		return total;
 	}
+	
 }

@@ -4,6 +4,7 @@ import java.io.*;
 import java.nio.*;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
@@ -420,10 +421,125 @@ public class GestorBD {
 		return productos;
 	}
 	
+	public List<Producto> obtenerProductosPrueba() {
+		List<Producto> productos = new ArrayList<>();
+		
+		//Se abre la conexión y se obtiene el Statement
+		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+		     Statement stmt = con.createStatement()) {
+			
+			String sql = "SELECT * FROM PRODUCTOS WHERE ID >= 0 GROUP BY ARTICULO, DEPORTE, MARCA";
+			
+			//Se ejecuta la sentencia y se obtiene el ResultSet con los resutlados
+			ResultSet rs = stmt.executeQuery(sql);			
+			Producto producto;
+			String[] generos = null;
+			
+			//Se recorre el ResultSet y se crean objetos Producto (Calzado/Ropa)
+			while (rs.next()) {
+				producto = new Producto();
+				
+				producto.setId(rs.getInt("ID"));
+				producto.setArticulo(rs.getString("ARTICULO"));
+				producto.setDeporte(rs.getString("DEPORTE"));
+				producto.setMarca(rs.getString("MARCA"));
+				producto.setGenero(Genero.valueOf(rs.getString("GENERO")));
+				producto.setTalla(rs.getString("TALLA"));
+				producto.setPrecio(rs.getDouble("PRECIO"));
+				
+				productos.add(producto);
+			}
+			//Se cierra el ResultSet
+			rs.close();
+			
+			
+			log(Level.INFO, "Se han recuperado " + productos.size() +  " productos", null);			
+		} catch (Exception ex) {
+			log(Level.SEVERE, "Error al obtener productos de la BD", ex);						
+		}		
+		return productos;
+	}
+	
+	public String[] obtenerGenero(String articulo, String deporte, String marca) {
+		String[] generos = null;
+		List<String> generosList = new ArrayList<String>();
+		
+		//Se abre la conexión y se obtiene el Statement
+		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+		     Statement stmt = con.createStatement()) {
+			
+			String sql = "SELECT * FROM PRODUCTOS WHERE ID >= 0 AND ARTICULO = '" + articulo + "' AND DEPORTE = '" + deporte +"' AND MARCA = '" + marca + "' GROUP BY GENERO";
+			
+			//Se ejecuta la sentencia y se obtiene el ResultSet con los resutlados
+			ResultSet rs = stmt.executeQuery(sql);			
+			
+			//Se recorre el ResultSet y se crean objetos Producto (Calzado/Ropa)
+			while (rs.next()) {
+				generosList.add(rs.getString("GENERO"));
+			}
+			//Se cierra el ResultSet
+			rs.close();
+			//System.out.println(generosList.toString() + "-----------------");
+			generos = generosList.toArray(new String[0]);
+			System.out.println("-------------------" + Arrays.toString(generos));
+			log(Level.INFO, "Se han recuperado " + generos.length +  " productos", null);			 
+		} catch (Exception ex) {
+			log(Level.SEVERE, "Error al obtener productos de la BD", ex);						
+		}		
+		return generos;
+	}
+	
+	public String[] obtenerTalla(String articulo, String deporte, String marca) {
+		String[] tallas = null;
+		List<String> generosList = new ArrayList<String>();
+		
+		//Se abre la conexión y se obtiene el Statement
+		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+		     Statement stmt = con.createStatement()) {
+			
+			String sql = "SELECT * FROM PRODUCTOS WHERE ID >= 0 AND ARTICULO = '" + articulo + "' AND DEPORTE = '" + deporte +"' AND MARCA = '" + marca + "' GROUP BY TALLA";
+			
+			//Se ejecuta la sentencia y se obtiene el ResultSet con los resutlados
+			ResultSet rs = stmt.executeQuery(sql);			
+			
+			//Se recorre el ResultSet y se crean objetos Producto (Calzado/Ropa)
+			while (rs.next()) {
+				generosList.add(rs.getString("TALLA"));
+			}
+			//Se cierra el ResultSet
+			rs.close();
+			//System.out.println(generosList.toString() + "-----------------");
+			tallas = generosList.toArray(new String[0]);
+			System.out.println("-------------------" + Arrays.toString(tallas));
+			log(Level.INFO, "Se han recuperado " + tallas.length +  " productos", null);			 
+		} catch (Exception ex) {
+			log(Level.SEVERE, "Error al obtener productos de la BD", ex);						
+		}		
+		return tallas;
+	}
+	
 	public List<Producto> obtenerProductosFiltro(String articulo, String deporte, String marca, String genero, double precio) {
 		List<Producto> productos = new ArrayList<>();
+		
 
-		String sql = "SELECT * FROM PRODUCTOS WHERE ID >= 0 AND ARTICULO = '" + articulo + "' AND DEPORTE = '" + deporte +"' AND MARCA = '" + marca + "' AND GENERO = '" + genero.toUpperCase() + "' AND PRECIO <= " + precio;
+		String sql = "SELECT * FROM PRODUCTOS WHERE ID >= 0 ";
+		
+		if (articulo != "Cualquiera") {
+			sql += " AND ARTICULO = '" + articulo + "' ";
+		}
+		if (deporte != "Cualquiera") {
+			sql += " AND DEPORTE = '" + deporte + "' ";
+		}
+		if (marca != "Cualquiera") {
+			sql += " AND MARCA = '" + marca + "' ";
+		}
+		if (genero != "Cualquiera") {
+			sql += " AND GENERO = '" + genero + "' ";
+		}
+		sql += "' AND PRECIO <= " + precio + " GROUP BY ARTICULO, DEPORTE, MARCA";
+		
+		
+		//String sql = "SELECT * FROM PRODUCTOS WHERE ID >= 0 AND ARTICULO = '" + articulo + "' AND DEPORTE = '" + deporte +"' AND MARCA = '" + marca + "' AND GENERO = '" + genero.toUpperCase() + "' AND PRECIO <= " + precio + " GROUP BY ARTICULO, DEPORTE, MARCA";
 		//Se abre la conexión y se obtiene el Statement
 		System.out.println("Esta es la sql ----------" + sql);
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
@@ -431,7 +547,7 @@ public class GestorBD {
 	
 			
 			//Se ejecuta la sentencia y se obtiene el ResultSet con los resutlados
-			ResultSet rs = stmt.executeQuery(sql);			
+			ResultSet rs = stmt.executeQuery(sql);
 			Producto producto;
 			
 			//Se recorre el ResultSet y se crean objetos Producto (Calzado/Ropa)
@@ -551,7 +667,7 @@ public class GestorBD {
 		this.logger = logger;
 	}
 	
-	private void log(Level level, String msg, Throwable excepcion) {
+	public void log(Level level, String msg, Throwable excepcion) {
 		if (logger == null) {
 			logger = logger.getLogger("BD-local");
 			logger.setLevel(Level.ALL);
