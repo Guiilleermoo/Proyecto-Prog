@@ -536,12 +536,12 @@ public class GestorBD {
 		if (genero != "Cualquiera") {
 			sql += " AND GENERO = '" + genero + "' ";
 		}
-		sql += "' AND PRECIO <= " + precio + " GROUP BY ARTICULO, DEPORTE, MARCA";
+		sql += " AND PRECIO <= " + precio + " GROUP BY ARTICULO, DEPORTE, MARCA";
 		
 		
 		//String sql = "SELECT * FROM PRODUCTOS WHERE ID >= 0 AND ARTICULO = '" + articulo + "' AND DEPORTE = '" + deporte +"' AND MARCA = '" + marca + "' AND GENERO = '" + genero.toUpperCase() + "' AND PRECIO <= " + precio + " GROUP BY ARTICULO, DEPORTE, MARCA";
 		//Se abre la conexión y se obtiene el Statement
-		System.out.println("Esta es la sql ----------" + sql);
+		System.out.println("Esta es la sql" + sql);
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
 		     Statement stmt = con.createStatement()) {
 	
