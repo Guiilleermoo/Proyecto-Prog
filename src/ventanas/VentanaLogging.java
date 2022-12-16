@@ -81,19 +81,6 @@ public class VentanaLogging extends JFrame{
 		panel.add(trabajador);
 		trabajador.setBounds(360, 420, 90, 25);
 		
-		KeyListener keyListener = new KeyAdapter() {			
-			@Override
-			public void keyReleased(KeyEvent e) {
-				
-				//Se esta clickando el enter
-				if (e.isControlDown() && e.getKeyCode() == KeyEvent.VK_PLUS) { 
-					System.out.println("HOLA");
-					accesoButton.doClick();
-				}
-			}
-		};
-		
-				
 		accesoButton.addActionListener(new ActionListener() {
 			
 			@Override
@@ -121,18 +108,29 @@ public class VentanaLogging extends JFrame{
 			
 		});
 		
-		panel.addKeyListener(new KeyAdapter() {
-		
-			
+		contrasenaText.addKeyListener(new KeyAdapter() {
+
 			@Override
-			public void keyPressed(KeyEvent e) {
-				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+			public void keyReleased(KeyEvent e) {
+				if (e.getKeyCode() == 10) {
 					accesoButton.doClick();
 				}
 				
 			}
+
 		});
 		
+		gmailText.addKeyListener(new KeyAdapter() {
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (e.getKeyCode() == 10) {
+					accesoButton.doClick();
+				}
+				
+			}
+
+		});
 		
 		registroButton.addActionListener(new ActionListener() {
 			
@@ -151,7 +149,7 @@ public class VentanaLogging extends JFrame{
 		this.setVisible(true);
 	}
 
-	
+
 	public static void main(String[] args) {
 		VentanaLogging v = new VentanaLogging();
 	}

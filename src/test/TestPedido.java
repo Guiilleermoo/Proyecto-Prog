@@ -18,7 +18,7 @@ import es.deusto.prog.III.Pedido.Estado;
 
 public class TestPedido {
 
-	Producto producto = new Producto("Zapatillas", "Baloncesto", "Nike", Genero.HOMBRE, "M", 0);
+	Producto producto = new Producto("Zapatillas", "Baloncesto", "Nike", Genero.HOMBRE, "M", 0, 1);
 	
 	private Pedido pedido;
 	private String cliente = "cliente";
@@ -26,6 +26,7 @@ public class TestPedido {
 	private ArrayList<Producto> productos = new ArrayList<Producto>();
 	private Estado estado = Estado.FINALIZADO;
 	private float precio = 0;
+	private int cantidad = 1;
 	
 	
 	@Before

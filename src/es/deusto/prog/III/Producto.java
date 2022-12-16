@@ -15,13 +15,13 @@ public class Producto {
 	protected Genero genero;
 	protected String talla;
 	protected double precio;
-	
+	protected int cantidad;
 	
 	public enum Genero {
 		HOMBRE,MUJER,NINO,NINA,UNISEX;
 	}
 
-	public Producto(String articulo, String deporte, String marca, Genero genero, String talla, double precio) {
+	public Producto(String articulo, String deporte, String marca, Genero genero, String talla, double precio, int cantidad) {
 		super();
 		this.articulo = articulo;
 		this.deporte = deporte;
@@ -29,6 +29,7 @@ public class Producto {
 		this.genero = genero;
 		this.talla = talla;
 		this.precio = precio;
+		this.cantidad = cantidad;
 	}
 	
 	public Producto() {
@@ -39,6 +40,7 @@ public class Producto {
 		this.genero = Genero.HOMBRE;
 		this.talla = "M";
 		this.precio = 10.5;
+		this.cantidad = 1;
 	}
 	
 	public int getId() {
@@ -97,7 +99,15 @@ public class Producto {
 		this.precio = precio;
 	}
 
-	//Crea un Producto a partir de una cadena de texto separada por comas.
+	public int getCantidad() {
+		return cantidad;
+	}
+
+	public void setCantidad(int cantidad) {
+		this.cantidad = cantidad;
+	}
+
+		//Crea un Producto a partir de una cadena de texto separada por comas.
 		public static Producto parseCSV(String csvString) {
 			if (csvString != null && !csvString.isBlank()) {		
 				StringTokenizer tokenizer = new StringTokenizer(csvString, ";");
@@ -110,17 +120,18 @@ public class Producto {
 				producto.setGenero(Genero.valueOf(tokenizer.nextToken().trim().toUpperCase()));
 				producto.setTalla(tokenizer.nextToken());
 				producto.setPrecio(Double.parseDouble(tokenizer.nextToken()));
+				producto.setCantidad(Integer.parseInt(tokenizer.nextToken()));
 
 				return producto;
 			} else {
 				return null;
 			}
 		}
-	
-	@Override
-	public String toString() {
-		return "Producto [id=" + id + ", articulo=" + articulo + ", deporte=" + deporte + ", marca=" + marca
-				+ ", genero=" + genero + ", talla=" + talla + ", precio=" + precio + "]";
-	}
+
+		@Override
+		public String toString() {
+			return "Producto [id=" + id + ", articulo=" + articulo + ", deporte=" + deporte + ", marca=" + marca
+					+ ", genero=" + genero + ", talla=" + talla + ", precio=" + precio + ", cantidad=" + cantidad + "]";
+		}
 	
 }

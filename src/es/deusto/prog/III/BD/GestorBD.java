@@ -185,6 +185,7 @@ public class GestorBD {
 				pstmt.setString(4, p.getGenero().toString());
 				pstmt.setString(5, p.getTalla());
 				pstmt.setDouble(6, p.getPrecio());
+				pstmt.setInt(7, p.getCantidad());
 				if (1 != pstmt.executeUpdate()) {	
 					log(Level.SEVERE, "No se ha insertado el producto" + p, null);
 				} else {
@@ -407,6 +408,7 @@ public class GestorBD {
 				producto.setGenero(Genero.valueOf(rs.getString("GENERO")));
 				producto.setTalla(rs.getString("TALLA"));
 				producto.setPrecio(rs.getDouble("PRECIO"));
+				producto.setCantidad(rs.getInt("CANTIDAD"));
 				
 				productos.add(producto);
 			}
@@ -446,6 +448,7 @@ public class GestorBD {
 				producto.setGenero(Genero.valueOf(rs.getString("GENERO")));
 				producto.setTalla(rs.getString("TALLA"));
 				producto.setPrecio(rs.getDouble("PRECIO"));
+				producto.setCantidad(rs.getInt("CANTIDAD"));
 				
 				productos.add(producto);
 			}
@@ -541,7 +544,6 @@ public class GestorBD {
 		
 		//String sql = "SELECT * FROM PRODUCTOS WHERE ID >= 0 AND ARTICULO = '" + articulo + "' AND DEPORTE = '" + deporte +"' AND MARCA = '" + marca + "' AND GENERO = '" + genero.toUpperCase() + "' AND PRECIO <= " + precio + " GROUP BY ARTICULO, DEPORTE, MARCA";
 		//Se abre la conexión y se obtiene el Statement
-		System.out.println("Esta es la sql" + sql);
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
 		     Statement stmt = con.createStatement()) {
 	
@@ -561,6 +563,7 @@ public class GestorBD {
 				producto.setGenero(Genero.valueOf(rs.getString("GENERO")));
 				producto.setTalla(rs.getString("TALLA"));
 				producto.setPrecio(rs.getDouble("PRECIO"));
+				producto.setCantidad(rs.getInt("CANTIDAD"));
 				
 				productos.add(producto);
 			}

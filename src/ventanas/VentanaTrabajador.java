@@ -21,35 +21,48 @@ public class VentanaTrabajador extends JFrame {
 	protected String gmail;
 	protected String contrasena;
 	
-	protected GestionEmpleados gestion;
+	protected GestionEmpleados gestionEmpleados;
+	protected GestionProductos gestionProductos;
 	
 	public VentanaTrabajador(GestorBD gestorBD, String gmail, String contrasena) {
 		this.gestorBD = gestorBD;
 		this.gmail = gmail;
 		this.contrasena = contrasena;
-		System.out.println(gmail);
-		gestion = new GestionEmpleados(gestorBD);
+		
+		gestionEmpleados = new GestionEmpleados(gestorBD, gmail, contrasena);
+		gestionProductos = new GestionProductos(gestorBD, gmail, contrasena);
+		
 		Container cp = this.getContentPane();
 		
 		JPanel centro = new JPanel();
 
 		
-		JButton gestionEmpleados = new JButton("Gestionar Empleados");
-		JButton gestionStock = new JButton("Gestionar Existencias");
+		JButton botonEmpleados = new JButton("Gestionar Empleados");
+		JButton botonProductos = new JButton("Gestionar Existencias");
 		
 		cp.add(centro , BorderLayout.CENTER);
 		
 		centro.setLayout(new GridLayout(1,2));
 		
-		centro.add(gestionEmpleados);
-		centro.add(gestionStock);
+		centro.add(botonEmpleados);
+		centro.add(botonProductos);
 		
-		gestionEmpleados.addActionListener(new ActionListener() {
+		botonEmpleados.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (gestorBD.getTrabajadorByGmail(gmail).getStatus() == Estatus.JEFE) {
-					gestion.setVisible(true);
+					gestionEmpleados.setVisible(true);
+				}
+			}
+		});
+		
+		botonProductos.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (gestorBD.getTrabajadorByGmail(gmail).getStatus() == Estatus.JEFE) {
+					gestionProductos.setVisible(true);
 				}
 			}
 		});

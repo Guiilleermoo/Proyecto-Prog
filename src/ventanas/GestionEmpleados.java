@@ -24,9 +24,14 @@ import es.deusto.prog.III.BD.GestorBD;
 
 public class GestionEmpleados extends JFrame{
 	protected GestorBD gestorBD;
+	protected String gmail;
+	protected String contrasena;
 	
-	public GestionEmpleados(GestorBD gestorBD) {
+	public GestionEmpleados(GestorBD gestorBD, String gmail, String contrasena) {
 		this.gestorBD = gestorBD;
+		this.gmail = gmail;
+		this.contrasena = contrasena;
+		
 		Container cp = this.getContentPane();
 		
 		JPanel izquierda = new JPanel();
@@ -41,9 +46,9 @@ public class GestionEmpleados extends JFrame{
 		
 		JLabel NomYApell = new JLabel("Nombre y Apellidos:");
 		JTextField NomYApell_1 = new JTextField();
-		JLabel gmail = new JLabel("Gmail:");
+		JLabel labelGmail = new JLabel("Gmail:");
 		JTextField gmail_1 = new JTextField();
-		JLabel contrasena = new JLabel("Contrasena:");
+		JLabel labelContrasena = new JLabel("Contrasena:");
 		JTextField contrasena_1 = new JTextField();
 		JLabel estatus = new JLabel("Estatus:");
 		JComboBox estatus_1 = new JComboBox();
@@ -56,9 +61,9 @@ public class GestionEmpleados extends JFrame{
 		
 		derecha.add(NomYApell);
 		derecha.add(NomYApell_1);
-		derecha.add(gmail);
+		derecha.add(labelGmail);
 		derecha.add(gmail_1);
-		derecha.add(contrasena);
+		derecha.add(labelContrasena);
 		derecha.add(contrasena_1);
 		derecha.add(estatus);
 		derecha.add(estatus_1);

@@ -150,7 +150,7 @@ public class VentanaCliente extends JFrame{
 		panel_6.add(scrollPaneProductos);
 		
 		JScrollPane scrollPaneSeleccionados = new JScrollPane(this.tablaSeleccionados);
-		scrollPaneSeleccionados.setBorder(new TitledBorder("Carrito\tTotal: " + 0.0 + "�"));
+		scrollPaneSeleccionados.setBorder(new TitledBorder("Carrito,Total: " + 0.0 + " euros"));
 		this.tablaSeleccionados.setFillsViewportHeight(true);
 		panel_2.add(scrollPaneSeleccionados);
 		
@@ -291,7 +291,7 @@ public class VentanaCliente extends JFrame{
 	
 	private void initTables() {
 		//Cabecera del modelo de datos
-		Vector<String> cabeceraProductos = new Vector<String>(Arrays.asList( "ID", "ARTICULO", "DEPORTE", "MARCA", "GENERO", "TALLA", "PRECIO"));
+		Vector<String> cabeceraProductos = new Vector<String>(Arrays.asList( "ID", "ARTICULO", "DEPORTE", "MARCA", "GENERO", "TALLA", "PRECIO", "CANTIDAD"));
 		
 		//Se crea el modelo de datos para la tabla de productos solo con la cabecera		
 		this.modeloDatosProductos = new DefaultTableModel(new Vector<Vector<Object>>(), cabeceraProductos) {
@@ -653,7 +653,6 @@ public class VentanaCliente extends JFrame{
 			total = total + (Double) carrito.getValueAt(j, 6);
 
 		}
-		System.out.println(total);
 		return total;
 	}
 	
