@@ -119,7 +119,7 @@ public class GestionProductos extends JFrame {
 		this.setSize(800, 600);
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
 		this.setLocationRelativeTo(null);
-		this.setVisible(true);
+		this.setVisible(false);
 	}
 
 	public void selectRows(String selectStr) {

@@ -329,6 +329,13 @@ public class VentanaCliente extends JFrame{
 //			private static final long serialVersionUID = 1L;
 //		};
 		
+		SpinnerNumberModel value = new SpinnerNumberModel(1, 1, 10, 1);
+		JSpinner SpinnerCantidad = new JSpinner(value);
+//		DefaultCellEditor cantidadEditor = new DefaultCellEditor(SpinnerCantidad)  {
+//			private static final long serialVersionUID = 1L;
+//		};
+		
+		
 		DefaultTableCellRenderer render = new DefaultTableCellRenderer() {
 			private static final long serialVersionUID = 1L;
 
@@ -428,6 +435,7 @@ public class VentanaCliente extends JFrame{
 		this.tablaProductos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		//this.tablaProductos.getColumnModel().getColumn(5).setCellEditor(tallaEditor);
 		//this.tablaProductos.getColumnModel().getColumn(4).setCellEditor(generoEditor);
+		//this.tablaProductos.getColumnModel().getColumn(7).setCellEditor(cantidadEditor);
 		
 		this.tablaProductos.addMouseListener(new MouseAdapter() {						
 			@Override

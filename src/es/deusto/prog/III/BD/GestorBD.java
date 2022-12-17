@@ -157,6 +157,7 @@ public class GestorBD {
 					pstmt.setString(4, t.getStatus().toString());
 					pstmt.setDouble(5, t.getSalario());
 					pstmt.setString(6, t.getTelefono());
+					
 					if (1 != pstmt.executeUpdate()) {
 						log(Level.SEVERE, "No se ha insertado el trabajador" + t, null);
 					} else {
@@ -186,6 +187,7 @@ public class GestorBD {
 				pstmt.setString(5, p.getTalla());
 				pstmt.setDouble(6, p.getPrecio());
 				pstmt.setInt(7, p.getCantidad());
+				
 				if (1 != pstmt.executeUpdate()) {	
 					log(Level.SEVERE, "No se ha insertado el producto" + p, null);
 				} else {

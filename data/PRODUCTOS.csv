@@ -1,30 +1,30 @@
-Articulo;Deporte;Marca;Genero;Talla;Precio
-Zapatillas;Running;Nike ;Hombre;47;132.005
-Zapatillas;Running;Adidas;Mujer;43;128.35
-Zapatillas;Running;Asics;Nino;30;86.75
-Zapatillas;Running;Puma;Mujer;38;162.99
-Zapatillas;Running;Joma;Mujer;38;162.24
-Camiseta;Running;Joma;Nina;XS;23.045
-Camiseta;Running;Adidas;Hombre;XS;44.99
-Camiseta;Running;Nike;Mujer;XXL;4.99
-Camiseta;Running;Puma;Nino;S;20.35
-Pantalon;Futbol;Joma;Nina;XS;33.45
-Pantalon;Futbol;Adidas;Hombre;XXL;34.75
-Pantalon;Futbol;Nike ;Mujer;S;36.00 
-Pantalon;Futbol;Puma;Nino;XS;17.00 
-Accesorios;Futbol;Nike;Mujer;XXL;23.00 
-Accesorios;Baloncesto;Puma;Nino ;S;29.00 
-Accesorios;Hockey;Joma;Nina;XS;24.00 
-Accesorios;Badminton;Adidas;Hombre;M;23.00 
-Accesorios;Futbol;Nike;Mujer;XS;24.00 
-Zapatillas;Baloncesto;Nike;Hombre;47;132.005
-Zapatillas;Baloncesto;Adidas;Mujer;43;128
-Zapatillas;Baloncesto;Asics;Nino;30;86
-Zapatillas;Baloncesto;Puma;Mujer;38;162
-Zapatillas;Baloncesto;Joma;Mujer;38;162
-Zapatillas;Futbol;New Balance;Nino ;30;84.00 
-Zapatillas;Futbol;Nike;Hombre;47;132.005
-Zapatillas;Futbol;Adidas;Mujer;43;128
-Zapatillas;Futbol;Asics;Nino;30;86
-Zapatillas;Futbol;Puma;Mujer;38;162
-Zapatillas;Futbol;Joma;Mujer;38;162
+Articulo;Deporte;Marca;Genero;Talla;Precio;Cantidad
+Zapatillas;Running;Nike ;Hombre;47;132.005;100
+Zapatillas;Running;Adidas;Mujer;43;128.35;100
+Zapatillas;Running;Asics;Nino;30;86.75;100
+Zapatillas;Running;Puma;Mujer;38;162.99;100
+Zapatillas;Running;Joma;Mujer;38;162.24;100
+Camiseta;Running;Joma;Nina;XS;23.045;100
+Camiseta;Running;Adidas;Hombre;XS;44.99;100
+Camiseta;Running;Nike;Mujer;XXL;4.99;100
+Camiseta;Running;Puma;Nino;S;20.35;100
+Pantalon;Futbol;Joma;Nina;XS;33.45;100
+Pantalon;Futbol;Adidas;Hombre;XXL;34.75;100
+Pantalon;Futbol;Nike ;Mujer;S;36.00 ;100
+Pantalon;Futbol;Puma;Nino;XS;17.00 ;100
+Accesorios;Futbol;Nike;Mujer;XXL;23.00 ;100
+Accesorios;Baloncesto;Puma;Nino ;S;29.00 ;100
+Accesorios;Hockey;Joma;Nina;XS;24.00 ;100
+Accesorios;Badminton;Adidas;Hombre;M;23.00 ;100
+Accesorios;Futbol;Nike;Mujer;XS;24.00 ;100
+Zapatillas;Baloncesto;Nike;Hombre;47;132.005;100
+Zapatillas;Baloncesto;Adidas;Mujer;43;128;100
+Zapatillas;Baloncesto;Asics;Nino;30;86;100
+Zapatillas;Baloncesto;Puma;Mujer;38;162;100
+Zapatillas;Baloncesto;Joma;Mujer;38;162;100
+Zapatillas;Futbol;New Balance;Nino ;30;84.00 ;100
+Zapatillas;Futbol;Nike;Hombre;47;132.005;100
+Zapatillas;Futbol;Adidas;Mujer;43;128;100
+Zapatillas;Futbol;Asics;Nino;30;86;100
+Zapatillas;Futbol;Puma;Mujer;38;162;100
+Zapatillas;Futbol;Joma;Mujer;38;162;100
