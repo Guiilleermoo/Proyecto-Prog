@@ -5,7 +5,7 @@ public class Trabajador {
 	protected String nombreYApellidos;
 	protected String gmail;
 	protected String contrasena;
-	protected Estatus status;
+	protected Estatus estatus;
 	protected double salario;
 	protected String telefono;
 	
@@ -18,7 +18,7 @@ public class Trabajador {
 		this.nombreYApellidos = null;
 		this.gmail = null;
 		this.contrasena = null;
-		this.status = null;
+		this.estatus = null;
 		this.salario = 0;
 		this.telefono = null;
 	}
@@ -29,7 +29,7 @@ public class Trabajador {
 		this.nombreYApellidos = nombreYApellidos;
 		this.gmail = gmail;
 		this.contrasena = contrasena;
-		this.status = status;
+		this.estatus = status;
 		this.salario = salario;
 		this.telefono = telefono;
 	}
@@ -69,11 +69,11 @@ public class Trabajador {
 	}
 
 	public Estatus getStatus() {
-		return status;
+		return estatus;
 	}
 
 	public void setStatus(Estatus status) {
-		this.status = status;
+		this.estatus = status;
 	}
 
 	public double getSalario() {
@@ -99,7 +99,7 @@ public class Trabajador {
 	@Override
 	public String toString() {
 		return "Trabajador [id=" + id + ", nombreYApellidos=" + nombreYApellidos + ", gmail=" + gmail + ", contrasena="
-				+ contrasena + ", status=" + status + ", salario=" + salario + ", telefono=" + telefono + "]";
+				+ contrasena + ", estatus=" + estatus + ", salario=" + salario + ", telefono=" + telefono + "]";
 	}
 	
 }
