@@ -30,9 +30,6 @@ public class VentanaLogging extends JFrame{
 	public VentanaLogging() {
 		gestorBD = new GestorBD();
 		
-		// Inicializamos la tabla Productos de la BD desde un fichero CSV
-		gestorBD.initilizeFromCSV();
-		
 		// Ventanas Secundarias (inicializacion)
 		ventanaRegistro = new VentanaRegistro(gestorBD);
 		

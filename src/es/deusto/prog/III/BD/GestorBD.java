@@ -42,74 +42,10 @@ public class GestorBD {
 			log(Level.SEVERE, "Error al cargar el driver de BBDD", ex);
 		}
 	}
-		
-	/**public void crearBBDD() {
-		//Se abre la conexión y se obtiene el Statement
-		//Al abrir la conexión, si no existía el fichero, se crea la base de datos
-		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
-		     Statement stmt = con.createStatement()) {
-			
-	        String sql = "CREATE TABLE IF NOT EXISTS CLIENTE (\n"
-	                   + " ID INTEGER PRIMARY KEY AUTOINCREMENT,\n"
-	                   + " NOMBREYAPELLIDOS TEXT NOT NULL,\n"
-	                   + " GMAIL TEXT NOT NULL,\n"
-	                   + " CONTRASENA TEXT NOT NULL, \n"
-	                   + " DIRECCION TEXT NOT NULL, \n"
-	                   + " TELEFONO TEXT NOT NULL\n"
-	                   + ");";
-	        	        
-	        if (!stmt.execute(sql)) {
-	        	System.out.println("- Se ha creado la tabla Cliente");
-	        }
-		} catch (Exception ex) {
-			System.err.println(String.format("* Error al crear la BBDD: %s", ex.getMessage()));
-			ex.printStackTrace();			
-		}
-	}**/
-	
-	/**public void borrarBBDD() {
-		//Se abre la conexión y se obtiene el Statement
-		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
-		     Statement stmt = con.createStatement()) {
-			
-	        String sql = "DROP TABLE IF EXISTS CLIENTE";
-			
-	        //Se ejecuta la sentencia de creación de la tabla Estudiantes
-	        if (!stmt.execute(sql)) {
-	        	System.out.println("- Se ha borrado la tabla Cliente");
-	        }
-		} catch (Exception ex) {
-			System.err.println(String.format("* Error al borrar la BBDD: %s", ex.getMessage()));
-			ex.printStackTrace();			
-		}
-		
-		try {
-			//Se borra el fichero de la BBDD
-			Files.delete(Paths.get(DATABASE_FILE));
-			System.out.println("- Se ha borrado el fichero de la BBDD");
-		} catch (Exception ex) {
-			System.err.println(String.format("* Error al borrar el archivo de la BBDD: %s", ex.getMessage()));
-			ex.printStackTrace();						
-		}
-	}**/
-	
-	/**
-	 * Inicializa la BBDD leyendo los datos de los ficheros CSV 
-	 */
-	public void initilizeFromCSV() {
-		//Sólo se inicializa la BBDD si la propiedad initBBDD es true.
-		if (properties.get("loadCSV").equals("true")) {
-			
-			//Se leen los productos del CSV
-			List<Producto> productos = this.loadCSVProductos();
-			//Se insertan los productos en la BBDD
-			this.insertarProducto(productos.toArray(new Producto[productos.size()]));	
-		}
-	}
-	
+
 	public void insertarClientes(Cliente... clientes ) {
 		//Se define la plantilla de la sentencia SQL
-		String sql = "INSERT INTO CLIENTES (NOMBRE, GMAIL, CONTRASENA, DIRECCION, TELEFONO) VALUES (?, ?, ?, ?, ?);";
+		String sql = "INSERT INTO CLIENTE (NOMBREYAPELLIDOS, GMAIL, CONTRASENA, DIRECCION, TELEFONO) VALUES (?, ?, ?, ?, ?);";
 				
 			//Se abre la conexión y se crea el PreparedStatement con la sentencia SQL
 			try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
@@ -141,7 +77,7 @@ public class GestorBD {
 	}
 	
 	public void insertarTrabajador(Trabajador... trabajadores ) {
-		String sql = "INSERT INTO EMPLEADOS (NOMBRE, GMAIL, CONTRASENA, ESTATUS, SALARIO, TELEFONO) VALUES (?, ?, ?, ?, ?, ?);";
+		String sql = "INSERT INTO TRABAJADOR (NOMBREYAPELLIDOS, GMAIL, CONTRASENA, ESTATUS, SALARIO, TELEFONO) VALUES (?, ?, ?, ?, ?, ?);";
 		
 		//Se abre la conexión y se obtiene el Statement
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
@@ -172,7 +108,7 @@ public class GestorBD {
 	}
 	
 	public void insertarProducto(Producto... productos) {
-		String sql = "INSERT INTO PRODUCTOS (ARTICULO, DEPORTE, MARCA, GENERO, TALLA, PRECIO) VALUES (?, ?, ?, ?, ?, ?);";
+		String sql = "INSERT INTO PRODUCTO (ARTICULO, DEPORTE, MARCA, GENERO, TALLA, PRECIO, STOCK) VALUES (?, ?, ?, ?, ?, ?, ?);";
 		
 		//Se abre la conexión y se obtiene el Statement
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
@@ -207,7 +143,7 @@ public class GestorBD {
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
 		     Statement stmt = con.createStatement()) {
 			
-			String sql = "SELECT * FROM CLIENTES WHERE ID >= 0";
+			String sql = "SELECT * FROM CLIENTE WHERE ID_C >= 0";
 			
 			//Se ejecuta la sentencia y se obtiene el ResultSet con los resutlados
 			ResultSet rs = stmt.executeQuery(sql);			
@@ -217,8 +153,8 @@ public class GestorBD {
 			while (rs.next()) {
 				cliente = new Cliente();
 				
-				cliente.setId(rs.getInt("ID"));
-				cliente.setNombreYApellidos(rs.getString("NOMBRE"));
+				cliente.setId(rs.getInt("ID_C"));
+				cliente.setNombreYApellidos(rs.getString("NOMBREYAPELLIDOS"));
 				cliente.setGmail(rs.getString("GMAIL"));
 				cliente.setContrasena(rs.getString("CONTRASENA"));
 				cliente.setDireccion(rs.getString("DIRECCION"));
@@ -241,7 +177,7 @@ public class GestorBD {
 	
 	public Cliente getClienteByNombreYApellidos(String nombreYApellidos) {
 		Cliente cliente = null;
-		String sql = "SELECT * FROM cliente WHERE nombreYApellidos = ? LIMIT 1";
+		String sql = "SELECT * FROM CLIENTE WHERE NOMBREYAPELLIDOS = ? LIMIT 1";
 		
 		//Se abre la conexión y se crea el PreparedStatement con la sentencia SQL
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
@@ -257,8 +193,8 @@ public class GestorBD {
 			if (rs.next()) {
 				cliente = new Cliente();
 				
-				cliente.setId(rs.getInt("ID"));
-				cliente.setNombreYApellidos(rs.getString("NOMBRE"));
+				cliente.setId(rs.getInt("ID_C"));
+				cliente.setNombreYApellidos(rs.getString("NOMBREYAPELLIDOS"));
 				cliente.setGmail(rs.getString("GMAIL"));
 				cliente.setContrasena(rs.getString("CONTRASENA"));
 				cliente.setDireccion(rs.getString("DIRECCION"));
@@ -277,7 +213,7 @@ public class GestorBD {
 	
 	public Cliente getClienteByGmail(String gmail) {
 		Cliente cliente = null;
-		String sql = "SELECT * FROM cliente WHERE gmail = ? LIMIT 1";
+		String sql = "SELECT * FROM CLIENTE WHERE GMAIL = ? LIMIT 1";
 		
 		//Se abre la conexión y se crea el PreparedStatement con la sentencia SQL
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
@@ -293,8 +229,8 @@ public class GestorBD {
 			if (rs.next()) {
 				cliente = new Cliente();
 				
-				cliente.setId(rs.getInt("ID"));
-				cliente.setNombreYApellidos(rs.getString("NOMBRE"));
+				cliente.setId(rs.getInt("ID_C"));
+				cliente.setNombreYApellidos(rs.getString("NOMBREYAPELLIDOS"));
 				cliente.setGmail(rs.getString("GMAIL"));
 				cliente.setContrasena(rs.getString("CONTRASENA"));
 				cliente.setDireccion(rs.getString("DIRECCION"));
@@ -318,7 +254,7 @@ public class GestorBD {
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
 		     Statement stmt = con.createStatement()) {
 			
-			String sql = "SELECT * FROM EMPLEADOS WHERE ID >= 0";
+			String sql = "SELECT * FROM TRABAJADOR WHERE ID_T >= 0";
 			
 			//Se ejecuta la sentencia y se obtiene el ResultSet con los resutlados
 			ResultSet rs = stmt.executeQuery(sql);			
@@ -328,8 +264,8 @@ public class GestorBD {
 			while (rs.next()) {
 				trabajador = new Trabajador();
 				
-				trabajador.setId(rs.getInt("ID"));
-				trabajador.setNombreYApellidos(rs.getString("NOMBRE"));
+				trabajador.setId(rs.getInt("ID_T"));
+				trabajador.setNombreYApellidos(rs.getString("NOMBREYAPELLIDOS"));
 				trabajador.setGmail(rs.getString("GMAIL"));
 				trabajador.setContrasena(rs.getString("CONTRASENA"));
 				trabajador.setStatus(Estatus.valueOf(rs.getString("ESTATUS")));
@@ -351,7 +287,7 @@ public class GestorBD {
 
 	public Trabajador getTrabajadorByGmail(String gmail) {
 		Trabajador trabajador = null;
-		String sql = "SELECT * FROM EMPLEADOS WHERE gmail = ? LIMIT 1";
+		String sql = "SELECT * FROM TRABAJADOR WHERE GMAIL = ? LIMIT 1";
 		
 		//Se abre la conexión y se crea el PreparedStatement con la sentencia SQL
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
@@ -367,8 +303,8 @@ public class GestorBD {
 			if (rs.next()) {
 				trabajador = new Trabajador();
 				
-				trabajador.setId(rs.getInt("ID"));
-				trabajador.setNombreYApellidos(rs.getString("NOMBRE"));
+				trabajador.setId(rs.getInt("ID_T"));
+				trabajador.setNombreYApellidos(rs.getString("NOMBREYAPELLIDOS"));
 				trabajador.setGmail(rs.getString("GMAIL"));
 				trabajador.setContrasena(rs.getString("CONTRASENA"));
 				trabajador.setStatus(Estatus.valueOf(rs.getString("ESTATUS")));
@@ -393,25 +329,26 @@ public class GestorBD {
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
 		     Statement stmt = con.createStatement()) {
 			
-			String sql = "SELECT * FROM PRODUCTOS WHERE ID >= 0";
+			String sql = "SELECT * FROM PRODUCTO WHERE ID_PROD >= 0;";
 			
 			//Se ejecuta la sentencia y se obtiene el ResultSet con los resutlados
-			ResultSet rs = stmt.executeQuery(sql);			
+			ResultSet rs = stmt.executeQuery(sql);
+			
 			Producto producto;
 			
-			//Se recorre el ResultSet y se crean objetos Producto (Calzado/Ropa)
+			//Se recorre el ResultSet y se crean objetos Producto
 			while (rs.next()) {
 				producto = new Producto();
 				
-				producto.setId(rs.getInt("ID"));
+				producto.setId(rs.getInt("ID_PROD"));
 				producto.setArticulo(rs.getString("ARTICULO"));
 				producto.setDeporte(rs.getString("DEPORTE"));
 				producto.setMarca(rs.getString("MARCA"));
-				producto.setGenero(Genero.valueOf(rs.getString("GENERO")));
+				producto.setGenero(Genero.valueOf(rs.getString("GENERO").toUpperCase()));
 				producto.setTalla(rs.getString("TALLA"));
 				producto.setPrecio(rs.getDouble("PRECIO"));
-				producto.setCantidad(rs.getInt("CANTIDAD"));
-				
+				producto.setCantidad(rs.getInt("STOCK"));
+
 				productos.add(producto);
 			}
 			//Se cierra el ResultSet
@@ -420,48 +357,9 @@ public class GestorBD {
 			
 			log(Level.INFO, "Se han recuperado " + productos.size() +  " productos", null);			
 		} catch (Exception ex) {
+
 			log(Level.SEVERE, "Error al obtener productos de la BD", ex);						
-		}		
-		return productos;
-	}
-	
-	public List<Producto> obtenerProductosPrueba() {
-		List<Producto> productos = new ArrayList<>();
-		
-		//Se abre la conexión y se obtiene el Statement
-		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
-		     Statement stmt = con.createStatement()) {
-			
-			String sql = "SELECT * FROM PRODUCTOS WHERE ID >= 0 GROUP BY ARTICULO, DEPORTE, MARCA";
-			
-			//Se ejecuta la sentencia y se obtiene el ResultSet con los resutlados
-			ResultSet rs = stmt.executeQuery(sql);			
-			Producto producto;
-			String[] generos = null;
-			
-			//Se recorre el ResultSet y se crean objetos Producto (Calzado/Ropa)
-			while (rs.next()) {
-				producto = new Producto();
-				
-				producto.setId(rs.getInt("ID"));
-				producto.setArticulo(rs.getString("ARTICULO"));
-				producto.setDeporte(rs.getString("DEPORTE"));
-				producto.setMarca(rs.getString("MARCA"));
-				producto.setGenero(Genero.valueOf(rs.getString("GENERO")));
-				producto.setTalla(rs.getString("TALLA"));
-				producto.setPrecio(rs.getDouble("PRECIO"));
-				producto.setCantidad(rs.getInt("CANTIDAD"));
-				
-				productos.add(producto);
-			}
-			//Se cierra el ResultSet
-			rs.close();
-			
-			
-			log(Level.INFO, "Se han recuperado " + productos.size() +  " productos", null);			
-		} catch (Exception ex) {
-			log(Level.SEVERE, "Error al obtener productos de la BD", ex);						
-		}		
+		}
 		return productos;
 	}
 	
@@ -473,7 +371,7 @@ public class GestorBD {
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
 		     Statement stmt = con.createStatement()) {
 			
-			String sql = "SELECT * FROM PRODUCTOS WHERE ID >= 0 AND ARTICULO = '" + articulo + "' AND DEPORTE = '" + deporte +"' AND MARCA = '" + marca + "' GROUP BY GENERO";
+			String sql = "SELECT * FROM PRODUCTO WHERE ID_PROD >= 0 AND ARTICULO = '" + articulo + "' AND DEPORTE = '" + deporte +"' AND MARCA = '" + marca + "' GROUP BY GENERO";
 			
 			//Se ejecuta la sentencia y se obtiene el ResultSet con los resutlados
 			ResultSet rs = stmt.executeQuery(sql);			
@@ -502,7 +400,7 @@ public class GestorBD {
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
 		     Statement stmt = con.createStatement()) {
 			
-			String sql = "SELECT * FROM PRODUCTOS WHERE ID >= 0 AND ARTICULO = '" + articulo + "' AND DEPORTE = '" + deporte +"' AND MARCA = '" + marca + "' GROUP BY TALLA";
+			String sql = "SELECT * FROM PRODUCTO WHERE ID_PROD >= 0 AND ARTICULO = '" + articulo + "' AND DEPORTE = '" + deporte +"' AND MARCA = '" + marca + "' GROUP BY TALLA";
 			
 			//Se ejecuta la sentencia y se obtiene el ResultSet con los resutlados
 			ResultSet rs = stmt.executeQuery(sql);			
@@ -527,7 +425,7 @@ public class GestorBD {
 		List<Producto> productos = new ArrayList<>();
 		
 
-		String sql = "SELECT * FROM PRODUCTOS WHERE ID >= 0 ";
+		String sql = "SELECT * FROM PRODUCTO WHERE ID_PROD >= 0 ";
 		
 		if (articulo != "Cualquiera") {
 			sql += " AND ARTICULO = '" + articulo + "' ";
@@ -558,14 +456,14 @@ public class GestorBD {
 			while (rs.next()) {
 				producto = new Producto();
 				
-				producto.setId(rs.getInt("ID"));
+				producto.setId(rs.getInt("ID_PROD"));
 				producto.setArticulo(rs.getString("ARTICULO"));
 				producto.setDeporte(rs.getString("DEPORTE"));
 				producto.setMarca(rs.getString("MARCA"));
 				producto.setGenero(Genero.valueOf(rs.getString("GENERO")));
 				producto.setTalla(rs.getString("TALLA"));
 				producto.setPrecio(rs.getDouble("PRECIO"));
-				producto.setCantidad(rs.getInt("CANTIDAD"));
+				producto.setCantidad(rs.getInt("STOCK"));
 				
 				productos.add(producto);
 			}
@@ -584,7 +482,7 @@ public class GestorBD {
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
 		     Statement stmt = con.createStatement()) {
 			//Se ejecuta la sentencia de borrado de datos
-			String sql = "UPDATE CLIENTES SET CONTRASENA = '%s' WHERE ID = %d;";
+			String sql = "UPDATE CLIENTE SET CONTRASENA = '%s' WHERE ID_C = %d;";
 			
 			int result = stmt.executeUpdate(String.format(sql, contrasenaNueva, cliente.getId()));
 			
@@ -599,7 +497,7 @@ public class GestorBD {
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
 		     Statement stmt = con.createStatement()) {
 			//Se ejecuta la sentencia de borrado de datos
-			String sql = "UPDATE EMPLEADOS SET SALARIO = '%s' WHERE ID = %d;";
+			String sql = "UPDATE TRABAJADOR SET SALARIO = '%s' WHERE ID_T = %d;";
 
 			int result = stmt.executeUpdate(String.format(sql, salario, trabajador.getId()));
 			
@@ -609,12 +507,27 @@ public class GestorBD {
 		}		
 	}
 	
+	public void actualizarStock(Producto producto, int stock) {
+		//Se abre la conexión y se obtiene el Statement
+		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+		     Statement stmt = con.createStatement()) {
+			//Se ejecuta la sentencia de borrado de datos
+			String sql = "UPDATE PRODUCTO SET STOCK = '%s' WHERE ID_PROD = %d;";
+
+			int result = stmt.executeUpdate(String.format(sql, stock, producto.getId()));
+			
+			log(Level.INFO, "Se ha actualizado el stock de " + producto, null);	
+		} catch (Exception ex) {
+			log(Level.SEVERE, "Error actualizando el stock del producto " + producto, ex);					
+		}		
+	}
+	
 	public boolean comprobarCliente(String gmail, String contrasena) {
 		
 		//Se abre la conexión y se crea el PreparedStatement con la sentencia SQL
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
 		     Statement pStmt = con.createStatement()) {		
-			String sql = "SELECT GMAIL,CONTRASENA FROM CLIENTES WHERE GMAIL = '" + gmail + "' and CONTRASENA = '" + contrasena + "' LIMIT 1";
+			String sql = "SELECT GMAIL,CONTRASENA FROM CLIENTE WHERE GMAIL = '" + gmail + "' and CONTRASENA = '" + contrasena + "' LIMIT 1";
 			
 			//Se ejecuta la sentencia y se obtiene el ResultSet con los resutlados
 			ResultSet rs = pStmt.executeQuery(sql);
@@ -631,7 +544,7 @@ public class GestorBD {
 	}
 	
 	public boolean comprobarTrabajador(String gmail, String contrasena) {
-		String sql = "SELECT GMAIL,CONTRASENA FROM empleados WHERE GMAIL = '" + gmail + "' and CONTRASENA = '" + contrasena + "' LIMIT 1";
+		String sql = "SELECT GMAIL,CONTRASENA FROM TRABAJADOR WHERE GMAIL = '" + gmail + "' and CONTRASENA = '" + contrasena + "' LIMIT 1";
 		
 		//Se abre la conexión y se crea el PreparedStatement con la sentencia SQL
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
@@ -647,25 +560,6 @@ public class GestorBD {
 			log(Level.SEVERE, "Error trabajador inexistente en la BD", ex );
 		}
 		return false;		
-	}
-	
-	public List<Producto> loadCSVProductos() {
-		List<Producto> productos = new ArrayList<>();
-		
-		try (BufferedReader in = new BufferedReader(new FileReader("data/PRODUCTOS.csv"))) {
-			String linea = null;
-			
-			//Omitir la cabecera
-			in.readLine();			
-			
-			while ((linea = in.readLine()) != null) {
-				productos.add(Producto.parseCSV(linea));
-			}	
-			log(Level.INFO, "Productos cargados", null );
-		} catch (Exception ex) {
-			log(Level.SEVERE, "Error leyendo productos del CSV", ex );
-		}
-		return productos;
 	}
 	
 	private void setLogger( Logger logger ) {
@@ -694,7 +588,7 @@ public class GestorBD {
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
 		     Statement stmt = con.createStatement()) {
 			//Se ejecuta la sentencia de borrado de datos
-			String sql = "DELETE FROM CLIENTES WHERE ID = %d;";
+			String sql = "DELETE FROM CLIENTE WHERE ID_C = %d;";
 			
 			int result = stmt.executeUpdate(String.format(sql, cliente.getId()));
 			
@@ -705,22 +599,25 @@ public class GestorBD {
 	}
 	
 	public void borrarTrabajador(Trabajador trabajador) {
-		//Se abre la conexión y se obtiene el Statement
-		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
-		     Statement stmt = con.createStatement()) {
-			//Se ejecuta la sentencia de borrado de datos
-			String sql = "DELETE FROM CLIENTES WHERE ID = %d;";
+		if (trabajador.getStatus() == Estatus.JEFE) {
+			//Se abre la conexión y se obtiene el Statement
+			try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+			     Statement stmt = con.createStatement()) {
+				//Se ejecuta la sentencia de borrado de datos
+				String sql = "DELETE FROM TRABAJADOR WHERE ID_T = %d;";
+				
+				int result = stmt.executeUpdate(String.format(sql, trabajador.getId()));
+				
+				log(Level.INFO, "Se ha borrado al cliente" + trabajador, null);
+			} catch (Exception ex) {
+				log(Level.SEVERE, "Error al borrar el trabajador en la BD", ex);						
+			}	
+		} else {
+			log(Level.SEVERE, "El trabajdor debe ser JEFE para borrar trabajadores", null);
+		}
 			
-			int result = stmt.executeUpdate(String.format(sql, trabajador.getId()));
-			
-			log(Level.INFO, "Se ha borrado al cliente" + trabajador, null );
-		} catch (Exception ex) {
-			log(Level.SEVERE, "Error al borrar el trabajador en la BD", ex );						
-		}		
 	}
-	
-	
-	
+
 	public void borrarDatos(String tabla) {
 		//Se abre la conexión y se obtiene el Statement
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);

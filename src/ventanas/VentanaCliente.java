@@ -291,7 +291,7 @@ public class VentanaCliente extends JFrame{
 	
 	private void initTables() {
 		//Cabecera del modelo de datos
-		Vector<String> cabeceraProductos = new Vector<String>(Arrays.asList( "ID", "ARTICULO", "DEPORTE", "MARCA", "GENERO", "TALLA", "PRECIO", "CANTIDAD"));
+		Vector<String> cabeceraProductos = new Vector<String>(Arrays.asList( "ID", "ARTICULO", "DEPORTE", "MARCA", "GENERO", "TALLA", "PRECIO", "STOCK"));
 		
 		//Se crea el modelo de datos para la tabla de productos solo con la cabecera		
 		this.modeloDatosProductos = new DefaultTableModel(new Vector<Vector<Object>>(), cabeceraProductos) {
@@ -404,6 +404,7 @@ public class VentanaCliente extends JFrame{
 		this.tablaProductos.getTableHeader().getColumnModel().getColumn(4).setHeaderRenderer(centerHeadRenderer);
 		this.tablaProductos.getTableHeader().getColumnModel().getColumn(5).setHeaderRenderer(centerHeadRenderer);
 		this.tablaProductos.getTableHeader().getColumnModel().getColumn(6).setHeaderRenderer(centerHeadRenderer);
+		this.tablaProductos.getTableHeader().getColumnModel().getColumn(7).setHeaderRenderer(centerHeadRenderer);
 		
 		this.tablaSeleccionados.getTableHeader().getColumnModel().getColumn(0).setHeaderRenderer(centerHeadRenderer);
 		this.tablaSeleccionados.getTableHeader().getColumnModel().getColumn(1).setHeaderRenderer(centerHeadRenderer);
@@ -412,6 +413,7 @@ public class VentanaCliente extends JFrame{
 		this.tablaSeleccionados.getTableHeader().getColumnModel().getColumn(4).setHeaderRenderer(centerHeadRenderer);
 		this.tablaSeleccionados.getTableHeader().getColumnModel().getColumn(5).setHeaderRenderer(centerHeadRenderer);
 		this.tablaSeleccionados.getTableHeader().getColumnModel().getColumn(6).setHeaderRenderer(centerHeadRenderer);
+		this.tablaSeleccionados.getTableHeader().getColumnModel().getColumn(7).setHeaderRenderer(centerHeadRenderer);
 		
 		//Se modifica el Renderer de las columnas		
 		this.tablaProductos.getColumnModel().getColumn(0).setCellRenderer(render);
@@ -421,6 +423,7 @@ public class VentanaCliente extends JFrame{
 		this.tablaProductos.getColumnModel().getColumn(4).setCellRenderer(render);
 		this.tablaProductos.getColumnModel().getColumn(5).setCellRenderer(render);
 		this.tablaProductos.getColumnModel().getColumn(6).setCellRenderer(render);
+		this.tablaProductos.getColumnModel().getColumn(7).setCellRenderer(render);
 		
 		//Se modifica el Renderer de las columnas		
 		this.tablaSeleccionados.getColumnModel().getColumn(0).setCellRenderer(render2);
@@ -430,6 +433,7 @@ public class VentanaCliente extends JFrame{
 		this.tablaSeleccionados.getColumnModel().getColumn(4).setCellRenderer(render2);
 		this.tablaSeleccionados.getColumnModel().getColumn(5).setCellRenderer(render2);
 		this.tablaSeleccionados.getColumnModel().getColumn(6).setCellRenderer(render2);
+		this.tablaSeleccionados.getColumnModel().getColumn(7).setCellRenderer(render2);
 		
 		//Se modifica el modelo de seleccion de la tabla para que se pueda selecciona unicamente una fila
 		this.tablaProductos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -602,7 +606,7 @@ public class VentanaCliente extends JFrame{
 				private static final long serialVersionUID = 1L;
 			};
 			
-			this.modeloDatosProductos.addRow( new Object[] {p.getId(), p.getArticulo(), p.getDeporte(), p.getMarca(), p.getGenero() ,p.getTalla(), p.getPrecio(),} );
+			this.modeloDatosProductos.addRow( new Object[] {p.getId(), p.getArticulo(), p.getDeporte(), p.getMarca(), p.getGenero() ,p.getTalla(), p.getPrecio(), p.getCantidad()} );
 			this.tablaProductos.getColumnModel().getColumn(4).setCellEditor(generoEditor);
 			this.tablaProductos.getColumnModel().getColumn(5).setCellEditor(tallaEditor);
 		}
@@ -610,7 +614,7 @@ public class VentanaCliente extends JFrame{
 	}
 	
 	private void loadproductos() {
-		this.productos = gestorBD.obtenerProductosPrueba();
+		this.productos = gestorBD.obtenerProductos();
 		//Se borran los datos del modelo de datos
 		this.modeloDatosProductos.setRowCount(0);
 
@@ -624,7 +628,7 @@ public class VentanaCliente extends JFrame{
 			DefaultCellEditor tallaEditor = new DefaultCellEditor(jComboTalla) {
 				private static final long serialVersionUID = 1L;
 			};
-			this.modeloDatosProductos.addRow( new Object[] {p.getId(), p.getArticulo(), p.getDeporte(), p.getMarca(), p.getGenero(),p.getTalla(), p.getPrecio(),} );
+			this.modeloDatosProductos.addRow( new Object[] {p.getId(), p.getArticulo(), p.getDeporte(), p.getMarca(), p.getGenero(),p.getTalla(), p.getPrecio(), p.getCantidad()} );
 
 			this.tablaProductos.getColumnModel().getColumn(4).setCellEditor(generoEditor);
 			this.tablaProductos.getColumnModel().getColumn(5).setCellEditor(tallaEditor);

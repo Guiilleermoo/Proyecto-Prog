@@ -3,6 +3,8 @@ package ventanas;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
@@ -38,9 +40,7 @@ public class GestionProductos extends JFrame {
 		this.contrasena = contrasena;
 		
 		Container cp = this.getContentPane();
-		
-		
-		
+
 		JPanel panel = new JPanel();
 		cp.add(panel);
 		
@@ -57,56 +57,73 @@ public class GestionProductos extends JFrame {
 		this.tablaProductos.setFillsViewportHeight(true);
 		panel.add(scrollPaneProductos, BorderLayout.WEST);
 		
-		JLabel selectLabel = new JLabel("Nombre de articulo: ");
-		JTextField filtroArticulo = new JTextField();
-		filtroArticulo.setColumns(15);
-		panel.add(filtroArticulo, BorderLayout.NORTH);
+		JPanel derecha = new JPanel();
 		
-		filtroArticulo.getDocument().addDocumentListener(new DocumentListener() {
+		JSpinner spinnerStock = new JSpinner();
+		JButton botonInsertarproducto = new JButton("Insertar Producto");
+		JButton botonBorrarproducto = new JButton("Borrar Producto");
+		JButton botonStock = new JButton("Anadir Stock");
+		
+		
+		derecha.add(botonInsertarproducto);
+		derecha.add(botonBorrarproducto);
+		derecha.add(botonStock);
+		
+		
+		panel.add(derecha, BorderLayout.EAST);
+		
+		botonInsertarproducto.addActionListener(new ActionListener() {
 			
 			@Override
-			public void removeUpdate(DocumentEvent e) {
-				selectRows(filtroArticulo.getText());
-				tablaProductos.repaint();
-			}
-			
-			@Override
-			public void insertUpdate(DocumentEvent e) {
-				selectRows(filtroArticulo.getText());
-				tablaProductos.repaint();
-			}
-			
-			@Override
-			public void changedUpdate(DocumentEvent e) {
-				selectRows(filtroArticulo.getText());
-				tablaProductos.repaint();
+			public void actionPerformed(ActionEvent e) {
+				
 			}
 		});
 		
-		TableCellRenderer render = (table, value, isSelected, hasFocus, row, column) -> {
+		botonBorrarproducto.addActionListener(new ActionListener() {
 			
-		JLabel label = new JLabel(value.toString());
-			
-		if (table.getValueAt(row, 0).toString().contains(filtroArticulo.getText()) && !filtroArticulo.getText().isEmpty()) {
-			label.setBackground(Color.BLUE);
-		} else {
-			label.setBackground(table.getBackground());
-		}
-		
-		for (Producto producto : productos) {
-			if (producto.getCantidad() == 0) {
-				label.setBackground(Color.RED);
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
 			}
-		}
+		});
 		
+		botonStock.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				gestorBD.actualizarStock(null, Integer.parseInt(spinnerStock.getValue().toString()));
+				
+			}
+		});
+		
+		TableCellRenderer renderStock = (table, value, isSelected, hasFocus, row, column) -> {
+
+		JLabel label = new JLabel(value.toString());
+
+			if (Integer.parseInt(table.getValueAt(row, 7).toString()) == 0) {
+				label.setBackground(Color.RED);
+			} else {
+				label.setBackground(table.getBackground());
+			}
+			
 		if (isSelected) {
 			label.setBackground(table.getSelectionBackground());
 		}
 		
 		label.setOpaque(true);
 
-		return label;			
+		return label;
 		};
+		
+		this.tablaProductos.getColumnModel().getColumn(0).setCellRenderer(renderStock);
+		this.tablaProductos.getColumnModel().getColumn(1).setCellRenderer(renderStock);
+		this.tablaProductos.getColumnModel().getColumn(2).setCellRenderer(renderStock);
+		this.tablaProductos.getColumnModel().getColumn(3).setCellRenderer(renderStock);
+		this.tablaProductos.getColumnModel().getColumn(4).setCellRenderer(renderStock);
+		this.tablaProductos.getColumnModel().getColumn(5).setCellRenderer(renderStock);
+		this.tablaProductos.getColumnModel().getColumn(6).setCellRenderer(renderStock);
+		this.tablaProductos.getColumnModel().getColumn(7).setCellRenderer(renderStock);
 		
 		this.setTitle("Gestion Productos");
 		this.setSize(800, 600);
