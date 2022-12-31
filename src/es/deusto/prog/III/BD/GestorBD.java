@@ -317,7 +317,7 @@ public class GestorBD {
 			
 			log(Level.INFO, "Se ha recuperado el trabajador", null);			
 		} catch (Exception ex) {
-			log(Level.SEVERE, "Error al recuperar el cliente", ex);					
+			log(Level.SEVERE, "Error al recuperar el trabajador", ex);					
 		}		
 		return trabajador;
 	}
@@ -361,6 +361,45 @@ public class GestorBD {
 			log(Level.SEVERE, "Error al obtener productos de la BD", ex);						
 		}
 		return productos;
+	}
+	
+	public Producto getProductoById(int id) {
+		Producto producto = null;
+		String sql = "SELECT * FROM PRODUCTO WHERE ID_PROD = ? LIMIT 1";
+		
+		//Se abre la conexión y se crea el PreparedStatement con la sentencia SQL
+		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+		     PreparedStatement pStmt = con.prepareStatement(sql)) {			
+			
+			//Se definen los parámetros de la sentencia SQL
+			pStmt.setInt(1, id);
+			
+			//Se ejecuta la sentencia y se obtiene el ResultSet con los resutlados
+			ResultSet rs = pStmt.executeQuery();			
+
+			//Se procesa el unico resultado
+			if (rs.next()) {
+				producto = new Producto();
+				
+				producto.setId(rs.getInt("ID_PROD"));
+				producto.setArticulo(rs.getString("ARTICULO"));
+				producto.setDeporte(rs.getString("DEPORTE"));
+				producto.setMarca(rs.getString("MARCA"));
+				producto.setTalla(rs.getString("TALLA"));
+				producto.setGenero(Genero.valueOf(rs.getString("GENERO").toUpperCase()));
+				producto.setPrecio(rs.getDouble("PRECIO"));
+				producto.setCantidad(rs.getInt("STOCK"));
+			}
+			
+			//Se cierra el ResultSet
+			rs.close();
+			
+			log(Level.INFO, "Se ha recuperado el producto", null);			
+		} catch (Exception ex) {
+			log(Level.SEVERE, "Error al recuperar el producto", ex);
+			System.out.println(ex);
+		}		
+		return producto;
 	}
 	
 	public String[] obtenerGenero(String articulo, String deporte, String marca) {
@@ -512,7 +551,7 @@ public class GestorBD {
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
 		     Statement stmt = con.createStatement()) {
 			//Se ejecuta la sentencia de borrado de datos
-			String sql = "UPDATE PRODUCTO SET STOCK = '%s' WHERE ID_PROD = %d;";
+			String sql = "UPDATE PRODUCTO SET STOCK = STOCK + '%s' WHERE ID_PROD = %d;";
 
 			int result = stmt.executeUpdate(String.format(sql, stock, producto.getId()));
 			

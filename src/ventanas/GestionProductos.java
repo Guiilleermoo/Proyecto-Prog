@@ -3,6 +3,7 @@ package ventanas;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
@@ -59,15 +60,27 @@ public class GestionProductos extends JFrame {
 		
 		JPanel derecha = new JPanel();
 		
-		JSpinner spinnerStock = new JSpinner();
+		
 		JButton botonInsertarproducto = new JButton("Insertar Producto");
 		JButton botonBorrarproducto = new JButton("Borrar Producto");
-		JButton botonStock = new JButton("Anadir Stock");
+		
+		
+		derecha.setLayout(new GridLayout(3,1));
 		
 		
 		derecha.add(botonInsertarproducto);
+		
 		derecha.add(botonBorrarproducto);
-		derecha.add(botonStock);
+		
+		JPanel abajo = new JPanel();
+		SpinnerModel spinner = new SpinnerNumberModel(10, 0 , 100, 1);
+		JSpinner spinnerStock = new JSpinner(spinner);
+		JButton botonStock = new JButton("Añadir Stock");
+		
+		abajo.add(spinnerStock);
+		abajo.add(botonStock);
+		
+		derecha.add(abajo);
 		
 		
 		panel.add(derecha, BorderLayout.EAST);
@@ -92,8 +105,8 @@ public class GestionProductos extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				gestorBD.actualizarStock(null, Integer.parseInt(spinnerStock.getValue().toString()));
-				
+				gestorBD.actualizarStock(gestorBD.getProductoById(tablaProductos.getSelectedRow()+1), Integer.parseInt(spinnerStock.getValue().toString()));
+				loadProductos();
 			}
 		});
 		
