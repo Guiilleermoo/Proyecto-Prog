@@ -34,7 +34,7 @@ public class GestionEmpleados extends JFrame{
 		cp.add(derecha, BorderLayout.EAST);
 		cp.add(abajo, BorderLayout.SOUTH);
 		derecha.setLayout(new GridLayout(6,2));
-		abajo.setLayout(new GridLayout(1,2));
+		abajo.setLayout(new GridLayout(1,3));
 		
 		JLabel NomYApell = new JLabel("Nombre y Apellidos:");
 		JTextField NomYApell_1 = new JTextField();
@@ -73,9 +73,11 @@ public class GestionEmpleados extends JFrame{
 		
 		JButton ver = new JButton("Ver");
 		JButton anyadir = new JButton("Anadir");
+		JButton despedir = new JButton("Despedir");
 		
 		abajo.add(ver);
 		abajo.add(anyadir);
+		abajo.add(despedir);
 		
 		
 		
@@ -110,6 +112,23 @@ public class GestionEmpleados extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				listaE.repaint();
+			}
+		});
+		
+		despedir.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				for (Trabajador trabajador : trabajadores) {
+					if(trabajador.getNombreYApellidos().equals(listaE.getSelectedValue().toString())){
+						listaEmpleados.remove(listaE.getSelectedIndex());
+						gestorBD.borrarTrabajador(trabajador);
+						listaE.repaint();
+						break;
+					} 
+				}
+		
+				
 			}
 		});
 		

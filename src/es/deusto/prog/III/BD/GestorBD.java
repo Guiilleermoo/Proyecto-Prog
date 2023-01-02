@@ -675,7 +675,6 @@ public class GestorBD {
 	}
 	
 	public void borrarTrabajador(Trabajador trabajador) {
-		if (trabajador.getStatus() == Estatus.JEFE) {
 			//Se abre la conexión y se obtiene el Statement
 			try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
 			     Statement stmt = con.createStatement()) {
@@ -688,10 +687,6 @@ public class GestorBD {
 			} catch (Exception ex) {
 				log(Level.SEVERE, "Error al borrar el trabajador en la BD", ex);						
 			}	
-		} else {
-			log(Level.SEVERE, "El trabajdor debe ser JEFE para borrar trabajadores", null);
-		}
-			
 	}
 
 	public void borrarDatos(String tabla) {
