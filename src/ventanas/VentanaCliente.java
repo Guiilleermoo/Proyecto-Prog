@@ -3,6 +3,8 @@ package ventanas;
 import javax.swing.*;
 
 import javax.swing.border.TitledBorder;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
@@ -229,50 +231,50 @@ public class VentanaCliente extends JFrame{
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 		
-		Buscar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                loadProductosFiltro(articulo.getSelectedItem().toString(), deporte.getSelectedItem().toString(), marca.getSelectedItem().toString(), genero.getSelectedItem().toString(), slider.getValue());
-            }
-        });
-		
-		articulo.addActionListener( new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            	loadProductosFiltro(articulo.getSelectedItem().toString(), deporte.getSelectedItem().toString(), marca.getSelectedItem().toString(), genero.getSelectedItem().toString(), slider.getValue());
-            }
-        });
-		
-		deporte.addActionListener( new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            	loadProductosFiltro(articulo.getSelectedItem().toString(), deporte.getSelectedItem().toString(), marca.getSelectedItem().toString(), genero.getSelectedItem().toString(), slider.getValue());
-            }
-        });
-		
-		marca.addActionListener( new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            	loadProductosFiltro(articulo.getSelectedItem().toString(), deporte.getSelectedItem().toString(), marca.getSelectedItem().toString(), genero.getSelectedItem().toString(), slider.getValue());
-            }
-        });
-		
-		genero.addActionListener( new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            	loadProductosFiltro(articulo.getSelectedItem().toString(), deporte.getSelectedItem().toString(), marca.getSelectedItem().toString(), genero.getSelectedItem().toString(), slider.getValue());
-            }
-        });
-		
-		Anyadir.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				loadSeleccionados();
-				Double dinero = calcularTotal(modeloDatosSeleccionados);
-				scrollPaneSeleccionados.setBorder(new TitledBorder("Carrito\nTotal: " + dinero + "�"));
-			}
-		});
+//		Buscar.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                loadProductosFiltro(articulo.getSelectedItem().toString(), deporte.getSelectedItem().toString(), marca.getSelectedItem().toString(), genero.getSelectedItem().toString(), slider.getValue());
+//            }
+//        });
+//		
+//		articulo.addActionListener( new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//            	loadProductosFiltro(articulo.getSelectedItem().toString(), deporte.getSelectedItem().toString(), marca.getSelectedItem().toString(), genero.getSelectedItem().toString(), slider.getValue());
+//            }
+//        });
+//		
+//		deporte.addActionListener( new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//            	loadProductosFiltro(articulo.getSelectedItem().toString(), deporte.getSelectedItem().toString(), marca.getSelectedItem().toString(), genero.getSelectedItem().toString(), slider.getValue());
+//            }
+//        });
+//		
+//		marca.addActionListener( new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//            	loadProductosFiltro(articulo.getSelectedItem().toString(), deporte.getSelectedItem().toString(), marca.getSelectedItem().toString(), genero.getSelectedItem().toString(), slider.getValue());
+//            }
+//        });
+//		
+//		genero.addActionListener( new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//            	loadProductosFiltro(articulo.getSelectedItem().toString(), deporte.getSelectedItem().toString(), marca.getSelectedItem().toString(), genero.getSelectedItem().toString(), slider.getValue());
+//            }
+//        });
+//		
+//		Anyadir.addActionListener(new ActionListener() {
+//			
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				loadSeleccionados();
+//				Double dinero = calcularTotal(modeloDatosSeleccionados);
+//				scrollPaneSeleccionados.setBorder(new TitledBorder("Carrito\nTotal: " + dinero + "�"));
+//			}
+//		});
 		
 		Borrar.addActionListener(new ActionListener(){
 
@@ -291,7 +293,7 @@ public class VentanaCliente extends JFrame{
 	
 	private void initTables() {
 		//Cabecera del modelo de datos
-		Vector<String> cabeceraProductos = new Vector<String>(Arrays.asList( "ID", "ARTICULO", "DEPORTE", "MARCA", "GENERO", "TALLA", "PRECIO", "STOCK"));
+		Vector<String> cabeceraProductos = new Vector<String>(Arrays.asList( "ID", "ARTICULO", "DEPORTE", "MARCA", "GENERO", "TALLA", "PRECIO", "CANTIDAD"));
 		
 		//Se crea el modelo de datos para la tabla de productos solo con la cabecera		
 		this.modeloDatosProductos = new DefaultTableModel(new Vector<Vector<Object>>(), cabeceraProductos) {
@@ -587,33 +589,45 @@ public class VentanaCliente extends JFrame{
 			gestorBD.log(Level.INFO, "Tabla Seleccionados: Se está arrastrando con el botón " + e.getButton() +  " pulsado sobre la fila " + row+1 + ", columna " + col+1, null);
 				}			
 		});
+		
+		this.tablaProductos.getModel().addTableModelListener(new TableModelListener() {
+
+			@Override
+			public void tableChanged(TableModelEvent e) {
+//				actualizarTallas(e);
+//				actualizarDinero(e);
+			}
+			
+		});
+		
 	}
 	
-	private void loadProductosFiltro(String articulo, String deporte, String marca, String genero, double precio) {
-		this.productos = gestorBD.obtenerProductosFiltro(articulo, deporte, marca, genero, precio);
-		//Se borran los datos del modelo de datos
-		this.modeloDatosProductos.setRowCount(0);
-		
-		
-		// Se anade al modelo una fila de datos por cada comic
-		for (Producto p : this.productos) {
-			JComboBox<String> jComboGenero = new JComboBox<>(gestorBD.obtenerGenero(p.getArticulo(), p.getDeporte(), p.getMarca()));
-			DefaultCellEditor generoEditor = new DefaultCellEditor(jComboGenero) {
-				private static final long serialVersionUID = 1L;
-			};
-			JComboBox<String> jComboTalla = new JComboBox<>(gestorBD.obtenerTalla(p.getArticulo(), p.getDeporte(), p.getMarca()));
-			DefaultCellEditor tallaEditor = new DefaultCellEditor(jComboTalla) {
-				private static final long serialVersionUID = 1L;
-			};
-			
-			this.modeloDatosProductos.addRow( new Object[] {p.getId(), p.getArticulo(), p.getDeporte(), p.getMarca(), p.getGenero() ,p.getTalla(), p.getPrecio(), p.getCantidad()} );
-			this.tablaProductos.getColumnModel().getColumn(4).setCellEditor(generoEditor);
-			this.tablaProductos.getColumnModel().getColumn(5).setCellEditor(tallaEditor);
-		}
-		
-	}
+//	private void loadProductosFiltro(String articulo, String deporte, String marca, String genero, double precio) {
+//		this.productos = gestorBD.obtenerProductosFiltro(articulo, deporte, marca, genero, precio);
+//		//Se borran los datos del modelo de datos
+//		this.modeloDatosProductos.setRowCount(0);
+//		
+//		
+//		// Se anade al modelo una fila de datos por cada comic
+//		for (Producto p : this.productos) {
+//			JComboBox<String> jComboGenero = new JComboBox<>(gestorBD.obtenerGenero(p.getArticulo(), p.getDeporte(), p.getMarca()));
+//			DefaultCellEditor generoEditor = new DefaultCellEditor(jComboGenero) {
+//				private static final long serialVersionUID = 1L;
+//			};
+//			JComboBox<String> jComboTalla = new JComboBox<>(gestorBD.obtenerTalla(p.getArticulo(), p.getDeporte(), p.getMarca()));
+//			DefaultCellEditor tallaEditor = new DefaultCellEditor(jComboTalla) {
+//				private static final long serialVersionUID = 1L;
+//			};
+//			
+//			this.modeloDatosProductos.addRow( new Object[] {p.getId(), p.getArticulo(), p.getDeporte(), p.getMarca(), p.getGenero() ,p.getTalla(), p.getPrecio(), p.getCantidad()} );
+//			this.tablaProductos.getColumnModel().getColumn(4).setCellEditor(generoEditor);
+//			this.tablaProductos.getColumnModel().getColumn(5).setCellEditor(tallaEditor);
+//		}
+//	}
 	
 	private void loadproductos() {
+		// SELECT ARTICULO, DEPORTE, MARCA, GENERO FROM PRODUCTO GROUP BY GENERO, MARCA; (PENDIENTE)
+		
 		this.productos = gestorBD.obtenerProductos();
 		//Se borran los datos del modelo de datos
 		this.modeloDatosProductos.setRowCount(0);
@@ -624,12 +638,19 @@ public class VentanaCliente extends JFrame{
 			DefaultCellEditor generoEditor = new DefaultCellEditor(jComboGenero) {
 				private static final long serialVersionUID = 1L;
 			};
-			JComboBox<String> jComboTalla = new JComboBox<>(gestorBD.obtenerTalla(p.getArticulo(), p.getDeporte(), p.getMarca())) ;
+			
+			String[] genero = gestorBD.obtenerGenero(p.getArticulo(), p.getDeporte(), p.getMarca());
+			
+			JComboBox<String> jComboTalla = new JComboBox<>(gestorBD.obtenerTalla(p.getArticulo(), p.getDeporte(), p.getMarca(), genero[0])) ;
 			DefaultCellEditor tallaEditor = new DefaultCellEditor(jComboTalla) {
 				private static final long serialVersionUID = 1L;
 			};
-			this.modeloDatosProductos.addRow( new Object[] {p.getId(), p.getArticulo(), p.getDeporte(), p.getMarca(), p.getGenero(),p.getTalla(), p.getPrecio(), p.getCantidad()} );
+			
+			String[] talla = gestorBD.obtenerTalla(p.getArticulo(), p.getDeporte(), p.getMarca(), genero[0]);
+			Double precio = gestorBD.obtenerDinero(p.getArticulo(), p.getDeporte(), p.getMarca(), genero[0], talla[0]);
 
+			this.modeloDatosProductos.addRow( new Object[] {p.getId(), p.getArticulo(), p.getDeporte(), p.getMarca(), genero[0], talla[0], precio, "1"} );
+			
 			this.tablaProductos.getColumnModel().getColumn(4).setCellEditor(generoEditor);
 			this.tablaProductos.getColumnModel().getColumn(5).setCellEditor(tallaEditor);
 		}		
@@ -658,12 +679,18 @@ public class VentanaCliente extends JFrame{
 		 }
 	}
 	
+	private Double actualizarPrecio(String articulo, String deporte, String marca, String genero, String talla) {
+		Double precio = gestorBD.obtenerDinero(articulo, deporte, marca, genero, talla);
+		
+		
+		return precio;
+	}
+	
 	private Double calcularTotal(DefaultTableModel carrito) {
 		//carrito.getDataVector();
 		Double total = 0.0;
 		for (int j = 0; j < carrito.getRowCount(); j++) {
 			total = total + (Double) carrito.getValueAt(j, 6);
-
 		}
 		return total;
 	}
