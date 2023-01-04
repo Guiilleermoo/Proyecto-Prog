@@ -244,6 +244,8 @@ public class GestionProductos extends JFrame {
 		});
 		
 		
+		
+		
 		this.tablaProductos.getColumnModel().getColumn(0).setCellRenderer(renderStock);
 		this.tablaProductos.getColumnModel().getColumn(1).setCellRenderer(renderStock);
 		this.tablaProductos.getColumnModel().getColumn(2).setCellRenderer(renderStock);
