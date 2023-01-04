@@ -107,31 +107,10 @@ public class Producto {
 		this.cantidad = cantidad;
 	}
 
-		//Crea un Producto a partir de una cadena de texto separada por comas.
-		public static Producto parseCSV(String csvString) {
-			if (csvString != null && !csvString.isBlank()) {		
-				StringTokenizer tokenizer = new StringTokenizer(csvString, ";");
-				
-				Producto producto = new Producto();		
-				
-				producto.setArticulo(tokenizer.nextToken());
-				producto.setDeporte(tokenizer.nextToken());
-				producto.setMarca(tokenizer.nextToken());
-				producto.setGenero(Genero.valueOf(tokenizer.nextToken().trim().toUpperCase()));
-				producto.setTalla(tokenizer.nextToken());
-				producto.setPrecio(Double.parseDouble(tokenizer.nextToken()));
-				producto.setCantidad(Integer.parseInt(tokenizer.nextToken()));
-
-				return producto;
-			} else {
-				return null;
-			}
-		}
-
-		@Override
-		public String toString() {
-			return "Producto [id=" + id + ", articulo=" + articulo + ", deporte=" + deporte + ", marca=" + marca
-					+ ", genero=" + genero + ", talla=" + talla + ", precio=" + precio + ", cantidad=" + cantidad + "]";
-		}
+	@Override
+	public String toString() {
+		return "Producto [id=" + id + ", articulo=" + articulo + ", deporte=" + deporte + ", marca=" + marca
+			+ ", genero=" + genero + ", talla=" + talla + ", precio=" + precio + ", cantidad=" + cantidad + "]";
+	}
 	
 }

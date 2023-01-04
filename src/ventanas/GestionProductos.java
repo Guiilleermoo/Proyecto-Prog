@@ -16,6 +16,8 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
@@ -45,7 +47,7 @@ public class GestionProductos extends JFrame {
 		JPanel panel = new JPanel();
 		cp.add(panel);
 		
-		panel.setLayout(new BorderLayout());
+		panel.setLayout(new GridLayout(1,2));
 		
 		tablaProductos = new JTable(modeloDatosProductos);
 		
@@ -60,28 +62,68 @@ public class GestionProductos extends JFrame {
 		
 		JPanel derecha = new JPanel();
 		
+		JPanel arriba = new JPanel();
+		arriba.setLayout(new GridLayout(4, 3));
+		
+		JLabel articuloLabel = new JLabel("Articulo: ");
+		arriba.add(articuloLabel);
+		
+		JTextField articuloText = new JTextField();
+		arriba.add(articuloText);
+		
+		JLabel deporteLabel = new JLabel("Deporte: ");
+		arriba.add(deporteLabel);
+		
+		JTextField deporteText = new JTextField();
+		arriba.add(deporteLabel);
+		
+		JLabel marcaLabel = new JLabel("marca: ");
+		arriba.add(marcaLabel);
+		
+		JTextField marcaText = new JTextField();
+		arriba.add(marcaText);
+		
+		JLabel generoLabel = new JLabel("Genero: ");
+		arriba.add(generoLabel);
+		
+		JTextField generoText = new JTextField();
+		arriba.add(generoText);
+		
+		JLabel tallaLabel = new JLabel("Talla: ");
+		arriba.add(tallaLabel);
+		
+		JTextField tallaText = new JTextField();
+		arriba.add(tallaText);
+		
+		JLabel precioLabel = new JLabel("Precio: ");
+		arriba.add(precioLabel);
+		
+		JTextField precioText = new JTextField();
+		arriba.add(precioText);
+		
 		
 		JButton botonInsertarproducto = new JButton("Insertar Producto");
+		
+		
+		
+		
+		
+		
+		
 		JButton botonBorrarproducto = new JButton("Borrar Producto");
-		
-		
-		derecha.setLayout(new GridLayout(3,1));
-		
-		
-		derecha.add(botonInsertarproducto);
-		
-		derecha.add(botonBorrarproducto);
 		
 		JPanel abajo = new JPanel();
 		SpinnerModel spinner = new SpinnerNumberModel(10, 0 , 100, 1);
 		JSpinner spinnerStock = new JSpinner(spinner);
 		JButton botonStock = new JButton("Añadir Stock");
 		
-		abajo.add(spinnerStock);
-		abajo.add(botonStock);
+		abajo.add(spinnerStock, BorderLayout.EAST);
+		abajo.add(botonStock, BorderLayout.WEST);
 		
+		derecha.setLayout(new GridLayout(3,1));
+		derecha.add(arriba);
+		derecha.add(botonBorrarproducto);
 		derecha.add(abajo);
-		
 		
 		panel.add(derecha, BorderLayout.EAST);
 		
@@ -108,6 +150,17 @@ public class GestionProductos extends JFrame {
 				gestorBD.actualizarStock(gestorBD.getProductoById(tablaProductos.getSelectedRow()+1), Integer.parseInt(spinnerStock.getValue().toString()));
 				loadProductos();
 			}
+		});
+		
+		this.tablaProductos.getModel().addTableModelListener(new TableModelListener() {
+
+			@Override
+			public void tableChanged(TableModelEvent e) {
+				Double precioNuevo = (Double) tablaProductos.getValueAt(e.getFirstRow(), e.getColumn());
+				Integer id = (Integer) tablaProductos.getValueAt(e.getFirstRow(), 0);
+				gestorBD.actualizarPrecio(id, precioNuevo);
+			}
+			
 		});
 		
 		TableCellRenderer renderStock = (table, value, isSelected, hasFocus, row, column) -> {
@@ -153,16 +206,16 @@ public class GestionProductos extends JFrame {
 		Vector<String> cabeceraProductos = new Vector<String>(Arrays.asList( "ID", "ARTICULO", "DEPORTE", "MARCA", "GENERO", "TALLA", "PRECIO", "CANTIDAD"));
 		
 		this.modeloDatosProductos = new DefaultTableModel(new Vector<Vector<Object>>(), cabeceraProductos) {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				if (column == 6) {
+					return true;
+				}
+				return false;
+			}
 		};
 		
 		tablaProductos = new JTable(this.modeloDatosProductos);	
-		
-		JComboBox<Genero> jComboGenero = new JComboBox<>(Genero.values());		
-		DefaultCellEditor generoEditor = new DefaultCellEditor(jComboGenero) {
-			private static final long serialVersionUID = 1L;
-		};
-		
-		this.tablaProductos.getColumnModel().getColumn(4).setCellEditor(generoEditor);
 	}
 	
 	public void loadProductos() {

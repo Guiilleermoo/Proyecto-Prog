@@ -582,6 +582,21 @@ public class GestorBD {
 		}		
 	}
 	
+	public void actualizarPrecio(int id, double precio) {
+		//Se abre la conexión y se obtiene el Statement
+		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+		     Statement stmt = con.createStatement()) {
+			//Se ejecuta la sentencia de borrado de datos
+			String sql = "UPDATE PRODUCTO SET PRECIO = '%s' WHERE ID_PROD = %d;";
+
+			int result = stmt.executeUpdate(String.format(sql, precio, id));
+			
+			log(Level.INFO, "Se ha actualizado el precio del producto con id: " + id , null);	
+		} catch (Exception ex) {
+			log(Level.SEVERE, "Error actualizando el precio del producto con id: " + id, ex);
+		}		
+	}
+	
 	public void actualizarStock(Producto producto, int stock) {
 		//Se abre la conexión y se obtiene el Statement
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
@@ -594,7 +609,6 @@ public class GestorBD {
 			log(Level.INFO, "Se ha actualizado el stock de " + producto, null);	
 		} catch (Exception ex) {
 			log(Level.SEVERE, "Error actualizando el stock del producto " + producto, ex);
-			System.out.println(ex);
 		}		
 	}
 	
