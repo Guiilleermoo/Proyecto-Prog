@@ -423,7 +423,7 @@ public class GestorBD {
 			rs.close();
 			//System.out.println(generosList.toString() + "-----------------");
 			generos = generosList.toArray(new String[0]);
-			System.out.println("-------------------" + Arrays.toString(generos));
+			//System.out.println("-------------------" + Arrays.toString(generos));
 			log(Level.INFO, "Se han recuperado " + generos.length +  " productos", null);			 
 		} catch (Exception ex) {
 			log(Level.SEVERE, "Error al obtener productos de la BD", ex);						
@@ -499,7 +499,6 @@ public class GestorBD {
 	public List<Producto> obtenerProductosFiltro(String articulo, String deporte, String marca, String genero, double precio) {
 		List<Producto> productos = new ArrayList<>();
 		
-
 		String sql = "SELECT * FROM PRODUCTO WHERE ID_PROD >= 0 ";
 		
 		if (articulo != "Cualquiera") {
@@ -514,7 +513,7 @@ public class GestorBD {
 		if (genero != "Cualquiera") {
 			sql += " AND GENERO = '" + genero + "' ";
 		}
-		sql += " AND PRECIO <= " + precio + " GROUP BY ARTICULO, DEPORTE, MARCA";
+		sql += " AND PRECIO <= " + precio;
 		
 		
 		//String sql = "SELECT * FROM PRODUCTOS WHERE ID >= 0 AND ARTICULO = '" + articulo + "' AND DEPORTE = '" + deporte +"' AND MARCA = '" + marca + "' AND GENERO = '" + genero.toUpperCase() + "' AND PRECIO <= " + precio + " GROUP BY ARTICULO, DEPORTE, MARCA";
@@ -526,7 +525,7 @@ public class GestorBD {
 			//Se ejecuta la sentencia y se obtiene el ResultSet con los resutlados
 			ResultSet rs = stmt.executeQuery(sql);
 			Producto producto;
-			
+			System.out.println(sql);
 			//Se recorre el ResultSet y se crean objetos Producto (Calzado/Ropa)
 			while (rs.next()) {
 				producto = new Producto();
@@ -535,11 +534,11 @@ public class GestorBD {
 				producto.setArticulo(rs.getString("ARTICULO"));
 				producto.setDeporte(rs.getString("DEPORTE"));
 				producto.setMarca(rs.getString("MARCA"));
-				producto.setGenero(Genero.valueOf(rs.getString("GENERO")));
+				producto.setGenero(Genero.valueOf(rs.getString("GENERO").toUpperCase()));
 				producto.setTalla(rs.getString("TALLA"));
 				producto.setPrecio(rs.getDouble("PRECIO"));
 				producto.setCantidad(rs.getInt("STOCK"));
-				
+				System.out.println(producto);
 				productos.add(producto);
 			}
 			//Se cierra el ResultSet
@@ -547,9 +546,12 @@ public class GestorBD {
 			
 			log(Level.INFO, "Se han recuperado " + productos.size() +  " productos", null);				
 		} catch (Exception ex) {
-			log(Level.SEVERE, "Error al obtener productos de la BD", ex);						
+			log(Level.SEVERE, "Error al obtener productos de la BD", ex);	
+			System.out.println(ex);
 		}		
+		
 		return productos;
+	
 	}
 	
 	public void actualizarContrasena(Cliente cliente, String contrasenaNueva) {

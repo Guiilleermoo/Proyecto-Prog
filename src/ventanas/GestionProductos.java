@@ -27,6 +27,7 @@ import es.deusto.prog.III.Producto.Genero;
 
 public class GestionProductos extends JFrame {
 		protected GestorBD gestorBD;
+		protected int filaseleccionada;
 		
 		private List<Producto> productos;
 		
@@ -36,6 +37,12 @@ public class GestionProductos extends JFrame {
 		protected JTable tablaProductos;
 		protected DefaultTableModel modeloDatosProductos;
 		protected JScrollPane scrollPaneProductos;
+		private JTextField txtArticulo;
+		private JTextField txtDeporte;
+		private JTextField txtMarca;
+		private JTextField txtGenero;
+		private JTextField txtTalla;
+		private JTextField txtPrecio;
 		
 	public GestionProductos(GestorBD gestorBD, String gmail, String contrasena) {
 		this.gestorBD = gestorBD;
@@ -62,93 +69,94 @@ public class GestionProductos extends JFrame {
 		
 		JPanel derecha = new JPanel();
 		
-		JPanel arriba = new JPanel();
-		arriba.setLayout(new GridLayout(4, 3));
-		
-		JLabel articuloLabel = new JLabel("Articulo: ");
-		arriba.add(articuloLabel);
-		
-		JTextField articuloText = new JTextField();
-		arriba.add(articuloText);
-		
-		JLabel deporteLabel = new JLabel("Deporte: ");
-		arriba.add(deporteLabel);
-		
 		JTextField deporteText = new JTextField();
-		arriba.add(deporteLabel);
-		
-		JLabel marcaLabel = new JLabel("marca: ");
-		arriba.add(marcaLabel);
-		
-		JTextField marcaText = new JTextField();
-		arriba.add(marcaText);
-		
-		JLabel generoLabel = new JLabel("Genero: ");
-		arriba.add(generoLabel);
-		
-		JTextField generoText = new JTextField();
-		arriba.add(generoText);
-		
-		JLabel tallaLabel = new JLabel("Talla: ");
-		arriba.add(tallaLabel);
-		
-		JTextField tallaText = new JTextField();
-		arriba.add(tallaText);
-		
-		JLabel precioLabel = new JLabel("Precio: ");
-		arriba.add(precioLabel);
-		
-		JTextField precioText = new JTextField();
-		arriba.add(precioText);
 		
 		
 		JButton botonInsertarproducto = new JButton("Insertar Producto");
-		
-		
-		
-		
-		
-		
-		
-		JButton botonBorrarproducto = new JButton("Borrar Producto");
-		
-		JPanel abajo = new JPanel();
 		SpinnerModel spinner = new SpinnerNumberModel(10, 0 , 100, 1);
-		JSpinner spinnerStock = new JSpinner(spinner);
-		JButton botonStock = new JButton("Añadir Stock");
-		
-		abajo.add(spinnerStock, BorderLayout.EAST);
-		abajo.add(botonStock, BorderLayout.WEST);
-		
-		derecha.setLayout(new GridLayout(3,1));
-		derecha.add(arriba);
-		derecha.add(botonBorrarproducto);
-		derecha.add(abajo);
 		
 		panel.add(derecha, BorderLayout.EAST);
+		derecha.setLayout(new GridLayout(2, 0, 0, 0));
+		
+		JPanel arriba = new JPanel();
+		derecha.add(arriba);
+		arriba.setLayout(new GridLayout(2, 0, 0, 0));
+		
+		JPanel arriba1 = new JPanel();
+		arriba.add(arriba1);
+		arriba1.setLayout(new GridLayout(3, 4, 0, 0));
+		
+		JLabel lblNewLabel = new JLabel("Articulo:");
+		arriba1.add(lblNewLabel);
+		
+		txtArticulo = new JTextField();
+		arriba1.add(txtArticulo);
+		txtArticulo.setColumns(10);
+		
+		JLabel de = new JLabel("Deporte:");
+		arriba1.add(de);
+		
+		txtDeporte = new JTextField();
+		arriba1.add(txtDeporte);
+		txtDeporte.setColumns(10);
+		
+		JLabel lblNewLabel_2 = new JLabel("Marca:");
+		arriba1.add(lblNewLabel_2);
+		
+		txtMarca = new JTextField();
+		arriba1.add(txtMarca);
+		txtMarca.setColumns(10);
+		
+		JLabel lblNewLabel_3 = new JLabel("Genero:");
+		arriba1.add(lblNewLabel_3);
+		
+		txtGenero = new JTextField();
+		arriba1.add(txtGenero);
+		txtGenero.setColumns(10);
+		
+		JLabel lblNewLabel_4 = new JLabel("Talla:");
+		arriba1.add(lblNewLabel_4);
+		
+		txtTalla = new JTextField();
+		arriba1.add(txtTalla);
+		txtTalla.setColumns(10);
+		
+		JLabel lblNewLabel_5 = new JLabel("Precio:");
+		arriba1.add(lblNewLabel_5);
+		
+		txtPrecio = new JTextField();
+		arriba1.add(txtPrecio);
+		txtPrecio.setColumns(10);
+		
+		JPanel arriba2 = new JPanel();
+		arriba.add(arriba2);
+		
+		JButton Buscar = new JButton("Buscar");
+		arriba2.add(Buscar);
+		
+		JButton BotonAnadir = new JButton("Anadir Producto");
+		arriba2.add(BotonAnadir);
+		
+		JButton BotonBorrar = new JButton("Borrar Producto");
+		arriba2.add(BotonBorrar);
+		
+		JButton Actualizar = new JButton("Actualizar ");
+		arriba2.add(Actualizar);
+		
+		JPanel abajo = new JPanel();
+		derecha.add(abajo);
+		
+		JSpinner spinner_1 = new JSpinner();
+		abajo.add(spinner_1);
+		
+		JButton BotonStock = new JButton("Anadir Stock");
+		abajo.add(BotonStock);
 		
 		botonInsertarproducto.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-			}
-		});
-		
-		botonBorrarproducto.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});
-		
-		botonStock.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				gestorBD.actualizarStock(gestorBD.getProductoById(tablaProductos.getSelectedRow()+1), Integer.parseInt(spinnerStock.getValue().toString()));
-				loadProductos();
 			}
 		});
 		
@@ -181,6 +189,60 @@ public class GestionProductos extends JFrame {
 
 		return label;
 		};
+		
+		Buscar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				filaseleccionada = tablaProductos.getSelectedRow();
+				if(filaseleccionada < 0) {
+					JOptionPane.showMessageDialog(null, "Selecciona una fila de la tabla", "Advertencia", JOptionPane.WARNING_MESSAGE);
+				}
+				
+				txtArticulo.setText((String) tablaProductos.getValueAt(filaseleccionada, 1));
+				txtDeporte.setText((String) tablaProductos.getValueAt(filaseleccionada, 2));
+				txtMarca.setText((String) tablaProductos.getValueAt(filaseleccionada, 3));
+				txtGenero.setText(tablaProductos.getValueAt(filaseleccionada, 4)+ "");
+				txtTalla.setText((String) tablaProductos.getValueAt(filaseleccionada, 5));
+				txtPrecio.setText(tablaProductos.getValueAt(filaseleccionada, 6)+ "");
+			}
+		});
+		
+		BotonAnadir.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String []info = new String[7];
+				info[0] = "21";
+				info[1] = txtArticulo.getText();
+				info[2] = txtDeporte.getText();
+				info[3] = txtMarca.getText();
+				info[4] = txtGenero.getText();
+				info[5] = txtTalla.getText();
+				info[6] = txtPrecio.getText();
+				
+				modeloDatosProductos.addRow(info);
+				
+				limpiar();
+			}
+
+			
+		});
+	
+		BotonBorrar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				filaseleccionada = tablaProductos.getSelectedRow();
+				if(filaseleccionada >= 0) {
+					modeloDatosProductos.removeRow(filaseleccionada);
+				}else {
+					JOptionPane.showMessageDialog(null, "Selecciona una fila de la tabla", "Advertencia", JOptionPane.WARNING_MESSAGE);
+				}
+				
+			}
+		});
+		
 		
 		this.tablaProductos.getColumnModel().getColumn(0).setCellRenderer(renderStock);
 		this.tablaProductos.getColumnModel().getColumn(1).setCellRenderer(renderStock);
@@ -229,4 +291,16 @@ public class GestionProductos extends JFrame {
 		}	
 
 	}
+	private void limpiar() {
+		txtArticulo.setText("");
+		txtDeporte.setText("");
+		txtGenero.setText("");
+		txtMarca.setText("");
+		txtPrecio.setText("");
+		txtTalla.setText("");
+		
+	}
+	
+	
+	
 }

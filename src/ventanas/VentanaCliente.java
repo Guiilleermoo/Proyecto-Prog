@@ -258,7 +258,7 @@ public class VentanaCliente extends JFrame{
 			}
 			
 		});
-
+	
 	}
 	
 	private void initTables() {
@@ -556,7 +556,7 @@ public class VentanaCliente extends JFrame{
 		this.modeloDatosProductos.setRowCount(0);
 		
 		
-		// Se anade al modelo una fila de datos por cada comic
+		// Se anade al modelo una fila de datos por cada producto
 		for (Producto p : this.productos) {
 			JComboBox<String> jComboGenero = new JComboBox<>(gestorBD.obtenerGenero(p.getArticulo(), p.getDeporte(), p.getMarca()));
 			DefaultCellEditor generoEditor = new DefaultCellEditor(jComboGenero) {
@@ -567,7 +567,7 @@ public class VentanaCliente extends JFrame{
 				private static final long serialVersionUID = 1L;
 			};
 			
-			this.modeloDatosProductos.addRow( new Object[] {p.getId(), p.getArticulo(), p.getDeporte(), p.getMarca(), p.getGenero() ,p.getTalla(), p.getPrecio(), p.getCantidad()} );
+			this.modeloDatosProductos.addRow( new Object[] {p.getId(), p.getArticulo(), p.getDeporte(), p.getMarca(), p.getGenero() ,p.getTalla(), p.getPrecio(), 1} );
 			this.tablaProductos.getColumnModel().getColumn(4).setCellEditor(generoEditor);
 			this.tablaProductos.getColumnModel().getColumn(5).setCellEditor(tallaEditor);
 		}
@@ -587,17 +587,15 @@ public class VentanaCliente extends JFrame{
 				private static final long serialVersionUID = 1L;
 			};
 			
-			String[] genero = gestorBD.obtenerGenero(p.getArticulo(), p.getDeporte(), p.getMarca());
 			
-			JComboBox<String> jComboTalla = new JComboBox<>(gestorBD.obtenerTalla(p.getArticulo(), p.getDeporte(), p.getMarca(), genero[0])) ;
+			JComboBox<String> jComboTalla = new JComboBox<>(gestorBD.obtenerTalla(p.getArticulo(), p.getDeporte(), p.getMarca(), p.getGenero().toString())) ;
 			DefaultCellEditor tallaEditor = new DefaultCellEditor(jComboTalla) {
 				private static final long serialVersionUID = 1L;
 			};
 			
-			String[] talla = gestorBD.obtenerTalla(p.getArticulo(), p.getDeporte(), p.getMarca(), genero[0]);
-			Double precio = gestorBD.obtenerDinero(p.getArticulo(), p.getDeporte(), p.getMarca(), genero[0], talla[0]);
+		
 
-			this.modeloDatosProductos.addRow( new Object[] {p.getId(), p.getArticulo(), p.getDeporte(), p.getMarca(), jComboGenero, jComboTalla, precio, "1"} );
+			this.modeloDatosProductos.addRow( new Object[] {p.getId(), p.getArticulo(), p.getDeporte(), p.getMarca(), p.getGenero(), p.getTalla(), p.getPrecio(), "1"} );
 
 			
 			this.tablaProductos.getColumnModel().getColumn(4).setCellEditor(generoEditor);
@@ -643,5 +641,7 @@ public class VentanaCliente extends JFrame{
 		}
 		return total;
 	}
+	
+	
 	
 }
