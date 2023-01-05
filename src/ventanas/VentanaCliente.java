@@ -69,7 +69,8 @@ public class VentanaCliente extends JFrame{
 		panel_5.add(Articulo);
 		
 		JComboBox articulo = new JComboBox();
-		articulo.setModel(new DefaultComboBoxModel(new String[] {"Cualquiera", "Zapatillas", "Camiseta", "Pantalon", "Accesorios"}));
+		String[] articulos = gestorBD.obtenerArticulos();
+		articulo.setModel(new DefaultComboBoxModel(articulos));
 		panel_5.add(articulo);
 		
 		JLabel Deporte = new JLabel("Deporte:");
@@ -77,23 +78,24 @@ public class VentanaCliente extends JFrame{
 		panel_5.add(Deporte);
 		
 		JComboBox deporte = new JComboBox();
-		deporte.setModel(new DefaultComboBoxModel(new String[] {"Cualquiera", "Running", "Futbol"}));
+		String[] deportes = gestorBD.obtenerDeportes();
+		deporte.setModel(new DefaultComboBoxModel(deportes));
 		panel_5.add(deporte);
 		
 		JLabel Marca = new JLabel("Marca:");
 		panel_5.add(Marca);
 		
 		JComboBox marca = new JComboBox();
-		marca.setModel(new DefaultComboBoxModel(new String[] {"Cualquiera", "Nike", "Adidas", "Asics", "New Balance", "Puma", "Joma"}));
+		String[] marcas = gestorBD.obtenerMarcas();
+		marca.setModel(new DefaultComboBoxModel(marcas));
 		panel_5.add(marca);
 		
 		JLabel Genero = new JLabel("Genero:");
 		panel_5.add(Genero);
 		
 		JComboBox genero = new JComboBox();
-		panel_5.add(genero);
 		genero.setModel(new DefaultComboBoxModel(new String[] {"Cualquiera", "Hombre", "Mujer", "Unisex", "Nino", "Nina"}));
-		
+		panel_5.add(genero);
 		
 		JLabel Precio = new JLabel("Precio:");
 		panel_5.add(Precio);

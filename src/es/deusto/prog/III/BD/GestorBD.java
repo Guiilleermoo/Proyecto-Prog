@@ -363,6 +363,34 @@ public class GestorBD {
 		return productos;
 	}
 	
+	public int getLastId() {
+		int id = 0;
+		
+		//Se abre la conexión y se obtiene el Statement
+		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+		     Statement stmt = con.createStatement()) {
+			
+			String sql = "SELECT MAX(ID_PROD) AS 'MAXIMO' FROM PRODUCTO;";
+			
+			//Se ejecuta la sentencia y se obtiene el ResultSet con los resutlados
+			ResultSet rs = stmt.executeQuery(sql);
+
+			//Se recorre el ResultSet y se crean objetos Producto
+			while (rs.next()) {
+				id = rs.getInt("MAXIMO");
+			}
+			//Se cierra el ResultSet
+			rs.close();
+			
+			
+			log(Level.INFO, "Se ha recuperado el id maximo: " + id, null);			
+		} catch (Exception ex) {
+
+			log(Level.SEVERE, "Error al obtener el id maximo: " + id + " de la BD", ex);
+		}
+		return id;
+	}
+	
 	public Producto getProductoById(int id) {
 		Producto producto = null;
 		String sql = "SELECT * FROM PRODUCTO WHERE ID_PROD = ? LIMIT 1";
@@ -400,6 +428,96 @@ public class GestorBD {
 			System.out.println(ex);
 		}		
 		return producto;
+	}
+	
+	public String[] obtenerMarcas() {
+		String[] marcas = null;
+		List<String> marcasList = new ArrayList<String>();
+		marcasList.add("Cualquiera");
+		
+		//Se abre la conexión y se obtiene el Statement
+		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+		     Statement stmt = con.createStatement()) {
+			
+			String sql = "SELECT DISTINCT MARCA FROM PRODUCTO;";
+			
+			//Se ejecuta la sentencia y se obtiene el ResultSet con los resutlados
+			ResultSet rs = stmt.executeQuery(sql);			
+			
+			//Se recorre el ResultSet y se crean objetos Producto (Calzado/Ropa)
+			while (rs.next()) {
+				marcasList.add(rs.getString("MARCA"));
+			}
+			//Se cierra el ResultSet
+			rs.close();
+
+			marcas = marcasList.toArray(new String[0]);
+
+			log(Level.INFO, "Se han recuperado " + marcas.length +  " marcas", null);			 
+		} catch (Exception ex) {
+			log(Level.SEVERE, "Error al obtener marcas de la BD", ex);						
+		}		
+		return marcas;
+	}
+	
+	public String[] obtenerArticulos() {
+		String[] articulos = null;
+		List<String> articulosList = new ArrayList<String>();
+		articulosList.add("Cualquiera");
+		
+		//Se abre la conexión y se obtiene el Statement
+		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+		     Statement stmt = con.createStatement()) {
+			
+			String sql = "SELECT DISTINCT ARTICULO FROM PRODUCTO;";
+			
+			//Se ejecuta la sentencia y se obtiene el ResultSet con los resutlados
+			ResultSet rs = stmt.executeQuery(sql);			
+			
+			//Se recorre el ResultSet y se crean objetos Producto (Calzado/Ropa)
+			while (rs.next()) {
+				articulosList.add(rs.getString("ARTICULO"));
+			}
+			//Se cierra el ResultSet
+			rs.close();
+
+			articulos = articulosList.toArray(new String[0]);
+
+			log(Level.INFO, "Se han recuperado " + articulos.length +  " articulos", null);			 
+		} catch (Exception ex) {
+			log(Level.SEVERE, "Error al obtener articulos de la BD", ex);						
+		}		
+		return articulos;
+	}
+	
+	public String[] obtenerDeportes() {
+		String[] deportes = null;
+		List<String> deportesList = new ArrayList<String>();
+		deportesList.add("Cualquiera");
+		
+		//Se abre la conexión y se obtiene el Statement
+		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+		     Statement stmt = con.createStatement()) {
+			
+			String sql = "SELECT DISTINCT DEPORTE FROM PRODUCTO;";
+			
+			//Se ejecuta la sentencia y se obtiene el ResultSet con los resutlados
+			ResultSet rs = stmt.executeQuery(sql);			
+			
+			//Se recorre el ResultSet y se crean objetos Producto (Calzado/Ropa)
+			while (rs.next()) {
+				deportesList.add(rs.getString("DEPORTE"));
+			}
+			//Se cierra el ResultSet
+			rs.close();
+
+			deportes = deportesList.toArray(new String[0]);
+
+			log(Level.INFO, "Se han recuperado " + deportes.length +  " deportes", null);			 
+		} catch (Exception ex) {
+			log(Level.SEVERE, "Error al obtener deportes de la BD", ex);						
+		}		
+		return deportes;
 	}
 	
 	public String[] obtenerGenero(String articulo, String deporte, String marca) {
@@ -599,18 +717,18 @@ public class GestorBD {
 		}		
 	}
 	
-	public void actualizarStock(Producto producto, int stock) {
+	public void actualizarStock(int id, int stock) {
 		//Se abre la conexión y se obtiene el Statement
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
 		     Statement stmt = con.createStatement()) {
 			//Se ejecuta la sentencia de borrado de datos
 			String sql = "UPDATE PRODUCTO SET STOCK = STOCK + '%s' WHERE ID_PROD = %d;";
 
-			int result = stmt.executeUpdate(String.format(sql, stock, producto.getId()));
+			int result = stmt.executeUpdate(String.format(sql, stock, id));
 			
-			log(Level.INFO, "Se ha actualizado el stock de " + producto, null);	
+			log(Level.INFO, "Se ha actualizado el stock del producto con id:  " + id, null);	
 		} catch (Exception ex) {
-			log(Level.SEVERE, "Error actualizando el stock del producto " + producto, ex);
+			log(Level.SEVERE, "Error actualizando el stock del producto con id: " + id, ex);
 		}		
 	}
 	
@@ -687,6 +805,21 @@ public class GestorBD {
 			log(Level.INFO, "Se ha borrado al cliente" + cliente, null );
 		} catch (Exception ex) {
 			log(Level.SEVERE, "Error al borrar el cliente en la BD", ex );				
+		}		
+	}
+	
+	public void borrarProducto(int id) {
+		//Se abre la conexión y se obtiene el Statement
+		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+		     Statement stmt = con.createStatement()) {
+			//Se ejecuta la sentencia de borrado de datos
+			String sql = "DELETE FROM PRODUCTO WHERE ID_PROD = %d;";
+			
+			int result = stmt.executeUpdate(String.format(sql, id));
+			
+			log(Level.INFO, "Se ha borrado el producto con id: " + id, null );
+		} catch (Exception ex) {
+			log(Level.SEVERE, "Error al borrar el producto con id: " + id + " en la BD", ex );				
 		}		
 	}
 	
