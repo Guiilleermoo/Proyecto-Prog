@@ -254,7 +254,7 @@ public class GestionProductos extends JFrame {
 	}
 	
 	public void loadProductos() {
-		this.productos = gestorBD.obtenerProductos();
+		this.productos = gestorBD.obtenerProductosTodos();
 		
 		//Se borran los datos del modelo de datos
 		this.modeloDatosProductos.setRowCount(0);

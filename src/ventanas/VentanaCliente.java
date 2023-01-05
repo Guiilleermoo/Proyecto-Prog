@@ -10,6 +10,9 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
+import Editors.GeneroEditor;
+import Editors.SpinnerEditor;
+import Editors.TallaEditor;
 import es.deusto.prog.III.Producto;
 import es.deusto.prog.III.BD.GestorBD;
 import es.deusto.prog.III.Producto.Genero;
@@ -118,11 +121,11 @@ public class VentanaCliente extends JFrame{
 		
 		JPanel panel_6 = new JPanel();
 		getContentPane().add(panel_6);
-		panel_6.setLayout(new GridLayout(2, 0, 0, 0));
+		panel_6.setLayout(new GridLayout(2, 0));
 		
 		JPanel panel_2 = new JPanel();
 		getContentPane().add(panel_2);
-		panel_2.setLayout(new GridLayout(2, 0, 0, 0));
+		panel_2.setLayout(new GridLayout(2, 0));
 		
 		
 		tablaProductos = new JTable(modeloDatosProductos);
@@ -244,7 +247,7 @@ public class VentanaCliente extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				loadSeleccionados();
 				Double dinero = calcularTotal(modeloDatosSeleccionados);
-				scrollPaneSeleccionados.setBorder(new TitledBorder("Carrito\nTotal: " + dinero + "�"));
+				scrollPaneSeleccionados.setBorder(new TitledBorder("Total: " + dinero));
 			}
 		});
 		
@@ -256,21 +259,20 @@ public class VentanaCliente extends JFrame{
 				modeloDatosSeleccionados.removeRow(seleccionado);
 				tablaSeleccionados.repaint();
 				Double dinero = calcularTotal(modeloDatosSeleccionados);
-				scrollPaneSeleccionados.setBorder(new TitledBorder("Carrito\nTotal: " + dinero + "�"));
+				scrollPaneSeleccionados.setBorder(new TitledBorder("Total: " + dinero));
 			}
-			
 		});
 	
 	}
 	
 	private void initTables() {
 		//Cabecera del modelo de datos
-		Vector<String> cabeceraProductos = new Vector<String>(Arrays.asList( "ID", "ARTICULO", "DEPORTE", "MARCA", "GENERO", "TALLA", "PRECIO", "CANTIDAD"));
+		Vector<String> cabeceraProductos = new Vector<String>(Arrays.asList("ARTICULO", "DEPORTE", "MARCA", "GENERO", "TALLA", "PRECIO", "CANTIDAD"));
 		
 		//Se crea el modelo de datos para la tabla de productos solo con la cabecera		
 		this.modeloDatosProductos = new DefaultTableModel(new Vector<Vector<Object>>(), cabeceraProductos) {
 			public boolean isCellEditable (int row, int column) {
-				if(column == 4 || column == 5) {
+				if(column == 3 || column == 4 || column == 6) {
 					return true;
 				}
 				return false;
@@ -359,7 +361,6 @@ public class VentanaCliente extends JFrame{
 		this.tablaProductos.getTableHeader().getColumnModel().getColumn(4).setHeaderRenderer(centerHeadRenderer);
 		this.tablaProductos.getTableHeader().getColumnModel().getColumn(5).setHeaderRenderer(centerHeadRenderer);
 		this.tablaProductos.getTableHeader().getColumnModel().getColumn(6).setHeaderRenderer(centerHeadRenderer);
-		this.tablaProductos.getTableHeader().getColumnModel().getColumn(7).setHeaderRenderer(centerHeadRenderer);
 		
 		this.tablaSeleccionados.getTableHeader().getColumnModel().getColumn(0).setHeaderRenderer(centerHeadRenderer);
 		this.tablaSeleccionados.getTableHeader().getColumnModel().getColumn(1).setHeaderRenderer(centerHeadRenderer);
@@ -368,7 +369,6 @@ public class VentanaCliente extends JFrame{
 		this.tablaSeleccionados.getTableHeader().getColumnModel().getColumn(4).setHeaderRenderer(centerHeadRenderer);
 		this.tablaSeleccionados.getTableHeader().getColumnModel().getColumn(5).setHeaderRenderer(centerHeadRenderer);
 		this.tablaSeleccionados.getTableHeader().getColumnModel().getColumn(6).setHeaderRenderer(centerHeadRenderer);
-		this.tablaSeleccionados.getTableHeader().getColumnModel().getColumn(7).setHeaderRenderer(centerHeadRenderer);
 		
 		//Se modifica el Renderer de las columnas		
 		this.tablaProductos.getColumnModel().getColumn(0).setCellRenderer(render);
@@ -378,7 +378,6 @@ public class VentanaCliente extends JFrame{
 		this.tablaProductos.getColumnModel().getColumn(4).setCellRenderer(render);
 		this.tablaProductos.getColumnModel().getColumn(5).setCellRenderer(render);
 		this.tablaProductos.getColumnModel().getColumn(6).setCellRenderer(render);
-		this.tablaProductos.getColumnModel().getColumn(7).setCellRenderer(render);
 		
 		//Se modifica el Renderer de las columnas		
 		this.tablaSeleccionados.getColumnModel().getColumn(0).setCellRenderer(render2);
@@ -388,7 +387,6 @@ public class VentanaCliente extends JFrame{
 		this.tablaSeleccionados.getColumnModel().getColumn(4).setCellRenderer(render2);
 		this.tablaSeleccionados.getColumnModel().getColumn(5).setCellRenderer(render2);
 		this.tablaSeleccionados.getColumnModel().getColumn(6).setCellRenderer(render2);
-		this.tablaSeleccionados.getColumnModel().getColumn(7).setCellRenderer(render2);
 		
 		//Se modifica el modelo de seleccion de la tabla para que se pueda selecciona unicamente una fila
 		this.tablaProductos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -560,18 +558,9 @@ public class VentanaCliente extends JFrame{
 		
 		// Se anade al modelo una fila de datos por cada producto
 		for (Producto p : this.productos) {
-			JComboBox<String> jComboGenero = new JComboBox<>(gestorBD.obtenerGenero(p.getArticulo(), p.getDeporte(), p.getMarca()));
-			DefaultCellEditor generoEditor = new DefaultCellEditor(jComboGenero) {
-				private static final long serialVersionUID = 1L;
-			};
-			JComboBox<String> jComboTalla = new JComboBox<>(gestorBD.obtenerTalla(p.getArticulo(), p.getDeporte(), p.getMarca(), p.getGenero().toString()));
-			DefaultCellEditor tallaEditor = new DefaultCellEditor(jComboTalla) {
-				private static final long serialVersionUID = 1L;
-			};
-			
-			this.modeloDatosProductos.addRow( new Object[] {p.getId(), p.getArticulo(), p.getDeporte(), p.getMarca(), p.getGenero() ,p.getTalla(), p.getPrecio(), 1} );
-			this.tablaProductos.getColumnModel().getColumn(4).setCellEditor(generoEditor);
-			this.tablaProductos.getColumnModel().getColumn(5).setCellEditor(tallaEditor);
+			this.modeloDatosProductos.addRow( new Object[] {p.getArticulo(), p.getDeporte(), p.getMarca(), p.getGenero() ,p.getTalla(), p.getPrecio(), 1} );
+			this.tablaProductos.getColumnModel().getColumn(3).setCellEditor(new GeneroEditor(gestorBD));
+			this.tablaProductos.getColumnModel().getColumn(4).setCellEditor(new TallaEditor(gestorBD));
 		}
 	}
 	
@@ -584,24 +573,13 @@ public class VentanaCliente extends JFrame{
 
 		// Se anade al modelo una fila de datos por cada comic
 		for (Producto p : this.productos) {
-			JComboBox<String> jComboGenero = new JComboBox<>(gestorBD.obtenerGenero(p.getArticulo(), p.getDeporte(), p.getMarca()));
-			DefaultCellEditor generoEditor = new DefaultCellEditor(jComboGenero) {
-				private static final long serialVersionUID = 1L;
-			};
-			
-			
-			JComboBox<String> jComboTalla = new JComboBox<>(gestorBD.obtenerTalla(p.getArticulo(), p.getDeporte(), p.getMarca(), p.getGenero().toString())) ;
-			DefaultCellEditor tallaEditor = new DefaultCellEditor(jComboTalla) {
-				private static final long serialVersionUID = 1L;
-			};
-			
-		
 
-			this.modeloDatosProductos.addRow( new Object[] {p.getId(), p.getArticulo(), p.getDeporte(), p.getMarca(), p.getGenero(), p.getTalla(), p.getPrecio(), "1"} );
+			this.modeloDatosProductos.addRow( new Object[] {p.getArticulo(), p.getDeporte(), p.getMarca(), p.getGenero(), p.getTalla(), p.getPrecio(), "1"} );
 
-			
-			this.tablaProductos.getColumnModel().getColumn(4).setCellEditor(generoEditor);
-			this.tablaProductos.getColumnModel().getColumn(5).setCellEditor(tallaEditor);
+			this.tablaProductos.getColumnModel().getColumn(3).setCellEditor(new GeneroEditor(gestorBD));
+			this.tablaProductos.getColumnModel().getColumn(4).setCellEditor(new TallaEditor(gestorBD));
+//			SpinnerEditor spinnerEditor = new SpinnerEditor(tablaProductos, 6);
+//			this.tablaProductos.setDefaultRenderer(getClass(), spinnerEditor);
 		}		
 	}
 	
@@ -639,7 +617,7 @@ public class VentanaCliente extends JFrame{
 		//carrito.getDataVector();
 		Double total = 0.0;
 		for (int j = 0; j < carrito.getRowCount(); j++) {
-			total = total + (Double) carrito.getValueAt(j, 6);
+			total = total + (Double) carrito.getValueAt(j, 5);
 		}
 		return total;
 	}
@@ -647,3 +625,4 @@ public class VentanaCliente extends JFrame{
 	
 	
 }
+
