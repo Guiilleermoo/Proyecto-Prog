@@ -18,7 +18,6 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
 	 private static final long serialVersionUID = 1L;
 	    private JSpinner editSpinner, renderSpinner;
 	    private JTable table;
-	    private String[] list;
 	    
 	public SpinnerEditor(JTable table, int column) {
 		SpinnerModel spinnerModel = new SpinnerNumberModel(10, 1, 30, 1);
@@ -27,43 +26,28 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
         this.table = table;
         table.getColumnModel().getColumn(column).setCellEditor(this);
     }
-	
-	public SpinnerEditor(String[] list, JTable table, int column) {
-        editSpinner = new JSpinner();
-        editSpinner.setModel(new SpinnerListModel(list));
-        renderSpinner = new JSpinner();
-        this.list = list;
-        this.table = table;
-        table.getColumnModel().getColumn(column).setCellEditor(this);
-    }
+
 	@Override
 	public Object getCellEditorValue() {
 		return editSpinner.getValue();
 	}
 
 	@Override
-	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
-			int row, int column) {
-	        if (value == null) {
-	            renderSpinner.setValue(1);
-	        } else {
-	            int intValue = ((Integer) value).intValue();
-	            renderSpinner.setValue(intValue);
-	        }
-	        return renderSpinner;
+	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {  
+		if (value == null) {
+	     renderSpinner.setValue(1);
+	  } else {
+		  int intValue = ((Integer) value).intValue();
+		  renderSpinner.setValue(intValue);
+		  }
+		return renderSpinner;
 	}
 
 	@Override
 	public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
-		 if (list != null) {
-	            editSpinner.setValue(list[6]);
-	        } else {
-	            editSpinner.setValue(1);
-	        }
-	        if (value != null) {
-	            editSpinner.setValue(value);
-	        }
-	        return editSpinner;
+		if (value != null) {
+			editSpinner.setValue(value);
+			}
+		return editSpinner;
 	}
-
 }

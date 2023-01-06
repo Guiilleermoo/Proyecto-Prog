@@ -93,13 +93,6 @@ public class VentanaCliente extends JFrame{
 		marca.setModel(new DefaultComboBoxModel(marcas));
 		panel_5.add(marca);
 		
-		JLabel Genero = new JLabel("Genero:");
-		panel_5.add(Genero);
-		
-		JComboBox genero = new JComboBox();
-		genero.setModel(new DefaultComboBoxModel(new String[] {"Cualquiera", "Hombre", "Mujer", "Unisex", "Nino", "Nina"}));
-		panel_5.add(genero);
-		
 		JLabel Precio = new JLabel("Precio:");
 		panel_5.add(Precio);
 		
@@ -206,40 +199,38 @@ public class VentanaCliente extends JFrame{
 			}
 		});
 		
-		// ventana est�ndar
-		this.setTitle("Cliente");
-		this.pack();
-		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
-		this.setLocationRelativeTo(null);
-		this.setVisible(true);
+		
 		
 		articulo.addActionListener( new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	loadProductosFiltro(articulo.getSelectedItem().toString(), deporte.getSelectedItem().toString(), marca.getSelectedItem().toString(), genero.getSelectedItem().toString(), slider.getValue());
+            	loadProductosFiltro(articulo.getSelectedItem().toString(), deporte.getSelectedItem().toString(), marca.getSelectedItem().toString(), slider.getValue());
             }
         });
 		
 		deporte.addActionListener( new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	loadProductosFiltro(articulo.getSelectedItem().toString(), deporte.getSelectedItem().toString(), marca.getSelectedItem().toString(), genero.getSelectedItem().toString(), slider.getValue());
+            	loadProductosFiltro(articulo.getSelectedItem().toString(), deporte.getSelectedItem().toString(), marca.getSelectedItem().toString(), slider.getValue());
             }
         });
 		
 		marca.addActionListener( new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	loadProductosFiltro(articulo.getSelectedItem().toString(), deporte.getSelectedItem().toString(), marca.getSelectedItem().toString(), genero.getSelectedItem().toString(), slider.getValue());
+            	loadProductosFiltro(articulo.getSelectedItem().toString(), deporte.getSelectedItem().toString(), marca.getSelectedItem().toString(), slider.getValue());
             }
         });
 		
-		genero.addActionListener( new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            	loadProductosFiltro(articulo.getSelectedItem().toString(), deporte.getSelectedItem().toString(), marca.getSelectedItem().toString(), genero.getSelectedItem().toString(), slider.getValue());
-            }
-        });
+		Precio2.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (Precio2.isSelected()) {
+					loadproductos();
+				}
+			}
+		});
 		
 		Anyadir.addActionListener(new ActionListener() {
 			
@@ -262,7 +253,13 @@ public class VentanaCliente extends JFrame{
 				scrollPaneSeleccionados.setBorder(new TitledBorder("Total: " + dinero));
 			}
 		});
-	
+		
+		// ventana est�ndar
+				this.setTitle("Cliente");
+				this.pack();
+				this.setDefaultCloseOperation(HIDE_ON_CLOSE);
+				this.setLocationRelativeTo(null);
+				this.setVisible(true);
 	}
 	
 	private void initTables() {
@@ -272,7 +269,7 @@ public class VentanaCliente extends JFrame{
 		//Se crea el modelo de datos para la tabla de productos solo con la cabecera		
 		this.modeloDatosProductos = new DefaultTableModel(new Vector<Vector<Object>>(), cabeceraProductos) {
 			public boolean isCellEditable (int row, int column) {
-				if(column == 3 || column == 4 || column == 6) {
+				if(column == 3 || column == 4 || column == 5 || column == 6) {
 					return true;
 				}
 				return false;
@@ -353,6 +350,10 @@ public class VentanaCliente extends JFrame{
 		DefaultTableCellRenderer centerHeadRenderer = new DefaultTableCellRenderer();
 		centerHeadRenderer.setHorizontalAlignment(JLabel.CENTER);
 		
+		//JSpinner en todas las filas de la columna 6 (cantidad de cada producto)
+		SpinnerEditor spinnerEditor = new SpinnerEditor(tablaProductos, 6);
+		this.tablaProductos.setDefaultRenderer(getClass(), spinnerEditor);
+		
 		//Se cambia el render de las cabeceras para ajustar en centrado del texto
 		this.tablaProductos.getTableHeader().getColumnModel().getColumn(0).setHeaderRenderer(centerHeadRenderer);
 		this.tablaProductos.getTableHeader().getColumnModel().getColumn(1).setHeaderRenderer(centerHeadRenderer);
@@ -370,7 +371,7 @@ public class VentanaCliente extends JFrame{
 		this.tablaSeleccionados.getTableHeader().getColumnModel().getColumn(5).setHeaderRenderer(centerHeadRenderer);
 		this.tablaSeleccionados.getTableHeader().getColumnModel().getColumn(6).setHeaderRenderer(centerHeadRenderer);
 		
-		//Se modifica el Renderer de las columnas		
+//		//Se modifica el Renderer de las columnas		
 		this.tablaProductos.getColumnModel().getColumn(0).setCellRenderer(render);
 		this.tablaProductos.getColumnModel().getColumn(1).setCellRenderer(render);
 		this.tablaProductos.getColumnModel().getColumn(2).setCellRenderer(render);
@@ -542,23 +543,25 @@ public class VentanaCliente extends JFrame{
 
 			@Override
 			public void tableChanged(TableModelEvent e) {
-//				actualizarTallas(e);
-//				actualizarDinero(e);
+				//Solo actualizamos el precio si es una modificacion/Update
+//				if (e.getType() == TableModelEvent.UPDATE) {
+//					Double PrecioNuevo = actualizarPrecio(e);
+//					tablaProductos.setValueAt(PrecioNuevo, e.getFirstRow(), 5);
+//				}
 			}
-			
 		});
 		
 	}
 	
-	private void loadProductosFiltro(String articulo, String deporte, String marca, String genero, double precio) {
-		this.productos = gestorBD.obtenerProductosFiltro(articulo, deporte, marca, genero, precio);
+	private void loadProductosFiltro(String articulo, String deporte, String marca, double precio) {
+		this.productos = gestorBD.obtenerProductosFiltro(articulo, deporte, marca, precio);
 		//Se borran los datos del modelo de datos
 		this.modeloDatosProductos.setRowCount(0);
-		
 		
 		// Se anade al modelo una fila de datos por cada producto
 		for (Producto p : this.productos) {
 			this.modeloDatosProductos.addRow( new Object[] {p.getArticulo(), p.getDeporte(), p.getMarca(), p.getGenero() ,p.getTalla(), p.getPrecio(), 1} );
+			
 			this.tablaProductos.getColumnModel().getColumn(3).setCellEditor(new GeneroEditor(gestorBD));
 			this.tablaProductos.getColumnModel().getColumn(4).setCellEditor(new TallaEditor(gestorBD));
 		}
@@ -573,13 +576,11 @@ public class VentanaCliente extends JFrame{
 
 		// Se anade al modelo una fila de datos por cada comic
 		for (Producto p : this.productos) {
-
-			this.modeloDatosProductos.addRow( new Object[] {p.getArticulo(), p.getDeporte(), p.getMarca(), p.getGenero(), p.getTalla(), p.getPrecio(), "1"} );
+			this.modeloDatosProductos.addRow( new Object[] {p.getArticulo(), p.getDeporte(), p.getMarca(), p.getGenero(), p.getTalla(), p.getPrecio(), 1} );
 
 			this.tablaProductos.getColumnModel().getColumn(3).setCellEditor(new GeneroEditor(gestorBD));
 			this.tablaProductos.getColumnModel().getColumn(4).setCellEditor(new TallaEditor(gestorBD));
-//			SpinnerEditor spinnerEditor = new SpinnerEditor(tablaProductos, 6);
-//			this.tablaProductos.setDefaultRenderer(getClass(), spinnerEditor);
+			
 		}		
 	}
 	
@@ -605,14 +606,7 @@ public class VentanaCliente extends JFrame{
 			 }
 		 }
 	}
-	
-	private Double actualizarPrecio(String articulo, String deporte, String marca, String genero, String talla) {
-		Double precio = gestorBD.obtenerDinero(articulo, deporte, marca, genero, talla);
-		
-		
-		return precio;
-	}
-	
+
 	private Double calcularTotal(DefaultTableModel carrito) {
 		//carrito.getDataVector();
 		Double total = 0.0;
@@ -622,7 +616,20 @@ public class VentanaCliente extends JFrame{
 		return total;
 	}
 	
-	
-	
+	private Double actualizarPrecio(TableModelEvent e) {
+		Double precioTotal = 0.0;
+		
+		String articulo = (String) tablaProductos.getValueAt(e.getFirstRow(), 0);
+		String deporte = (String) tablaProductos.getValueAt(e.getFirstRow(), 1);
+		String marca = (String) tablaProductos.getValueAt(e.getFirstRow(), 2);
+		String genero = tablaProductos.getValueAt(e.getFirstRow(), 3) + "";
+		String talla = (String) tablaProductos.getValueAt(e.getFirstRow(), 4);
+		
+		Double precioParcial = gestorBD.obtenerDinero(articulo, deporte, marca, genero, talla);
+		if (precioParcial != null) {
+			precioTotal = ((Integer) tablaProductos.getValueAt(e.getFirstRow(), 6)) * precioParcial;
+		}	
+		return precioTotal;
+	}
 }
 

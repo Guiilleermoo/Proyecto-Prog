@@ -652,7 +652,7 @@ public class GestorBD {
 		return precio;
 	}
 	
-	public List<Producto> obtenerProductosFiltro(String articulo, String deporte, String marca, String genero, double precio) {
+	public List<Producto> obtenerProductosFiltro(String articulo, String deporte, String marca, double precio) {
 		List<Producto> productos = new ArrayList<>();
 		
 		String sql = "SELECT * FROM PRODUCTO WHERE ID_PROD >= 0 ";
@@ -666,13 +666,8 @@ public class GestorBD {
 		if (marca != "Cualquiera") {
 			sql += " AND MARCA = '" + marca + "' ";
 		}
-		if (genero != "Cualquiera") {
-			sql += " AND GENERO = '" + genero + "' ";
-		}
 		sql += " AND PRECIO <= " + precio + " GROUP BY ARTICULO, DEPORTE, MARCA";
-		
-		
-		//String sql = "SELECT * FROM PRODUCTOS WHERE ID >= 0 AND ARTICULO = '" + articulo + "' AND DEPORTE = '" + deporte +"' AND MARCA = '" + marca + "' AND GENERO = '" + genero.toUpperCase() + "' AND PRECIO <= " + precio + " GROUP BY ARTICULO, DEPORTE, MARCA";
+
 		//Se abre la conexión y se obtiene el Statement
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
 		     Statement stmt = con.createStatement()) {
