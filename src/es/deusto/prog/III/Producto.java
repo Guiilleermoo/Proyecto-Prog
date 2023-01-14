@@ -21,7 +21,7 @@ public class Producto {
 		HOMBRE,MUJER,NINO,NINA,UNISEX;
 	}
 
-	public Producto(String articulo, String deporte, String marca, Genero genero, String talla, double precio, int cantidad) {
+	public Producto(String articulo, String deporte, String marca, Genero genero, String talla, double precio) {
 		super();
 		this.articulo = articulo;
 		this.deporte = deporte;
@@ -29,7 +29,6 @@ public class Producto {
 		this.genero = genero;
 		this.talla = talla;
 		this.precio = precio;
-		this.cantidad = cantidad;
 	}
 	
 	public Producto() {
@@ -109,8 +108,7 @@ public class Producto {
 
 	@Override
 	public String toString() {
-		return "Producto [id=" + id + ", articulo=" + articulo + ", deporte=" + deporte + ", marca=" + marca
-			+ ", genero=" + genero + ", talla=" + talla + ", precio=" + precio + ", cantidad=" + cantidad + "]";
+		return articulo + " " + deporte + " " + marca + " " + genero + " " + talla + " " + precio + "€";
 	}
 	
 }

@@ -17,6 +17,7 @@ import es.deusto.prog.III.Producto.Genero;
 import es.deusto.prog.III.Trabajador.Estatus;
 
 public class GestorBD {
+	
 	private Properties properties;
 	protected static  String DRIVER_NAME;
 	protected static  String DATABASE_FILE;
@@ -700,9 +701,58 @@ public class GestorBD {
 			log(Level.SEVERE, "Error al obtener productos de la BD", ex);	
 			System.out.println(ex);
 		}		
-		
 		return productos;
+	}
 	
+	public List<Producto> obtenerProductosFiltro2(String articulo, String deporte, String marca) {
+		List<Producto> productos = new ArrayList<>();
+		
+		String sql = "SELECT * FROM PRODUCTO WHERE ID_PROD >= 0 ";
+		
+		if (articulo != "Cualquiera") {
+			sql += " AND ARTICULO = '" + articulo + "' ";
+		}
+		if (deporte != "Cualquiera") {
+			sql += " AND DEPORTE = '" + deporte + "' ";
+		}
+		if (marca != "Cualquiera") {
+			sql += " AND MARCA = '" + marca + "' ";
+		}
+		sql += " GROUP BY ARTICULO, DEPORTE, MARCA";
+
+		//Se abre la conexión y se obtiene el Statement
+		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+		     Statement stmt = con.createStatement()) {
+	
+			
+			//Se ejecuta la sentencia y se obtiene el ResultSet con los resutlados
+			ResultSet rs = stmt.executeQuery(sql);
+			Producto producto;
+
+			//Se recorre el ResultSet y se crean objetos Producto (Calzado/Ropa)
+			while (rs.next()) {
+				producto = new Producto();
+				
+				producto.setId(rs.getInt("ID_PROD"));
+				producto.setArticulo(rs.getString("ARTICULO"));
+				producto.setDeporte(rs.getString("DEPORTE"));
+				producto.setMarca(rs.getString("MARCA"));
+				producto.setGenero(Genero.valueOf(rs.getString("GENERO").toUpperCase()));
+				producto.setTalla(rs.getString("TALLA"));
+				producto.setPrecio(rs.getDouble("PRECIO"));
+				producto.setCantidad(rs.getInt("STOCK"));
+
+				productos.add(producto);
+			}
+			//Se cierra el ResultSet
+			rs.close();
+			
+			log(Level.INFO, "Se han recuperado " + productos.size() +  " productos", null);				
+		} catch (Exception ex) {
+			log(Level.SEVERE, "Error al obtener productos de la BD", ex);	
+			System.out.println(ex);
+		}		
+		return productos;
 	}
 	
 	public void actualizarContrasena(Cliente cliente, String contrasenaNueva) {

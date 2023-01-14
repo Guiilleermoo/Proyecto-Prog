@@ -49,7 +49,7 @@ public class VentanaRegistro extends JFrame {
 		contrasenaLabel.setBounds(100, 250, 80, 25);
 		panel.add(contrasenaLabel);
 		
-		JTextField contrasenaText = new JTextField(30);
+		JPasswordField contrasenaText = new JPasswordField(30);
 		contrasenaText.setBounds(200, 250, 300, 30);
 		panel.add(contrasenaText);
 		
@@ -82,14 +82,14 @@ public class VentanaRegistro extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 			
-			if (nombreYApellidoText.getText().isEmpty() || gmailText.getText().isEmpty() || contrasenaText.getText().isEmpty() || direccionText.getText().isEmpty() || telefonoText.getText().isEmpty()) {
+			if (nombreYApellidoText.getText().isEmpty() || gmailText.getText().isEmpty() || String.valueOf(contrasenaText.getPassword()).isEmpty() || direccionText.getText().isEmpty() || telefonoText.getText().isEmpty()) {
 				JOptionPane.showMessageDialog(null, "Error: completa los campos vacios");
 			} else if (telefonoText.getText().length() < 9 || telefonoText.getText().length() > 9) {
 				JOptionPane.showMessageDialog(null, "Error: tel�fono no v�lido");
 			} else {
 				String nombreYApellidos = nombreYApellidoText.getText();
 				String gmail = gmailText.getText();
-				String contrasena = contrasenaText.getText();
+				String contrasena = String.valueOf(contrasenaText.getPassword());
 				String direccion = direccionText.getText();
 				String telefono = telefonoText.getText();
 				

@@ -19,6 +19,7 @@ import es.deusto.prog.III.Producto.Genero;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -55,11 +56,8 @@ public class VentanaCliente extends JFrame{
 		this.gestorBD = gestorBD;
 		this.gmail = gmail;
 		this.contrasena = contrasena;
-		this.ventanaProgreso = new VentanaProgreso(gestorBD);
-		
-		
+
 		getContentPane().setLayout(new GridLayout(3, 0));
-		
 		
 		JPanel panel_1 = new JPanel();
 		getContentPane().add(panel_1);
@@ -152,7 +150,7 @@ public class VentanaCliente extends JFrame{
 		JButton Carrito = new JButton("Carrito");
 		panel_8.add(Carrito);
 		Carrito.setBackground(new Color(177, 205, 248));
-		
+
 		JPanel panel_7 = new JPanel();
 		panel_6.add(panel_7);
 		
@@ -190,10 +188,9 @@ public class VentanaCliente extends JFrame{
 					JOptionPane.showMessageDialog(null, "Tu carrito esta vacio", "Advertencia", JOptionPane.WARNING_MESSAGE);
 					
 				}else {
-					ventanaProgreso.setVisible(true);
-					System.out.println(tablaSeleccionados.getRowCount()); 
+					VentanaProgreso ventanaProgreso = new VentanaProgreso(gestorBD, obtenerCarrito(tablaSeleccionados));
 					for (int i = 0; i < tablaSeleccionados.getRowCount(); i++) {
-						modeloDatosSeleccionados.removeRow(i);
+						modeloDatosSeleccionados.removeRow(0);
 					}
 				}
 			}
@@ -227,7 +224,7 @@ public class VentanaCliente extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (Precio2.isSelected()) {
-					loadproductos();
+					loadProductosFiltro2(articulo.getSelectedItem().toString(), deporte.getSelectedItem().toString(), marca.getSelectedItem().toString());
 				}
 			}
 		});
@@ -325,8 +322,6 @@ public class VentanaCliente extends JFrame{
 				JLabel label = new JLabel(value.toString());					
 				label.setHorizontalAlignment(JLabel.CENTER);
 
-				System.out.println(row);
-				System.out.println(mouseRow);
 				//Si la celda esta seleccionada se asocia un color de fondo y letra
 				if (mouseRow == row) {
 					label.setBackground(Color.PINK);
@@ -567,6 +562,20 @@ public class VentanaCliente extends JFrame{
 		}
 	}
 	
+	private void loadProductosFiltro2(String articulo, String deporte, String marca) {
+		this.productos = gestorBD.obtenerProductosFiltro2(articulo, deporte, marca);
+		//Se borran los datos del modelo de datos
+		this.modeloDatosProductos.setRowCount(0);
+		
+		// Se anade al modelo una fila de datos por cada producto
+		for (Producto p : this.productos) {
+			this.modeloDatosProductos.addRow( new Object[] {p.getArticulo(), p.getDeporte(), p.getMarca(), p.getGenero() ,p.getTalla(), p.getPrecio(), 1} );
+			
+			this.tablaProductos.getColumnModel().getColumn(3).setCellEditor(new GeneroEditor(gestorBD));
+			this.tablaProductos.getColumnModel().getColumn(4).setCellEditor(new TallaEditor(gestorBD));
+		}
+	}
+	
 	private void loadproductos() {
 		// SELECT ARTICULO, DEPORTE, MARCA, GENERO FROM PRODUCTO GROUP BY GENERO, MARCA; (PENDIENTE)
 		
@@ -608,7 +617,6 @@ public class VentanaCliente extends JFrame{
 	}
 
 	private Double calcularTotal(DefaultTableModel carrito) {
-		//carrito.getDataVector();
 		Double total = 0.0;
 		for (int j = 0; j < carrito.getRowCount(); j++) {
 			total = total + (Double) carrito.getValueAt(j, 5);
@@ -630,6 +638,22 @@ public class VentanaCliente extends JFrame{
 			precioTotal = ((Integer) tablaProductos.getValueAt(e.getFirstRow(), 6)) * precioParcial;
 		}	
 		return precioTotal;
+	}
+	
+	private List<Producto> obtenerCarrito(JTable tabla) {
+		List<Producto> productos = new ArrayList<>();
+		for (int i = 0; i < tabla.getRowCount(); i++) {
+			Producto producto = new Producto(
+											tabla.getValueAt(i, 0).toString(),
+											tabla.getValueAt(i, 1).toString(),
+											tabla.getValueAt(i, 2).toString(),
+											Genero.valueOf(tabla.getValueAt(i, 3).toString()),
+											tabla.getValueAt(i, 4).toString(),
+											Double.parseDouble(tabla.getValueAt(i, 4).toString())
+											);
+			productos.add(producto);
+		}
+		return productos;
 	}
 }
 

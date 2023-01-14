@@ -55,7 +55,7 @@ public class VentanaLogging extends JFrame{
 		contrasenaLabel.setBounds(200, 480, 80, 25);
 		panel.add(contrasenaLabel);
 		
-		JTextField contrasenaText = new JTextField(20);
+		JPasswordField contrasenaText = new JPasswordField(20);
 		contrasenaText.setBounds(290, 480, 160, 25);
 		panel.add(contrasenaText);
 		
@@ -84,7 +84,7 @@ public class VentanaLogging extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				
 				gmail = gmailText.getText();
-				contrasena = contrasenaText.getText();
+				contrasena = String.valueOf(contrasenaText.getPassword());
 				// Trabajador: hulk@gmail.com, NUcRn8h85RZZTjg6UBwa 
 				// Cliente: guille, 123
 				
