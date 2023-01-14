@@ -611,7 +611,36 @@ public class VentanaCliente extends JFrame{
 					 fila[j] = tmO.getValueAt(i, j);
 				 }
 				 // 3) Agrega la fila al TableModel de la tabla de destino
-				 tmD.addRow(fila);
+				 if(tmD.getRowCount() == 0) {
+					 tmD.addRow(fila);
+				 } else {
+					 Object[] filaComp = new Object[tmO.getColumnCount()];
+					 int maximo = tmD.getRowCount();
+					 boolean repetido = false;
+					 int filaRep = 0;
+					 for(int m = 0; m < maximo; m++) {
+						 for(int h = 0; h < tmD.getColumnCount(); h++) {
+							 filaComp[h] = tmD.getValueAt(m, h);
+							 
+						 }
+						 System.out.println(Arrays.toString(fila) + "--------" + Arrays.toString(filaComp));
+						 if(fila[0] == filaComp[0] && fila[1] == filaComp[1] && fila[2] == filaComp[2] && fila[3] == filaComp[3] && fila[4] == filaComp[4]) {
+							 repetido = true;
+							 filaRep = m;
+						 } else {
+							 repetido = false;
+						 }
+					 }
+					 if(repetido == true) {
+						 int sumar = Integer.parseInt(tmD.getValueAt(filaRep, tmD.getColumnCount()-1).toString()) + Integer.parseInt(fila[6].toString());
+						 tmD.setValueAt(Integer.toString(sumar), filaRep, tmD.getColumnCount()-1);
+					 } else {
+						 tmD.addRow(fila);
+					 }
+				 }
+				 
+				 
+				 
 			 }
 		 }
 	}
@@ -619,7 +648,7 @@ public class VentanaCliente extends JFrame{
 	private Double calcularTotal(DefaultTableModel carrito) {
 		Double total = 0.0;
 		for (int j = 0; j < carrito.getRowCount(); j++) {
-			total = total + (Double) carrito.getValueAt(j, 5);
+			total = total + ((Double) carrito.getValueAt(j, 5) *  Double.parseDouble(carrito.getValueAt(j, 6).toString()));
 		}
 		return total;
 	}
