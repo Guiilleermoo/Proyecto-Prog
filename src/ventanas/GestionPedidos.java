@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.logging.Level;
 
 import javax.swing.*;
@@ -27,12 +28,18 @@ public class GestionPedidos extends JFrame{
 	protected JButton botonListoAFinalizado;
 	protected JButton botonFinalizadoAListo;
 	
-	protected ArrayList<Pedido> pedidos;
+	protected List<Pedido> pedidos;
 	protected HashMap<Estado, ArrayList<Pedido>> pedidosPorEstado;
 	
 	public GestionPedidos(GestorBD gestorBD, String gmail, String contrasena) {
 		Container cp = this.getContentPane();
 		cp.setLayout(new GridLayout(1, 3));
+		
+		pedidos = gestorBD.obtenerPedidos();
+		
+		pedidosPorEstado = new HashMap<>();
+		
+		this.regenerarPedidosPorEstado();
 		
 		JPanel preparacion = new JPanel(new BorderLayout());
 		JPanel listo = new JPanel(new BorderLayout());
@@ -198,25 +205,11 @@ public class GestionPedidos extends JFrame{
 			botonFinalizadoAListo.setEnabled(true);
 		}
 	}
-	
-	public ArrayList<Pedido> getPedidos() {
-		return pedidos;
-	}
 
-	public void setPedidos(ArrayList<Pedido> pedidos) {
-		if (pedidos != null) {
-			this.pedidos = pedidos;
-		}
-	}
 	public HashMap<Estado, ArrayList<Pedido>> getPedidosPorEstado() {
 		return pedidosPorEstado;
 	}
 
-	public void setPedidosPorEstado(HashMap<Estado, ArrayList<Pedido>> pedidosPorEstado) {
-		if (pedidosPorEstado != null && pedidosPorEstado.keySet().size() == Estado.values().length) {
-			this.pedidosPorEstado = pedidosPorEstado;
-		}
-	}
 	
 	public void actualizarEstadoPedido(Pedido pedido, Estado estado) {
 		int posicion = pedidos.lastIndexOf(pedido);
@@ -225,4 +218,13 @@ public class GestionPedidos extends JFrame{
 		pedidos.get(posicion).setEstado(estado);
 	}
 	
+	public void regenerarPedidosPorEstado() {
+		for (Estado estado : Estado.values()) {
+			this.pedidosPorEstado.put(estado, new ArrayList<Pedido>());
+		}
+		for (Pedido pedido : pedidos) {
+			this.pedidosPorEstado.get(pedido.getEstado()).add(pedido);
+		}
+	}
+
 }

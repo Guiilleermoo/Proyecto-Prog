@@ -5,6 +5,7 @@ import java.nio.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
@@ -322,6 +323,40 @@ public class GestorBD {
 			log(Level.SEVERE, "Error al recuperar el trabajador", ex);					
 		}		
 		return trabajador;
+	}
+	
+	public List<Pedido> obtenerPedidos() {
+		List<Pedido> pedidos = new ArrayList<>();
+		
+		//Se abre la conexión y se obtiene el Statement
+		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+		     Statement stmt = con.createStatement()) {
+			
+			String sql = "SELECT * FROM PEDIDO";
+			
+			//Se ejecuta la sentencia y se obtiene el ResultSet con los resutlados
+			ResultSet rs = stmt.executeQuery(sql);			
+			Pedido pedido;
+			
+			//Se recorre el ResultSet y se crean objetos Trabajador
+			while (rs.next()) {
+				pedido = new Pedido();
+				
+				pedido.setCliente(rs.getString("ID_C"));
+				pedido.setFecha(rs.getDate("FECHA"));
+				pedido.setEstado(Estado.valueOf(rs.getString("ESTADO")));
+
+				//Se inserta cada nuevo trabajador en la lista de trabajadores
+				pedidos.add(pedido);
+			}
+			//Se cierra el ResultSet
+			rs.close();
+			
+			log(Level.INFO, "Se han recuperado " + pedidos.size() + " pedidos", null);			
+		} catch (Exception ex) {
+			log(Level.SEVERE, "Error al obtener los pedidos de la BD", ex);					
+		}		
+		return pedidos;
 	}
 	
 	public List<Producto> obtenerProductosTodos() {
