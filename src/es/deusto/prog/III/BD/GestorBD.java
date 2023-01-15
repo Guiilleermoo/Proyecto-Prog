@@ -957,16 +957,16 @@ public class GestorBD {
 		}		
 	}
 	
-	public void borrarTrabajador(Trabajador trabajador) {
+	public void borrarTrabajador(int id) {
 			//Se abre la conexión y se obtiene el Statement
 			try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
 			     Statement stmt = con.createStatement()) {
 				//Se ejecuta la sentencia de borrado de datos
 				String sql = "DELETE FROM TRABAJADOR WHERE ID_T = %d;";
 				
-				int result = stmt.executeUpdate(String.format(sql, trabajador.getId()));
+				int result = stmt.executeUpdate(String.format(sql, id));
 				
-				log(Level.INFO, "Se ha borrado al cliente" + trabajador, null);
+				log(Level.INFO, "Se ha borrado al cliente" + id, null);
 			} catch (Exception ex) {
 				log(Level.SEVERE, "Error al borrar el trabajador en la BD", ex);						
 			}	
