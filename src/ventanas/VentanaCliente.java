@@ -126,7 +126,7 @@ public class VentanaCliente extends JFrame{
 
 		//Se inicializan las tablas y sus modelos de datos
 		this.initTables();
-		//Se cargan los comics en la tabla de comics
+		//Se cargan los productos en la tabla de productos
 		this.loadproductos();
 		
 		//La tabla de productos se inserta en un panel con scroll

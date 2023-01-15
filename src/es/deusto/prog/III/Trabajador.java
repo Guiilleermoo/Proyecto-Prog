@@ -98,8 +98,10 @@ public class Trabajador {
 
 	@Override
 	public String toString() {
-		return "Trabajador --> id :" + id + " " + nombreYApellidos +" . Contrasena: "
-				+ contrasena + ". Estatus " + estatus + ", con un salario de: " + salario + ", su telefono movil es " + telefono;
+		return "Trabajador [id=" + id + ", nombreYApellidos=" + nombreYApellidos + ", gmail=" + gmail + ", contrasena="
+				+ contrasena + ", estatus=" + estatus + ", salario=" + salario + ", telefono=" + telefono + "]";
 	}
+
+	
 	
 }
