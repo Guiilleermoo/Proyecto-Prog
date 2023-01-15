@@ -623,7 +623,6 @@ public class VentanaCliente extends JFrame{
 							 filaComp[h] = tmD.getValueAt(m, h);
 							 
 						 }
-						 System.out.println(Arrays.toString(fila) + "--------" + Arrays.toString(filaComp));
 						 if(fila[0] == filaComp[0] && fila[1] == filaComp[1] && fila[2] == filaComp[2] && fila[3] == filaComp[3] && fila[4] == filaComp[4]) {
 							 repetido = true;
 							 filaRep = m;

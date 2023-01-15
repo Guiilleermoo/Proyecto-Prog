@@ -75,7 +75,7 @@ public class Pedido {
 	
 	@Override
 	public String toString() {
-		SimpleDateFormat sdf = new SimpleDateFormat("DD//MM/YYYY");
+		SimpleDateFormat sdf = new SimpleDateFormat("DD/MM/YYYY");
 		return "Pedido de " + cliente + ", " + sdf.format(fecha) + ", " + estado;
 	}
 }

@@ -89,10 +89,10 @@ public class Trabajador {
 	}
 
 	public void setTelefono(String telefono) {
-		if (telefono.length() < 9 || telefono.length() > 9) {
-			System.err.println("Error guardando el teléfono");
-		} else {
+		if (telefono.length() == 9) {
 			this.telefono = telefono;
+		} else {
+			System.err.println("Error guardando el teléfono");
 		}
 	}
 

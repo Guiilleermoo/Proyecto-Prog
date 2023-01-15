@@ -39,8 +39,6 @@ public class GestionPedidos extends JFrame{
 		
 		pedidosPorEstado = new HashMap<>();
 		
-		this.regenerarPedidosPorEstado();
-		
 		JPanel preparacion = new JPanel(new BorderLayout());
 		JPanel listo = new JPanel(new BorderLayout());
 		JPanel finalizado = new JPanel(new BorderLayout());
@@ -63,18 +61,17 @@ public class GestionPedidos extends JFrame{
 						public void run() {
 							System.out.print("Preparando pedido");
 							gestorBD.log(Level.INFO, "Preparando pedido", null);
-//							for (int i = seleccionado.getElementos().size(); i > 0; i--) {
-//								try {
-//									Thread.sleep(1000);
-//								} catch (InterruptedException e) {				
-//								}
-//							}
+								try {
+									Thread.sleep(1000);
+								} catch (InterruptedException e) {				
+								}
 							System.out.println("Pedido preparado.");
 							gestorBD.log(Level.INFO, "Pedido preparado", null);
 							modeloListo.addElement(seleccionado);
 							modeloPreparacion.removeElement(seleccionado);
-							//gestorBD.actualizarEstadoPedido(seleccionado, Estado.LISTO);
+							actualizarEstadoPedido(seleccionado, Estado.LISTO);
 							actualizarBotones();
+							//gestorBD.actualizarEstado();
 						}
 					});
 					hilo.start();
@@ -85,7 +82,7 @@ public class GestionPedidos extends JFrame{
 		JPanel PreparacionAListo = new JPanel();
 		PreparacionAListo.add(botonPreparacionAListo);
 		
-		preparacion.add(new JLabel("En preparación..."), BorderLayout.NORTH);
+		preparacion.add(new JLabel("En preparacion..."), BorderLayout.NORTH);
 		preparacion.add(scrollPreparacion, BorderLayout.CENTER);
 		preparacion.add(PreparacionAListo, BorderLayout.SOUTH);
 		
@@ -104,7 +101,7 @@ public class GestionPedidos extends JFrame{
 				if (seleccionado != null) {
 					modeloPreparacion.addElement(seleccionado);
 					modeloListo.removeElement(seleccionado);			
-					//gestorBD.actualizarEstadoPedido(seleccionado, Estado.PREPARACION);
+					actualizarEstadoPedido(seleccionado, Estado.PREPARACION);
 					actualizarBotones();
 				}
 			}
@@ -117,7 +114,7 @@ public class GestionPedidos extends JFrame{
 				if (seleccionado != null) {
 					modeloFinalizado.addElement(seleccionado);
 					modeloListo.removeElement(seleccionado);			
-					//gestorBD.actualizarEstadoPedido(seleccionado, Estado.FINALIZADO);
+					actualizarEstadoPedido(seleccionado, Estado.FINALIZADO);
 					actualizarBotones();
 				}
 			}
@@ -145,7 +142,7 @@ public class GestionPedidos extends JFrame{
 				if (seleccionado != null) {
 					modeloListo.addElement(seleccionado);
 					modeloFinalizado.removeElement(seleccionado);			
-					//gestorBD.actualizarEstadoPedido(seleccionado, Estado.LISTO);
+					actualizarEstadoPedido(seleccionado, Estado.LISTO);
 					actualizarBotones();
 				}
 			}
@@ -162,13 +159,29 @@ public class GestionPedidos extends JFrame{
 		cp.add(listo);
 		cp.add(finalizado);
 		
+		this.generarPedidosPorEstado();
+		this.cargarModelos();
+		
 		this.setTitle("Preparación de pedidos");
 		this.setSize(800, 600);
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
 		this.setVisible(false);
 	}
 	
-	public void recargarModelos(GestorBD gestorBD) {
+	public void cargarModelos() {
+		for (Pedido pedido : this.getPedidosPorEstado().get(Estado.PREPARACION)) {
+			modeloPreparacion.addElement(pedido);
+		}
+		for (Pedido pedido : this.getPedidosPorEstado().get(Estado.LISTO)) {
+			modeloListo.addElement(pedido);
+		}
+		for (Pedido pedido : this.getPedidosPorEstado().get(Estado.FINALIZADO)) {
+			modeloFinalizado.addElement(pedido);
+		}
+		actualizarBotones();
+	}
+	
+	public void recargarModelos() {
 		modeloPreparacion.removeAllElements();
 		for (Pedido pedido : this.getPedidosPorEstado().get(Estado.PREPARACION)) {
 			modeloPreparacion.addElement(pedido);
@@ -183,7 +196,7 @@ public class GestionPedidos extends JFrame{
 		}
 		actualizarBotones();
 	}
-
+	
 	public void actualizarBotones() {
 		if (modeloPreparacion.isEmpty()) {
 			botonPreparacionAListo.setEnabled(false);
@@ -218,7 +231,7 @@ public class GestionPedidos extends JFrame{
 		pedidos.get(posicion).setEstado(estado);
 	}
 	
-	public void regenerarPedidosPorEstado() {
+	public void generarPedidosPorEstado() {
 		for (Estado estado : Estado.values()) {
 			this.pedidosPorEstado.put(estado, new ArrayList<Pedido>());
 		}

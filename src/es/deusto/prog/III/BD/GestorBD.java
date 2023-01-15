@@ -80,7 +80,7 @@ public class GestorBD {
 	}
 	
 	public void insertarTrabajador(Trabajador... trabajadores ) {
-		String sql = "INSERT INTO TRABAJADOR (NOMBREYAPELLIDOS, GMAIL, CONTRASENA, ESTATUS, SALARIO, TELEFONO) VALUES (?, ?, ?, ?, ?, ?);";
+		String sql = "INSERT INTO TRABAJADOR (ID_T, NOMBREYAPELLIDOS, GMAIL, CONTRASENA, ESTATUS, SALARIO, TELEFONO) VALUES (?, ?, ?, ?, ?, ?, ?);";
 		
 		//Se abre la conexión y se obtiene el Statement
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
@@ -90,12 +90,13 @@ public class GestorBD {
 			for (Trabajador t : trabajadores) {
 				// Si el trabajador no existe que se a�ada el trabajador a la BD
 				if(comprobarTrabajador(t.getGmail(), t.getContrasena()) == false) {
-					pstmt.setString(1, t.getNombreYApellidos());
-					pstmt.setString(2, t.getGmail());
-					pstmt.setString(3, t.getContrasena());
-					pstmt.setString(4, t.getStatus().toString());
-					pstmt.setDouble(5, t.getSalario());
-					pstmt.setString(6, t.getTelefono());
+					pstmt.setInt(1, t.getId());
+					pstmt.setString(2, t.getNombreYApellidos());
+					pstmt.setString(3, t.getGmail());
+					pstmt.setString(4, t.getContrasena());
+					pstmt.setString(5, t.getStatus().toString());
+					pstmt.setDouble(6, t.getSalario());
+					pstmt.setString(7, t.getTelefono());
 					
 					if (1 != pstmt.executeUpdate()) {
 						log(Level.SEVERE, "No se ha insertado el trabajador" + t, null);
@@ -283,6 +284,7 @@ public class GestorBD {
 			
 			log(Level.INFO, "Se han recuperado " + trabajadores.size() + " trabajadores", null);			
 		} catch (Exception ex) {
+			System.out.println(ex);
 			log(Level.SEVERE, "Error al obtener los trabajadores de la BD", ex);					
 		}		
 		return trabajadores;

@@ -160,6 +160,7 @@ public class GestionEmpleados extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				Trabajador t = new Trabajador();
 				
+				t.setId(gestorBD.getLastId());
 				t.setNombreYApellidos(nombreYApellidoText.getText());
 				t.setGmail(gmailText.getText());
 				t.setContrasena(contrasenaText.getText());
@@ -173,15 +174,11 @@ public class GestionEmpleados extends JFrame{
 					gestorBD.log(Level.SEVERE, "Error: campo Gmail vacio", null);
 				} else if (contrasenaText.getText().isEmpty()) {
 					gestorBD.log(Level.SEVERE, "Error: campo Contrasena vacio", null);
-				} else if (telefonoText.getText().isEmpty()) {
-					gestorBD.log(Level.SEVERE, "Error: campo Telefono vacio", null);
+				} else if (telefonoText.getText().isEmpty() || telefonoText.getText().length() != 9) {
+					gestorBD.log(Level.SEVERE, "Error: campo de telefono erróneo/vacio", null);
 				} else {
 					gestorBD.insertarTrabajador(t);
-					
-					int id = gestorBD.getLastId();
-					modeloDatosEmpleados.addRow(new Object[] {id, t.getNombreYApellidos(), t.getGmail(), t.getStatus(), t.getSalario(), t.getTelefono()});
-					
-					limpiar();
+					loadEmpleados();
 				}
 			}
 		});
