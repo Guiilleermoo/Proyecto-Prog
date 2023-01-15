@@ -6,9 +6,12 @@ import java.awt.GridLayout;
 import java.awt.ScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Vector;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 import es.deusto.prog.III.Trabajador;
 import es.deusto.prog.III.Trabajador.Estatus;
@@ -30,7 +33,7 @@ public class GestionEmpleados extends JFrame{
 		JPanel derecha = new JPanel();
 		JPanel abajo = new JPanel();
 		
-		cp.add(izquierda , BorderLayout.WEST);
+		cp.add(izquierda , BorderLayout.CENTER);
 		cp.add(derecha, BorderLayout.EAST);
 		cp.add(abajo, BorderLayout.SOUTH);
 		derecha.setLayout(new GridLayout(6,2));
@@ -63,13 +66,16 @@ public class GestionEmpleados extends JFrame{
 		derecha.add(salario_1);
 		derecha.add(telefono);
 		derecha.add(telefono_1);
+		izquierda.setLayout(null);
 		
 		JScrollPane scroll = new JScrollPane();
+		scroll.setBounds(10, 11, 574, 516);
 		izquierda.add(scroll);
-		
-		DefaultListModel listaEmpleados = new DefaultListModel();
+		DefaultListModel  listaEmpleados = new DefaultListModel();
 		JList listaE = new JList(listaEmpleados);
 		scroll.setViewportView(listaE);
+		
+		
 		
 		JButton ver = new JButton("Ver");
 		JButton anyadir = new JButton("Anadir");
@@ -80,10 +86,9 @@ public class GestionEmpleados extends JFrame{
 		abajo.add(despedir);
 		
 		
-		
 		List<Trabajador> trabajadores = gestorBD.obtenerTrabajadores();
 		trabajadores.forEach(t ->
-		listaEmpleados.addElement(t.getNombreYApellidos())
+		listaEmpleados.addElement(t.toString())
 		);
 		
 		anyadir.addActionListener(new ActionListener() {
@@ -120,12 +125,11 @@ public class GestionEmpleados extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				for (Trabajador trabajador : trabajadores) {
-					if(trabajador.getNombreYApellidos().equals(listaE.getSelectedValue().toString())){
+					if(trabajador.toString().equals(listaE.getSelectedValue().toString()))
 						listaEmpleados.remove(listaE.getSelectedIndex());
-						gestorBD.borrarTrabajador(trabajador);
+						gestorBD.borrarTrabajador(trabajador);	
 						listaE.repaint();
 						break;
-					} 
 				}
 		
 				
@@ -137,7 +141,6 @@ public class GestionEmpleados extends JFrame{
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		this.setVisible(false);
-		this.pack();
 	}
 	
 	private void insertarNuevoTrabajador(String nombre, String gmail, String contrasena, String estatus, String salario, String telefono) {
