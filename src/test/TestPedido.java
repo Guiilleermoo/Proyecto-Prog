@@ -18,7 +18,7 @@ import es.deusto.prog.III.Pedido.Estado;
 
 public class TestPedido {
 
-	Producto producto = new Producto("Zapatillas", "Baloncesto", "Nike", Genero.HOMBRE, "M", 0);
+	Producto producto = new Producto("Zapatillas", "Baloncesto", "Nike", Genero.HOMBRE, "M", 0, 1);
 	
 	private Pedido pedido;
 	private String cliente = "cliente";

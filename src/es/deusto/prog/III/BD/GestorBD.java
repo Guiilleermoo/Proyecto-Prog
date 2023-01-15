@@ -13,6 +13,7 @@ import java.util.logging.*;
 import javax.net.ssl.SSLEngineResult.Status;
 
 import es.deusto.prog.III.*;
+import es.deusto.prog.III.Pedido.Estado;
 import es.deusto.prog.III.Producto.Genero;
 import es.deusto.prog.III.Trabajador.Estatus;
 
@@ -814,6 +815,21 @@ public class GestorBD {
 			log(Level.SEVERE, "Error actualizando el stock del producto con id: " + id, ex);
 		}		
 	}
+	
+	/*public void actualizarStock(Pedido pedido, Estado estado) {
+		//Se abre la conexión y se obtiene el Statement
+		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+		     Statement stmt = con.createStatement()) {
+			//Se ejecuta la sentencia de borrado de datos
+			String sql = "UPDATE PEDIDO SET ESTADO =  %s WHERE ID_C = %d AND FECHA = %s;";
+
+			int result = stmt.executeUpdate(String.format(sql, estado, pedido.getCliente(), pedido.getFecha()));
+			
+			log(Level.INFO, "Se ha actualizado el estado del pedido" , null);	
+		} catch (Exception ex) {
+			log(Level.SEVERE, "Error actualizando el estado del pedido", ex);
+		}		
+	}*/
 	
 	public boolean comprobarCliente(String gmail, String contrasena) {
 		

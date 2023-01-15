@@ -97,9 +97,9 @@ public class VentanaProgreso extends JFrame{
 		
 		private void factura(List<Producto> productos) {
 				try (PrintWriter out = new PrintWriter("factura.txt")){
-					out.println("Productos Comprados: ");
+					out.println("PRODUCTO\t\t\tPRECIO\tCANTIDAD");
 					for (Producto p : productos) {
-						out.println(new Producto(p.getArticulo(), p.getDeporte(), p.getMarca(), p.getGenero(), p.getTalla(), p.getPrecio()));
+						out.println(new Producto(p.getArticulo(), p.getDeporte(), p.getMarca(), p.getGenero(), p.getTalla(), p.getPrecio(), p.getCantidad()));
 					}
 					out.println("Total: " + calcularTotal(productos) + "");
 				} catch (Exception e) {
@@ -110,7 +110,7 @@ public class VentanaProgreso extends JFrame{
 		private Double calcularTotal(List<Producto> productos) {
 			Double total = 0.0;
 			for (Producto p : productos) {
-				total += p.getPrecio();
+				total += (p.getPrecio() * p.getCantidad());
 			}
 			return total;
 		}

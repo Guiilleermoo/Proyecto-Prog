@@ -678,7 +678,8 @@ public class VentanaCliente extends JFrame{
 											tabla.getValueAt(i, 2).toString(),
 											Genero.valueOf(tabla.getValueAt(i, 3).toString()),
 											tabla.getValueAt(i, 4).toString(),
-											Double.parseDouble(tabla.getValueAt(i, 4).toString())
+											Double.parseDouble(tabla.getValueAt(i, 4).toString()),
+											Integer.parseInt(tabla.getValueAt(i, 6).toString())
 											);
 			productos.add(producto);
 		}

@@ -21,12 +21,14 @@ public class VentanaTrabajador extends JFrame {
 	
 	protected GestionEmpleados gestionEmpleados;
 	protected GestionProductos gestionProductos;
+	protected GestionPedidos gestionPedidos;
 	
 	public VentanaTrabajador(GestorBD gestorBD, String gmail, String contrasena) {
 		this.gestorBD = gestorBD;
 		this.gmail = gmail;
 		this.contrasena = contrasena;
 		
+		gestionPedidos = new GestionPedidos(gestorBD, gmail, contrasena);
 		gestionEmpleados = new GestionEmpleados(gestorBD, gmail, contrasena);
 		gestionProductos = new GestionProductos(gestorBD, gmail, contrasena);
 		
@@ -34,14 +36,15 @@ public class VentanaTrabajador extends JFrame {
 		
 		JPanel centro = new JPanel();
 
-		
+		JButton botonPedidos = new JButton("Gestionar Pedidos");
 		JButton botonEmpleados = new JButton("Gestionar Empleados");
 		JButton botonProductos = new JButton("Gestionar Existencias");
 		
 		cp.add(centro , BorderLayout.CENTER);
 		
-		centro.setLayout(new GridLayout(1,2));
+		centro.setLayout(new GridLayout(1,3));
 		
+		centro.add(botonPedidos);
 		centro.add(botonEmpleados);
 		centro.add(botonProductos);
 		
@@ -59,9 +62,15 @@ public class VentanaTrabajador extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (gestorBD.getTrabajadorByGmail(gmail).getStatus() == Estatus.JEFE) {
 					gestionProductos.setVisible(true);
-				}
+			}
+		});
+		
+		botonPedidos.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				gestionPedidos.setVisible(true);
 			}
 		});
 		
