@@ -215,6 +215,42 @@ public class GestorBD {
 		return cliente;
 	}
 	
+	public Cliente getClienteById(int id) {
+		Cliente cliente = null;
+		String sql = "SELECT * FROM CLIENTE WHERE ID_C = ? LIMIT 1";
+		
+		//Se abre la conexión y se crea el PreparedStatement con la sentencia SQL
+		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+		     PreparedStatement pStmt = con.prepareStatement(sql)) {			
+			
+			//Se definen los parámetros de la sentencia SQL
+			pStmt.setInt(1, id);
+			
+			//Se ejecuta la sentencia y se obtiene el ResultSet con los resutlados
+			ResultSet rs = pStmt.executeQuery();			
+
+			//Se procesa el unico resultado
+			if (rs.next()) {
+				cliente = new Cliente();
+				
+				cliente.setId(rs.getInt("ID_C"));
+				cliente.setNombreYApellidos(rs.getString("NOMBREYAPELLIDOS"));
+				cliente.setGmail(rs.getString("GMAIL"));
+				cliente.setContrasena(rs.getString("CONTRASENA"));
+				cliente.setDireccion(rs.getString("DIRECCION"));
+				cliente.setTelefono(rs.getString("TELEFONO"));
+			}
+			
+			//Se cierra el ResultSet
+			rs.close();
+			
+			log(Level.INFO, "Se ha recuperado el cliente" + cliente, null);		
+		} catch (Exception ex) {
+			log(Level.SEVERE, "Error al recuperar el cliente" + cliente, ex);						
+		}		
+		return cliente;
+	}
+	
 	public Cliente getClienteByGmail(String gmail) {
 		Cliente cliente = null;
 		String sql = "SELECT * FROM CLIENTE WHERE GMAIL = ? LIMIT 1";
@@ -326,7 +362,6 @@ public class GestorBD {
 		}		
 		return trabajador;
 	}
-	
 	public List<Pedido> obtenerPedidos() {
 		List<Pedido> pedidos = new ArrayList<>();
 		
@@ -340,15 +375,49 @@ public class GestorBD {
 			ResultSet rs = stmt.executeQuery(sql);			
 			Pedido pedido;
 			
-			//Se recorre el ResultSet y se crean objetos Trabajador
 			while (rs.next()) {
 				pedido = new Pedido();
 				
 				pedido.setCliente(rs.getString("ID_C"));
 				pedido.setFecha(rs.getDate("FECHA"));
 				pedido.setEstado(Estado.valueOf(rs.getString("ESTADO")));
+				
 
-				//Se inserta cada nuevo trabajador en la lista de trabajadores
+				pedidos.add(pedido);
+			}
+
+			//Se cierra el ResultSet
+			rs.close();
+			
+			log(Level.INFO, "Se han recuperado " + pedidos.size() + " pedidos", null);			
+		} catch (Exception ex) {
+			log(Level.SEVERE, "Error al obtener los pedidos de la BD", ex);					
+		}		
+		return pedidos;
+	}
+	
+	public List<Pedido> obtenerPedidosCliente(int id) {
+		List<Pedido> pedidos = new ArrayList<>();
+		
+		//Se abre la conexión y se obtiene el Statement
+		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+		     Statement stmt = con.createStatement()) {
+			
+			String sql = "SELECT * FROM PEDIDO WHERE ID_C = " + id;
+			
+			//Se ejecuta la sentencia y se obtiene el ResultSet con los resutlados
+			ResultSet rs = stmt.executeQuery(sql);			
+			Pedido pedido;
+			
+
+			while (rs.next()) {
+				pedido = new Pedido();
+				
+				pedido.setId(rs.getInt("ID_P"));
+				pedido.setCliente(rs.getString("ID_C"));
+				pedido.setFecha(rs.getDate("FECHA"));
+				pedido.setEstado(Estado.valueOf(rs.getString("ESTADO")));
+
 				pedidos.add(pedido);
 			}
 			//Se cierra el ResultSet
@@ -853,20 +922,20 @@ public class GestorBD {
 		}		
 	}
 	
-	/*public void actualizarStock(Pedido pedido, Estado estado) {
+	public void actualizarStockCompra(int id, int stock) {
 		//Se abre la conexión y se obtiene el Statement
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
 		     Statement stmt = con.createStatement()) {
 			//Se ejecuta la sentencia de borrado de datos
-			String sql = "UPDATE PEDIDO SET ESTADO =  %s WHERE ID_C = %d AND FECHA = %s;";
+			String sql = "UPDATE PRODUCTO SET STOCK = STOCK - '%s' WHERE ID_PROD = %d;";
 
-			int result = stmt.executeUpdate(String.format(sql, estado, pedido.getCliente(), pedido.getFecha()));
+			int result = stmt.executeUpdate(String.format(sql, stock, id));
 			
-			log(Level.INFO, "Se ha actualizado el estado del pedido" , null);	
+			log(Level.INFO, "Se ha actualizado el stock del producto con id:  " + id, null);	
 		} catch (Exception ex) {
-			log(Level.SEVERE, "Error actualizando el estado del pedido", ex);
+			log(Level.SEVERE, "Error actualizando el stock del producto con id: " + id, ex);
 		}		
-	}*/
+	}
 	
 	public boolean comprobarCliente(String gmail, String contrasena) {
 		

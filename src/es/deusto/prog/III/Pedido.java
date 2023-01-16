@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Pedido {
+	protected int id;
 	protected String cliente;
 	protected Date fecha;
 	protected ArrayList<Producto> productos;
@@ -16,9 +17,10 @@ public class Pedido {
 	
 	public Pedido() {
 		super();
-		this.cliente = null;
+		this.id = -1;
+		this.cliente = "";
 		this.fecha = null;
-		this.productos = null;
+		this.productos = new ArrayList<>();
 		this.estado = Estado.LISTO;
 	}
 
@@ -28,6 +30,14 @@ public class Pedido {
 		this.fecha = fecha;
 		this.productos = productos;
 		this.estado = estado;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getCliente() {

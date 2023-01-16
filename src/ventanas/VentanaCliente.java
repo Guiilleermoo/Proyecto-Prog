@@ -7,9 +7,6 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableColumn;
-
 import Editors.GeneroEditor;
 import Editors.SpinnerEditor;
 import Editors.TallaEditor;
@@ -21,7 +18,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -33,6 +29,7 @@ public class VentanaCliente extends JFrame{
 	protected String gmail;
 	protected String contrasena;
 	protected VentanaProgreso ventanaProgreso;
+	protected VentanaPedidos ventanaPedidos;
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -69,26 +66,26 @@ public class VentanaCliente extends JFrame{
 		JLabel Articulo = new JLabel("Articulo:");
 		panel_5.add(Articulo);
 		
-		JComboBox articulo = new JComboBox();
+		JComboBox<String> articulo = new JComboBox<String>();
 		String[] articulos = gestorBD.obtenerArticulos();
-		articulo.setModel(new DefaultComboBoxModel(articulos));
+		articulo.setModel(new DefaultComboBoxModel<String>(articulos));
 		panel_5.add(articulo);
 		
 		JLabel Deporte = new JLabel("Deporte:");
 		Deporte.setEnabled(true);
 		panel_5.add(Deporte);
 		
-		JComboBox deporte = new JComboBox();
+		JComboBox<String> deporte = new JComboBox<String>();
 		String[] deportes = gestorBD.obtenerDeportes();
-		deporte.setModel(new DefaultComboBoxModel(deportes));
+		deporte.setModel(new DefaultComboBoxModel<String>(deportes));
 		panel_5.add(deporte);
 		
 		JLabel Marca = new JLabel("Marca:");
 		panel_5.add(Marca);
 		
-		JComboBox marca = new JComboBox();
+		JComboBox<String> marca = new JComboBox<String>();
 		String[] marcas = gestorBD.obtenerMarcas();
-		marca.setModel(new DefaultComboBoxModel(marcas));
+		marca.setModel(new DefaultComboBoxModel<String>(marcas));
 		panel_5.add(marca);
 		
 		JLabel Precio = new JLabel("Precio:");
@@ -117,12 +114,6 @@ public class VentanaCliente extends JFrame{
 		JPanel panel_2 = new JPanel();
 		getContentPane().add(panel_2);
 		panel_2.setLayout(new GridLayout(2, 0));
-		
-		
-		tablaProductos = new JTable(modeloDatosProductos);
-
-		tablaSeleccionados = new JTable();
-		
 
 		//Se inicializan las tablas y sus modelos de datos
 		this.initTables();
@@ -143,20 +134,21 @@ public class VentanaCliente extends JFrame{
 		JPanel panel_8 = new JPanel();
 		panel_2.add(panel_8);
 		
-		JButton Borrar = new JButton("Borrar");
-		panel_8.add(Borrar);
-		Borrar.setBackground(new Color(177, 205, 248));
+		JButton borrar = new JButton("Borrar");
+		panel_8.add(borrar);
 		
-		JButton Carrito = new JButton("Carrito");
-		panel_8.add(Carrito);
-		Carrito.setBackground(new Color(177, 205, 248));
+		JButton carrito = new JButton("Comprar");
+		panel_8.add(carrito);
 
+		JButton pedidos = new JButton("Mis Pedidos");
+		panel_8.add(pedidos);
+		
+		
 		JPanel panel_7 = new JPanel();
 		panel_6.add(panel_7);
 		
-		JButton Anyadir = new JButton("Anadir");
-		Anyadir.setBackground(new Color(177, 205, 248));
-		panel_7.add(Anyadir);
+		JButton anyadir = new JButton("Anadir");
+		panel_7.add(anyadir);
 		
 		tablaProductos.addKeyListener(new KeyAdapter() {
 			
@@ -164,7 +156,7 @@ public class VentanaCliente extends JFrame{
 			public void keyPressed(KeyEvent e) {
 				
 				if(e.isControlDown() && e.getKeyCode() == KeyEvent.VK_PLUS) {
-					Anyadir.doClick();
+					anyadir.doClick();
 				}
 			}
 		});
@@ -175,12 +167,12 @@ public class VentanaCliente extends JFrame{
 			public void keyPressed(KeyEvent e) {
 				
 				if(e.isControlDown() && e.getKeyCode() == KeyEvent.VK_MINUS) {
-					Borrar.doClick();
+					borrar.doClick();
 				}	
 			}
 		});
 		
-		Carrito.addActionListener(new ActionListener() {
+		carrito.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -188,7 +180,7 @@ public class VentanaCliente extends JFrame{
 					JOptionPane.showMessageDialog(null, "Tu carrito esta vacio", "Advertencia", JOptionPane.WARNING_MESSAGE);
 					
 				}else {
-					VentanaProgreso ventanaProgreso = new VentanaProgreso(gestorBD, obtenerCarrito(tablaSeleccionados));
+					ventanaProgreso = new VentanaProgreso(gestorBD, obtenerCarrito(tablaSeleccionados));
 					for (int i = 0; i < tablaSeleccionados.getRowCount(); i++) {
 						modeloDatosSeleccionados.removeRow(0);
 					}
@@ -196,7 +188,14 @@ public class VentanaCliente extends JFrame{
 			}
 		});
 		
-		
+		pedidos.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int idCliente = gestorBD.getClienteByGmail(gmail).getId();
+				ventanaPedidos = new VentanaPedidos(gestorBD, idCliente);
+			}
+		});
 		
 		articulo.addActionListener( new ActionListener() {
             @Override
@@ -229,7 +228,7 @@ public class VentanaCliente extends JFrame{
 			}
 		});
 		
-		Anyadir.addActionListener(new ActionListener() {
+		anyadir.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -239,7 +238,7 @@ public class VentanaCliente extends JFrame{
 			}
 		});
 		
-		Borrar.addActionListener(new ActionListener(){
+		borrar.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -253,7 +252,7 @@ public class VentanaCliente extends JFrame{
 		
 		// ventana est�ndar
 				this.setTitle("Cliente");
-				this.pack();
+				this.setSize(900, 600);
 				this.setDefaultCloseOperation(HIDE_ON_CLOSE);
 				this.setLocationRelativeTo(null);
 				this.setVisible(true);
@@ -278,14 +277,13 @@ public class VentanaCliente extends JFrame{
 				return false;
 			}
 		};
-		//Se crea la tabla de comics con el modelo de datos		
+		
+		//Se crea la tabla de productos con el modelo de datos		
 		tablaProductos = new JTable(this.modeloDatosProductos);	
 		tablaSeleccionados = new JTable(this.modeloDatosSeleccionados);	
 		
 		SpinnerNumberModel value = new SpinnerNumberModel(1, 1, 10, 1);
 		JSpinner SpinnerCantidad = new JSpinner(value);
-
-		
 		
 		DefaultTableCellRenderer render = new DefaultTableCellRenderer() {
 			private static final long serialVersionUID = 1L;
@@ -366,7 +364,7 @@ public class VentanaCliente extends JFrame{
 		this.tablaSeleccionados.getTableHeader().getColumnModel().getColumn(5).setHeaderRenderer(centerHeadRenderer);
 		this.tablaSeleccionados.getTableHeader().getColumnModel().getColumn(6).setHeaderRenderer(centerHeadRenderer);
 		
-//		//Se modifica el Renderer de las columnas		
+		//Se modifica el Renderer de las columnas		
 		this.tablaProductos.getColumnModel().getColumn(0).setCellRenderer(render);
 		this.tablaProductos.getColumnModel().getColumn(1).setCellRenderer(render);
 		this.tablaProductos.getColumnModel().getColumn(2).setCellRenderer(render);
@@ -539,10 +537,10 @@ public class VentanaCliente extends JFrame{
 			@Override
 			public void tableChanged(TableModelEvent e) {
 				//Solo actualizamos el precio si es una modificacion/Update
-//				if (e.getType() == TableModelEvent.UPDATE) {
-//					Double PrecioNuevo = actualizarPrecio(e);
-//					tablaProductos.setValueAt(PrecioNuevo, e.getFirstRow(), 5);
-//				}
+				if (e.getType() == TableModelEvent.UPDATE && e.getColumn() == 4) {
+					Double PrecioNuevo = actualizarPrecio(e);
+					tablaProductos.setValueAt(PrecioNuevo, e.getFirstRow(), 5);
+				}
 			}
 		});
 		
@@ -577,7 +575,6 @@ public class VentanaCliente extends JFrame{
 	}
 	
 	private void loadproductos() {
-		// SELECT ARTICULO, DEPORTE, MARCA, GENERO FROM PRODUCTO GROUP BY GENERO, MARCA; (PENDIENTE)
 		
 		this.productos = gestorBD.obtenerProductos();
 		//Se borran los datos del modelo de datos
@@ -620,9 +617,9 @@ public class VentanaCliente extends JFrame{
 					 int filaRep = 0;
 					 for(int m = 0; m < maximo; m++) {
 						 for(int h = 0; h < tmD.getColumnCount(); h++) {
-							 filaComp[h] = tmD.getValueAt(m, h);
-							 
+							 filaComp[h] = tmD.getValueAt(m, h); 
 						 }
+						 
 						 if(fila[0] == filaComp[0] && fila[1] == filaComp[1] && fila[2] == filaComp[2] && fila[3] == filaComp[3] && fila[4] == filaComp[4]) {
 							 repetido = true;
 							 filaRep = m;
@@ -631,16 +628,14 @@ public class VentanaCliente extends JFrame{
 							 repetido = false;
 						 }
 					 }
+					 
 					 if(repetido == true) {
 						 int sumar = Integer.parseInt(tmD.getValueAt(filaRep, tmD.getColumnCount()-1).toString()) + Integer.parseInt(fila[6].toString());
 						 tmD.setValueAt(Integer.toString(sumar), filaRep, tmD.getColumnCount()-1);
 					 } else {
 						 tmD.addRow(fila);
 					 }
-				 }
-				 
-				 
-				 
+				 } 
 			 }
 		 }
 	}
@@ -654,7 +649,7 @@ public class VentanaCliente extends JFrame{
 	}
 	
 	private Double actualizarPrecio(TableModelEvent e) {
-		Double precioTotal = 0.0;
+		Double precio = 0.0;
 		
 		String articulo = (String) tablaProductos.getValueAt(e.getFirstRow(), 0);
 		String deporte = (String) tablaProductos.getValueAt(e.getFirstRow(), 1);
@@ -662,11 +657,9 @@ public class VentanaCliente extends JFrame{
 		String genero = tablaProductos.getValueAt(e.getFirstRow(), 3) + "";
 		String talla = (String) tablaProductos.getValueAt(e.getFirstRow(), 4);
 		
-		Double precioParcial = gestorBD.obtenerDinero(articulo, deporte, marca, genero, talla);
-		if (precioParcial != null) {
-			precioTotal = ((Integer) tablaProductos.getValueAt(e.getFirstRow(), 6)) * precioParcial;
-		}	
-		return precioTotal;
+		precio = gestorBD.obtenerDinero(articulo, deporte, marca, genero, talla);
+
+		return precio;
 	}
 	
 	private List<Producto> obtenerCarrito(JTable tabla) {
