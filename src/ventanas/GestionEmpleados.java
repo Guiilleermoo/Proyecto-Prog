@@ -180,7 +180,6 @@ public class GestionEmpleados extends JFrame{
 		tablaEmpleados.addMouseListener(new MouseAdapter() {
 		
 			
-			@Override
 			public void mousePressed(MouseEvent e) {
 				
 				int seleccion = 0;
@@ -231,7 +230,7 @@ public class GestionEmpleados extends JFrame{
             	if(tablaEmpleados.getSelectionModel().isSelectionEmpty() == false) {
             		System.out.println(estatusCombo.getSelectedItem().toString() + tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 0) );
             		gestorBD.actualizarDatosEmpleado("ESTATUS", tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 0).toString(), estatusCombo.getSelectedItem().toString());
-            		tablaEmpleados.setValueAt(estatusCombo.getSelectedItem().toString(), tablaEmpleados.getSelectedRow(), 3);
+            		tablaEmpleados.setValueAt(estatusCombo.getSelectedItem(), tablaEmpleados.getSelectedRow(), 3);
             	}
             }
         });
