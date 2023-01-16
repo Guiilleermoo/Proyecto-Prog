@@ -75,6 +75,7 @@ public class GestorBD {
 					log(Level.INFO, clientes.length + "Clientes insertados en la BBDD", null);
 				}
 			} catch (Exception ex) {
+				System.out.println(ex);
 				log(Level.SEVERE, "Error al insertar clientes", ex);
 			}		
 	}
@@ -507,6 +508,34 @@ public class GestorBD {
 			log(Level.SEVERE, "Error al obtener productos de la BD", ex);						
 		}
 		return productos;
+	}
+	
+	public int getLastIdCliente() {
+		int id = 0;
+		
+		//Se abre la conexión y se obtiene el Statement
+		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+		     Statement stmt = con.createStatement()) {
+			
+			String sql = "SELECT MAX(ID_C) AS 'MAXIMO' FROM CLIENTE;";
+			
+			//Se ejecuta la sentencia y se obtiene el ResultSet con los resutlados
+			ResultSet rs = stmt.executeQuery(sql);
+
+			//Se recorre el ResultSet y se crean objetos Producto
+			while (rs.next()) {
+				id = rs.getInt("MAXIMO");
+			}
+			//Se cierra el ResultSet
+			rs.close();
+			
+			
+			log(Level.INFO, "Se ha recuperado el id maximo: " + id, null);			
+		} catch (Exception ex) {
+
+			log(Level.SEVERE, "Error al obtener el id maximo: " + id + " de la BD", ex);
+		}
+		return id;
 	}
 	
 	public int getLastId() {

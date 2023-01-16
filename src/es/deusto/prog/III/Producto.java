@@ -111,5 +111,4 @@ public class Producto {
 	public String toString() {
 		return articulo + "-" + deporte + "\t" + precio + "€\t" + cantidad;
 	}
-	
 }

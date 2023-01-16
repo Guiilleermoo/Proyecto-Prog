@@ -150,6 +150,9 @@ public class VentanaCliente extends JFrame{
 		JButton anyadir = new JButton("Anadir");
 		panel_7.add(anyadir);
 		
+		JButton compraPosible = new JButton("Compra posible");
+		panel_7.add(compraPosible);
+		
 		tablaProductos.addKeyListener(new KeyAdapter() {
 			
 			@Override
@@ -185,6 +188,17 @@ public class VentanaCliente extends JFrame{
 						modeloDatosSeleccionados.removeRow(0);
 					}
 				}
+			}
+		});
+		
+		compraPosible.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Double importe = Double.parseDouble(JOptionPane.showInputDialog("Cual es tu importe mmaximo??"));
+				List<Producto> productos = gestorBD.obtenerProductosTodos();
+				List<List<Producto>> comprasPosibles = comprasPosibles(productos, importe);
+				VentanaRecursividad ventanaRecursividad = new VentanaRecursividad(comprasPosibles);
 			}
 		});
 		
@@ -678,6 +692,37 @@ public class VentanaCliente extends JFrame{
 			productos.add(producto);
 		}
 		return productos;
+	}
+	
+	private static void comprasPosiblesRecursividad(List<List<Producto>> result, List<Producto> productos, double maximo, List<Producto> temp) {
+		// Caso base. Si el importe disponible es negativo se detiene la recursividad
+		if (maximo < 0) {
+				return;
+		} else {
+				// Caso recursivo. Por cada elemento        	
+				for(Producto p : productos) {
+					//Se añade el elemento a la lista temporal
+					temp.add(p);
+					//Se realiza la invocación recursiva en la que se va decrementado el importe disponible
+					comprasPosiblesRecursividad(result, productos, maximo-p.getPrecio(), temp);
+					//Se elimina el último de la lista temporal
+					temp.remove(temp.size()-1);
+					if (!result.contains(temp)) {
+						
+		            	//Se añade la lista temporal a la lista de resultados
+		                result.add(new ArrayList<>(temp));
+		        	}
+				}
+		}
+	}
+
+	public static List<List<Producto>> comprasPosibles(List<Producto> elementos, double maximo) {
+		//Se inicializa la lista de combinaciones que se devolverá como resultado.
+		List<List<Producto>> result = new ArrayList<>();
+		//Se invoca al método recursivo
+		comprasPosiblesRecursividad(result, elementos, maximo, new ArrayList<>());
+		//Se devuelve el resultado.
+		return result;
 	}
 }
 

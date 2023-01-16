@@ -163,6 +163,7 @@ public class GestionPedidos extends JFrame{
 		this.setSize(800, 600);
 		this.setIconImage(new ImageIcon("data/logo.png").getImage());
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
+		this.setLocationRelativeTo(null);
 		this.setVisible(false);
 	}
 	

@@ -94,6 +94,7 @@ public class VentanaRegistro extends JFrame {
 				String telefono = telefonoText.getText();
 				
 				Cliente nuevo = new Cliente(nombreYApellidos, gmail, contrasena, direccion, telefono);
+				nuevo.setId(gestorBD.getLastIdCliente() + 1);
 				gestorBD.insertarClientes(nuevo);
 				
 				dispose();

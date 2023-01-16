@@ -207,7 +207,7 @@ public class GestionEmpleados extends JFrame{
 		nombreYApellidoText.addFocusListener(new FocusAdapter() {
 		    public void focusLost(FocusEvent e) {
 		    	if(tablaEmpleados.getSelectionModel().isSelectionEmpty() == false) {
-		    		System.out.println(nombreYApellidoText.getText() + tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 0) );
+		    		gestorBD.log(Level.INFO, nombreYApellidoText.getText() + tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 0) , null);
 		    		gestorBD.actualizarDatosEmpleado("NOMBREYAPELLIDOS", tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 0).toString(), nombreYApellidoText.getText());
 		    		tablaEmpleados.setValueAt(nombreYApellidoText.getText(), tablaEmpleados.getSelectedRow(), 1);
 		    	}
@@ -218,7 +218,7 @@ public class GestionEmpleados extends JFrame{
 		gmailText.addFocusListener(new FocusAdapter() {
 		    public void focusLost(FocusEvent e) {
 		    	if(tablaEmpleados.getSelectionModel().isSelectionEmpty() == false) {
-		    		System.out.println(gmailText.getText() + tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 0) );
+		    		gestorBD.log(Level.INFO, gmailText.getText() + tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 0), null);
 		    		gestorBD.actualizarDatosEmpleado("GMAIL", tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 0).toString(), gmailText.getText());
 		    		tablaEmpleados.setValueAt(gmailText.getText(), tablaEmpleados.getSelectedRow(), 2);
 		    	}
@@ -228,7 +228,7 @@ public class GestionEmpleados extends JFrame{
 		estatusCombo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
             	if(tablaEmpleados.getSelectionModel().isSelectionEmpty() == false) {
-            		System.out.println(estatusCombo.getSelectedItem().toString() + tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 0) );
+            		gestorBD.log(Level.INFO, estatusCombo.getSelectedItem().toString() + tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 0), null);
             		gestorBD.actualizarDatosEmpleado("ESTATUS", tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 0).toString(), estatusCombo.getSelectedItem().toString());
             		tablaEmpleados.setValueAt(estatusCombo.getSelectedItem(), tablaEmpleados.getSelectedRow(), 3);
             	}
@@ -238,7 +238,7 @@ public class GestionEmpleados extends JFrame{
 		salarioSpinner.addChangeListener(new ChangeListener() {
 	        public void stateChanged(ChangeEvent e) {
 	        	if(tablaEmpleados.getSelectionModel().isSelectionEmpty() == false) {
-	        		System.out.println(salarioSpinner.getValue().toString() + tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 0) );
+	        		gestorBD.log(Level.INFO, salarioSpinner.getValue().toString() + tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 0), null);
 	        		gestorBD.actualizarDatosEmpleado("SALARIO", tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 0).toString(), salarioSpinner.getValue().toString());
 	        		tablaEmpleados.setValueAt(salarioSpinner.getValue().toString(), tablaEmpleados.getSelectedRow(), 4);
 	        	}
@@ -248,7 +248,7 @@ public class GestionEmpleados extends JFrame{
 		telefonoText.addFocusListener(new FocusAdapter() {
 		    public void focusLost(FocusEvent e) {
 		    	if(tablaEmpleados.getSelectionModel().isSelectionEmpty() == false) {
-		    		System.out.println(telefonoText.getText() + tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 0) );
+		    		gestorBD.log(Level.INFO, telefonoText.getText() + tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 0), null);
 		    		gestorBD.actualizarDatosEmpleado("TELEFONO", tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 0).toString(), telefonoText.getText());
 		    		tablaEmpleados.setValueAt(telefonoText.getText(), tablaEmpleados.getSelectedRow(), 5);
 		    	}
@@ -345,8 +345,6 @@ public class GestionEmpleados extends JFrame{
 		telefonoText.setText("");
 		nombreYApellidoText.setText("");
 		gmailText.setText("");
-		contrasenaText.setText("");
-		
-		
+		contrasenaText.setText("");	
 	}
 }
