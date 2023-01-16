@@ -112,6 +112,7 @@ public class VentanaRegistro extends JFrame {
 		// ventana est�ndar
 		this.setTitle("Registro");
 		this.setSize(800, 600);
+		this.setIconImage(new ImageIcon("data/logo.png").getImage());
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		this.setVisible(false);

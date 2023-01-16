@@ -227,7 +227,8 @@ public class GestionProductos extends JFrame {
 		this.tablaProductos.getColumnModel().getColumn(7).setCellRenderer(renderStock);
 		
 		this.setTitle("Gestion Productos");
-		this.setSize(800, 600);
+		this.pack();
+		this.setIconImage(new ImageIcon("data/logo.png").getImage());
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		this.setVisible(false);

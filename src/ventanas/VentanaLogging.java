@@ -141,6 +141,7 @@ public class VentanaLogging extends JFrame{
 		// ventana est�ndar
 		this.setTitle("Ventana Logging");
 		this.setSize(800, 600);
+		this.setIconImage(new ImageIcon("data/logo.png").getImage());
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);

@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -42,6 +43,7 @@ public class VentanaPedidos extends JFrame {
 		
 		this.setTitle("Ventana Pedidos");
 		this.setSize(800, 600);
+		this.setIconImage(new ImageIcon("data/logo.png").getImage());
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);

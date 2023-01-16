@@ -1,8 +1,5 @@
 package ventanas;
 
-import javax.swing.DefaultListModel;
-import javax.swing.JFrame;
-
 import es.deusto.prog.III.Pedido;
 import es.deusto.prog.III.Pedido.Estado;
 import es.deusto.prog.III.BD.GestorBD;
@@ -164,6 +161,7 @@ public class GestionPedidos extends JFrame{
 		
 		this.setTitle("Preparación de pedidos");
 		this.setSize(800, 600);
+		this.setIconImage(new ImageIcon("data/logo.png").getImage());
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
 		this.setVisible(false);
 	}

@@ -4,11 +4,16 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.GridLayout;
+import java.awt.Point;
 import java.awt.ScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionAdapter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
@@ -72,6 +77,7 @@ public class GestionEmpleados extends JFrame{
 		getContentPane().add(izquierda);
 		
 		tablaEmpleados = new JTable(modeloDatosEmpleados);
+		tablaEmpleados.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		izquierda.add(tablaEmpleados);
 		
 		//La tabla de productos se inserta en un panel con scroll
@@ -133,11 +139,11 @@ public class GestionEmpleados extends JFrame{
 		JButton botonBorrar = new JButton("Borrar");
 		derecha.add(botonBorrar);
 		
-		TableCellRenderer renderStock = (table, value, isSelected, hasFocus, row, column) -> {
+		TableCellRenderer renderJefe = (table, value, isSelected, hasFocus, row, column) -> {
 
 			JLabel label = new JLabel(value.toString());
 
-				if (table.getValueAt(row, 3) == Estatus.JEFE ) {
+				if (row == this.mouseRow && table.getValueAt(row, 3) == Estatus.JEFE ) {
 					label.setBackground(Color.GREEN);
 				} else {
 					label.setBackground(table.getBackground());
@@ -145,6 +151,7 @@ public class GestionEmpleados extends JFrame{
 				
 			if (isSelected) {
 				label.setBackground(table.getSelectionBackground());
+				label.setForeground(table.getForeground());
 			}
 			
 			label.setOpaque(true);
@@ -152,28 +159,52 @@ public class GestionEmpleados extends JFrame{
 			return label;
 			};
 			
-		tablaEmpleados.getColumnModel().getColumn(0).setCellRenderer(renderStock);	
-		tablaEmpleados.getColumnModel().getColumn(1).setCellRenderer(renderStock);	
-		tablaEmpleados.getColumnModel().getColumn(2).setCellRenderer(renderStock);	
-		tablaEmpleados.getColumnModel().getColumn(3).setCellRenderer(renderStock);	
-		tablaEmpleados.getColumnModel().getColumn(4).setCellRenderer(renderStock);		
-		tablaEmpleados.getColumnModel().getColumn(5).setCellRenderer(renderStock);	
+			this.tablaEmpleados.setDefaultRenderer(Object.class, renderJefe);
+			
+			
+			this.tablaEmpleados.addMouseMotionListener(new MouseMotionAdapter() {
+				@Override
+				public void mouseMoved(MouseEvent e) {
+					//Se obtiene la fila/columna sobre la que está el ratón mientras se mueve
+					mouseRow = tablaEmpleados.rowAtPoint(e.getPoint());
+					mouseCol = tablaEmpleados.columnAtPoint(e.getPoint());
+
+					//Se repinta la tabla para forzar el renderizado de las celdas
+					if (mouseRow > -1 && mouseCol >-1) {
+						tablaEmpleados.repaint();
+					}
+				}
+			});
 		
-		tablaEmpleados.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
-	        public void valueChanged(ListSelectionEvent event) {
-	        	int seleccion = 0;
+		
+		tablaEmpleados.addMouseListener(new MouseAdapter() {
+		
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				
+				int seleccion = 0;
 	        	if(tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 3).toString().toUpperCase() == "EMPLEADO" ) {
 	        		seleccion = 1;
 	        	}
-	        	nombreYApellidoText.setText(tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 1).toString());
-	        	gmailText.setText(tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 2).toString());
-	        	//contrasenaText.setText(tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 3).toString());
-	        	estatusCombo.setSelectedIndex(seleccion);
-	        	salarioSpinner.setValue(tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 4));
-	        	telefonoText.setText(tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 5).toString());
-	        }	
-	    });
+				
+				JTable table = (JTable) e.getSource();
+				Point point = e.getPoint();
+				int row = table.rowAtPoint(point);
+				if(e.getClickCount() == 1) {
+					nombreYApellidoText.setText(tablaEmpleados.getValueAt(row, 1).toString());
+					gmailText.setText(tablaEmpleados.getValueAt(row, 2).toString());
+					estatusCombo.setSelectedIndex(seleccion);
+					salarioSpinner.setValue(Double.parseDouble(tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 4).toString()));
+					telefonoText.setText(tablaEmpleados.getValueAt(row, 5).toString());
+					
+				}
+				
+			}
 		
+		});
+		
+
 		nombreYApellidoText.addFocusListener(new FocusAdapter() {
 		    public void focusLost(FocusEvent e) {
 		    	if(tablaEmpleados.getSelectionModel().isSelectionEmpty() == false) {
@@ -250,6 +281,7 @@ public class GestionEmpleados extends JFrame{
 				} else {
 					gestorBD.insertarTrabajador(t);
 					loadEmpleados();
+					limpiar();
 				}
 			}
 		});
@@ -260,19 +292,13 @@ public class GestionEmpleados extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				if(filaseleccionada >= 0) {
 					
-					int id = (int) tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 0);
-//					String nombreYApellidos = (String) tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 1);
-//					String gmail =  (String) tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 2);
-//					Estatus status = (Estatus) tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 3);
-//					double salario = (double) tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 4);
-//					String telefono = (String) tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 5);
-//					trabajador.setId(id);
-					
+					int id = (int) tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 0);					
 					
 					gestorBD.borrarTrabajador(id);
 					
 					modeloDatosEmpleados.removeRow(tablaEmpleados.getSelectedRow());
 					tablaEmpleados.repaint();
+					limpiar();
 				} else {
 					gestorBD.log(Level.SEVERE, "Error: seleccione una fila para borrar un producto", null);
 				}
@@ -284,6 +310,7 @@ public class GestionEmpleados extends JFrame{
 		this.setTitle("Gestion Empleados");
 		this.pack();
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
+		this.setIconImage(new ImageIcon("data/logo.png").getImage());
 		this.setLocationRelativeTo(null);
 		this.setVisible(false);
 	}

@@ -77,6 +77,7 @@ public class VentanaTrabajador extends JFrame {
 		// ventana est�ndar
 		this.setTitle("Menu");
 		this.setSize(800, 600);
+		this.setIconImage(new ImageIcon("data/logo.png").getImage());
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);

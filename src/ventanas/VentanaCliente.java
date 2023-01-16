@@ -253,6 +253,7 @@ public class VentanaCliente extends JFrame{
 		// ventana est�ndar
 				this.setTitle("Cliente");
 				this.setSize(900, 600);
+				this.setIconImage(new ImageIcon("data/logo.png").getImage());
 				this.setDefaultCloseOperation(HIDE_ON_CLOSE);
 				this.setLocationRelativeTo(null);
 				this.setVisible(true);
