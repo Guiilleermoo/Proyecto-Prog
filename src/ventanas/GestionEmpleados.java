@@ -7,6 +7,8 @@ import java.awt.GridLayout;
 import java.awt.ScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
@@ -14,6 +16,10 @@ import java.util.logging.Level;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
@@ -153,6 +159,71 @@ public class GestionEmpleados extends JFrame{
 		tablaEmpleados.getColumnModel().getColumn(4).setCellRenderer(renderStock);		
 		tablaEmpleados.getColumnModel().getColumn(5).setCellRenderer(renderStock);	
 		
+		tablaEmpleados.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+	        public void valueChanged(ListSelectionEvent event) {
+	        	int seleccion = 0;
+	        	if(tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 3).toString().toUpperCase() == "EMPLEADO" ) {
+	        		seleccion = 1;
+	        	}
+	        	nombreYApellidoText.setText(tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 1).toString());
+	        	gmailText.setText(tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 2).toString());
+	        	//contrasenaText.setText(tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 3).toString());
+	        	estatusCombo.setSelectedIndex(seleccion);
+	        	salarioSpinner.setValue(tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 4));
+	        	telefonoText.setText(tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 5).toString());
+	        }	
+	    });
+		
+		nombreYApellidoText.addFocusListener(new FocusAdapter() {
+		    public void focusLost(FocusEvent e) {
+		    	if(tablaEmpleados.getSelectionModel().isSelectionEmpty() == false) {
+		    		System.out.println(nombreYApellidoText.getText() + tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 0) );
+		    		gestorBD.actualizarDatosEmpleado("NOMBREYAPELLIDOS", tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 0).toString(), nombreYApellidoText.getText());
+		    		tablaEmpleados.setValueAt(nombreYApellidoText.getText(), tablaEmpleados.getSelectedRow(), 1);
+		    	}
+		        
+		    }
+		});
+		
+		gmailText.addFocusListener(new FocusAdapter() {
+		    public void focusLost(FocusEvent e) {
+		    	if(tablaEmpleados.getSelectionModel().isSelectionEmpty() == false) {
+		    		System.out.println(gmailText.getText() + tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 0) );
+		    		gestorBD.actualizarDatosEmpleado("GMAIL", tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 0).toString(), gmailText.getText());
+		    		tablaEmpleados.setValueAt(gmailText.getText(), tablaEmpleados.getSelectedRow(), 2);
+		    	}
+		    }
+		});
+		
+		estatusCombo.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+            	if(tablaEmpleados.getSelectionModel().isSelectionEmpty() == false) {
+            		System.out.println(estatusCombo.getSelectedItem().toString() + tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 0) );
+            		gestorBD.actualizarDatosEmpleado("ESTATUS", tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 0).toString(), estatusCombo.getSelectedItem().toString());
+            		tablaEmpleados.setValueAt(estatusCombo.getSelectedItem().toString(), tablaEmpleados.getSelectedRow(), 3);
+            	}
+            }
+        });
+		
+		salarioSpinner.addChangeListener(new ChangeListener() {
+	        public void stateChanged(ChangeEvent e) {
+	        	if(tablaEmpleados.getSelectionModel().isSelectionEmpty() == false) {
+	        		System.out.println(salarioSpinner.getValue().toString() + tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 0) );
+	        		gestorBD.actualizarDatosEmpleado("SALARIO", tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 0).toString(), salarioSpinner.getValue().toString());
+	        		tablaEmpleados.setValueAt(salarioSpinner.getValue().toString(), tablaEmpleados.getSelectedRow(), 4);
+	        	}
+	        }
+	    });
+		
+		telefonoText.addFocusListener(new FocusAdapter() {
+		    public void focusLost(FocusEvent e) {
+		    	if(tablaEmpleados.getSelectionModel().isSelectionEmpty() == false) {
+		    		System.out.println(telefonoText.getText() + tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 0) );
+		    		gestorBD.actualizarDatosEmpleado("TELEFONO", tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 0).toString(), telefonoText.getText());
+		    		tablaEmpleados.setValueAt(telefonoText.getText(), tablaEmpleados.getSelectedRow(), 5);
+		    	}
+		    }
+		});
 		
 		botonAnadir.addActionListener(new ActionListener() {
 			
@@ -175,7 +246,7 @@ public class GestionEmpleados extends JFrame{
 				} else if (contrasenaText.getText().isEmpty()) {
 					gestorBD.log(Level.SEVERE, "Error: campo Contrasena vacio", null);
 				} else if (telefonoText.getText().isEmpty() || telefonoText.getText().length() != 9) {
-					gestorBD.log(Level.SEVERE, "Error: campo de telefono erróneo/vacio", null);
+					gestorBD.log(Level.SEVERE, "Error: campo de telefono errï¿½neo/vacio", null);
 				} else {
 					gestorBD.insertarTrabajador(t);
 					loadEmpleados();

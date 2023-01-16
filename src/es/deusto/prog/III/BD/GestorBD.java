@@ -877,6 +877,21 @@ public class GestorBD {
 		}		
 	}
 	
+	public void actualizarDatosEmpleado(String columna, String id, String nuevoDato) {
+		//Se abre la conexión y se obtiene el Statement
+		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+		     Statement stmt = con.createStatement()) {
+			//Se ejecuta la sentencia de borrado de datos
+			String sql = "UPDATE TRABAJADOR SET %s = '%s' WHERE ID_T = %s;";
+			System.out.println(String.format(sql, columna, nuevoDato, id));
+			int result = stmt.executeUpdate(String.format(sql, columna, nuevoDato, id));
+			
+			logger.info(String.format("Se ha actualizado el dato %s del cliente %s a %s", columna, id, nuevoDato));
+		} catch (Exception ex) {
+			logger.warning(String.format("Error actualizando datos de la BD: %s", ex.getMessage()));					
+		}		
+	}
+	
 	public void actualizarSalario(Trabajador trabajador, Float salario) {
 		//Se abre la conexión y se obtiene el Statement
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
