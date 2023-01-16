@@ -11,6 +11,14 @@ import javax.swing.*;
 
 import es.deusto.prog.III.Trabajador.Estatus;
 import es.deusto.prog.III.BD.GestorBD;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import java.awt.Component;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.Color;
+import java.awt.Font;
 
 public class VentanaTrabajador extends JFrame {
 	protected GestorBD gestorBD;
@@ -33,20 +41,38 @@ public class VentanaTrabajador extends JFrame {
 		gestionProductos = new GestionProductos(gestorBD, gmail, contrasena);
 		
 		Container cp = this.getContentPane();
+		getContentPane().setLayout(new GridLayout(0, 3, 0, 0));
 		
-		JPanel centro = new JPanel();
-
-		JButton botonPedidos = new JButton("Gestionar Pedidos");
-		JButton botonEmpleados = new JButton("Gestionar Empleados");
-		JButton botonProductos = new JButton("Gestionar Existencias");
+		JPanel panel = new JPanel();
+		getContentPane().add(panel);
+		panel.setLayout(new BorderLayout(0, 0));
 		
-		cp.add(centro , BorderLayout.CENTER);
+		JButton botonEmpleados = new JButton("Gestion Empleados");
+		botonEmpleados.setFont(new Font("Comic Sans MS", Font.BOLD, 24));
+		botonEmpleados.setBackground(new Color(0, 191, 255));
+		panel.add(botonEmpleados, BorderLayout.CENTER);
 		
-		centro.setLayout(new GridLayout(1,3));
+		JPanel panel_1 = new JPanel();
+		getContentPane().add(panel_1);
+		panel_1.setLayout(new BorderLayout(0, 0));
 		
-		centro.add(botonPedidos);
-		centro.add(botonEmpleados);
-		centro.add(botonProductos);
+		JButton botonPedidos = new JButton("Gestion Pedidos");
+		botonPedidos.setFont(new Font("Comic Sans MS", Font.BOLD, 24));
+		botonPedidos.setBackground(new Color(152, 251, 152));
+		panel_1.add(botonPedidos, BorderLayout.CENTER);
+		
+		JPanel panel_2 = new JPanel();
+		getContentPane().add(panel_2);
+		panel_2.setLayout(new BorderLayout(0, 0));
+		
+		JButton botonProductos = new JButton("Gestion Productos");
+		botonProductos.setFont(new Font("Comic Sans MS", Font.BOLD, 24));
+		botonProductos.setBackground(new Color(127, 255, 212));
+		panel_2.add(botonProductos, BorderLayout.CENTER);
+		
+		
+		
+		
 		
 		botonEmpleados.addActionListener(new ActionListener() {
 			
@@ -58,6 +84,7 @@ public class VentanaTrabajador extends JFrame {
 			}
 		});
 		
+				
 		botonProductos.addActionListener(new ActionListener() {
 			
 			@Override
@@ -73,6 +100,8 @@ public class VentanaTrabajador extends JFrame {
 				gestionPedidos.setVisible(true);
 			}
 		});
+		
+		
 		
 		// ventana est�ndar
 		this.setTitle("Menu");

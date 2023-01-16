@@ -104,9 +104,6 @@ public class VentanaCliente extends JFrame{
 		Precio2.setHorizontalAlignment(SwingConstants.LEFT);
 		panel_5.add(Precio2);
 		
-		JPanel panel_3 = new JPanel();
-		panel_1.add(panel_3);
-		
 		JPanel panel_6 = new JPanel();
 		getContentPane().add(panel_6);
 		panel_6.setLayout(new GridLayout(2, 0));
@@ -195,9 +192,10 @@ public class VentanaCliente extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Double importe = Double.parseDouble(JOptionPane.showInputDialog("Cual es tu importe mmaximo??"));
+				Double importe = Double.parseDouble(JOptionPane.showInputDialog("Cual es tu importe maximo??"));
 				List<Producto> productos = gestorBD.obtenerProductosTodos();
 				List<List<Producto>> comprasPosibles = comprasPosibles(productos, importe);
+//				System.out.println(comprasPosibles);
 				VentanaRecursividad ventanaRecursividad = new VentanaRecursividad(comprasPosibles);
 			}
 		});
