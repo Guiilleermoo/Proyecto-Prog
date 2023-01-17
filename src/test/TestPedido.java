@@ -42,7 +42,7 @@ public class TestPedido {
 
 	@Test
 	public void testPedido() {
-		pedido = new Pedido(1, cliente, fecha,  productos, estado);
+		pedido = new Pedido(cliente, fecha,  productos, estado);
 		assertEquals(pedido.getCliente(), cliente);
 		assertEquals(pedido.getFecha(), fecha);
 		assertEquals(pedido.getProductos(), productos);

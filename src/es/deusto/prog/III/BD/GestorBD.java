@@ -1027,7 +1027,7 @@ public class GestorBD {
 				}
 			}			
 		} catch (Exception ex) {
-			log(Level.SEVERE, "Error al insertar productos", ex);						
+		//	log(Level.SEVERE, "Error al insertar productos", ex);						
 		}				
 	}
 	
@@ -1157,6 +1157,31 @@ public class GestorBD {
 			System.out.println(ex);
 			log(Level.SEVERE, "Error al borrar el pedido con id: " + id + " en la BD", ex );				
 		}		
+	}
+	
+	public String getIdCloente(String gmail) throws SQLException {
+		String id = "";
+		
+		//Se abre la conexión y se obtiene el Statement
+		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+		     Statement stmt = con.createStatement()) {
+			
+			String sql = "SELECT * FROM CLIENTE WHERE GMAIL = " + gmail;
+			
+			//Se ejecuta la sentencia y se obtiene el ResultSet con los resutlados
+			ResultSet rs = stmt.executeQuery(sql);			
+
+			while (rs.next()) {
+				id = rs.getString("ID_C");
+			}
+			//Se cierra el ResultSet
+			rs.close();
+			
+			log(Level.INFO, "Se han recuperado " + id + " cliente", null);			
+		} catch (Exception ex) {
+			log(Level.SEVERE, "Error al obtener los pedidos de la BD", ex);					
+		}		
+		return id;
 	}
 
 	// LOGGER:

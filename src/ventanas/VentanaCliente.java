@@ -10,6 +10,8 @@ import javax.swing.table.DefaultTableModel;
 import Editors.GeneroEditor;
 import Editors.SpinnerEditor;
 import Editors.TallaEditor;
+import es.deusto.prog.III.Pedido;
+import es.deusto.prog.III.Pedido.Estado;
 import es.deusto.prog.III.Producto;
 import es.deusto.prog.III.BD.GestorBD;
 import es.deusto.prog.III.Producto.Genero;
@@ -17,8 +19,10 @@ import es.deusto.prog.III.Producto.Genero;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -216,7 +220,13 @@ public class VentanaCliente extends JFrame{
 								}
 							}
 							gestorBD.log(Level.INFO, "La compra ha finalizado", null);
-							factura(obtenerCarrito(tablaSeleccionados));
+							try {
+								factura(obtenerCarrito(tablaSeleccionados), gmail);
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							
 							JOptionPane.showMessageDialog(VentanaCliente.this, "Compra Finalizada con exito, revise su factura.", "Atencion", JOptionPane.INFORMATION_MESSAGE);
 						}
 					});
@@ -730,7 +740,7 @@ public class VentanaCliente extends JFrame{
 		return productos;
 	}
 	
-	private void factura(List<Producto> productos) {
+	private void factura(List<Producto> productos, String gmail) throws SQLException {
 		try (PrintWriter out = new PrintWriter("factura.txt")){
 			
 			out.println("PRODUCTO\t\t\t\t\t\tPRECIO\tCANTIDAD");
@@ -741,6 +751,15 @@ public class VentanaCliente extends JFrame{
 		} catch (Exception e) {
 			gestorBD.log(Level.INFO, "Error exportando datos", e);
 		}
+		
+		Date date = new Date();
+		
+		String id_cliente = gestorBD.getIdCloente(gmail);
+		
+		Pedido pedido = new Pedido(id_cliente, date, (ArrayList<Producto>) productos, Estado.PREPARACION);
+		
+		gestorBD.insertarPedido(pedido);
+		
 	}
 	
 	private static void comprasPosiblesRecursividad(List<List<Producto>> result, List<Producto> productos, double maximo, List<Producto> temp) {
