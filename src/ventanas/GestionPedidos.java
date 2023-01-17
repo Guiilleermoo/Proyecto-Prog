@@ -24,6 +24,7 @@ public class GestionPedidos extends JFrame{
 	protected JButton botonListoAPreparacion;
 	protected JButton botonListoAFinalizado;
 	protected JButton botonFinalizadoAListo;
+	protected JButton botonEnviar;
 	
 	protected List<Pedido> pedidos;
 	protected HashMap<Estado, ArrayList<Pedido>> pedidosPorEstado;
@@ -52,26 +53,12 @@ public class GestionPedidos extends JFrame{
 			public void actionPerformed(ActionEvent arg0) {
 				Pedido seleccionado = listaPreparacion.getSelectedValue();
 				if (seleccionado != null) {
-					Thread hilo = new Thread(new Runnable() {
-						
-						@Override
-						public void run() {
-							System.out.print("Preparando pedido");
-							gestorBD.log(Level.INFO, "Preparando pedido", null);
-								try {
-									Thread.sleep(1000);
-								} catch (InterruptedException e) {				
-								}
-							System.out.println("Pedido preparado.");
-							gestorBD.log(Level.INFO, "Pedido preparado", null);
-							modeloListo.addElement(seleccionado);
-							modeloPreparacion.removeElement(seleccionado);
-							actualizarEstadoPedido(seleccionado, Estado.LISTO);
-							actualizarBotones();
-							//gestorBD.actualizarEstado();
-						}
-					});
-					hilo.start();
+					modeloListo.addElement(seleccionado);
+					modeloPreparacion.removeElement(seleccionado);
+					actualizarEstadoPedido(seleccionado, Estado.LISTO);
+					actualizarBotones();
+					gestorBD.actualizarEstadoPedido(seleccionado.getId(), seleccionado.getEstado().toString());
+					
 				}
 			}
 		});
@@ -100,6 +87,7 @@ public class GestionPedidos extends JFrame{
 					modeloListo.removeElement(seleccionado);			
 					actualizarEstadoPedido(seleccionado, Estado.PREPARACION);
 					actualizarBotones();
+					gestorBD.actualizarEstadoPedido(seleccionado.getId(), seleccionado.getEstado().toString());
 				}
 			}
 		});
@@ -113,6 +101,7 @@ public class GestionPedidos extends JFrame{
 					modeloListo.removeElement(seleccionado);			
 					actualizarEstadoPedido(seleccionado, Estado.FINALIZADO);
 					actualizarBotones();
+					gestorBD.actualizarEstadoPedido(seleccionado.getId(), seleccionado.getEstado().toString());
 				}
 			}
 		});
@@ -141,12 +130,48 @@ public class GestionPedidos extends JFrame{
 					modeloFinalizado.removeElement(seleccionado);			
 					actualizarEstadoPedido(seleccionado, Estado.LISTO);
 					actualizarBotones();
+					gestorBD.actualizarEstadoPedido(seleccionado.getId(), seleccionado.getEstado().toString());
 				}
+			}
+		});
+		
+		botonEnviar = new JButton("Enviar");
+		
+		botonEnviar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Pedido seleccionado = listaFinalizado.getSelectedValue();
+				if (seleccionado != null) {
+					Thread hilo = new Thread(new Runnable() {
+						
+						@Override
+						public void run() {
+							System.out.print("Enviando pedido");
+							gestorBD.log(Level.INFO, "Enviando pedido", null);
+								try {
+									Thread.sleep(1000);
+								} catch (InterruptedException e) {				
+								}
+							System.out.println("Pedido enviado.");
+							gestorBD.log(Level.INFO, "Pedido enviado", null);
+							modeloFinalizado.removeElement(seleccionado);
+							pedidos.remove(seleccionado);
+							pedidosPorEstado.get(Estado.FINALIZADO).remove(seleccionado);
+							actualizarBotones();
+							gestorBD.borrarPedido(seleccionado.getId());
+						}
+					});
+					hilo.start();
+					
+				}
+				
 			}
 		});
 		
 		JPanel finalizadoAListo = new JPanel();
 		finalizadoAListo.add(botonFinalizadoAListo);
+		finalizadoAListo.add(botonEnviar);
 
 		finalizado.add(new JLabel("Finalizados..."), BorderLayout.NORTH);
 		finalizado.add(scrollFinalizado, BorderLayout.CENTER);	

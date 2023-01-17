@@ -261,7 +261,7 @@ public class GestionEmpleados extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				Trabajador t = new Trabajador();
 				
-				t.setId(gestorBD.getLastId());
+				t.setId(gestorBD.getLastIdTrabajador() + 1);
 				t.setNombreYApellidos(nombreYApellidoText.getText());
 				t.setGmail(gmailText.getText());
 				t.setContrasena(contrasenaText.getText());

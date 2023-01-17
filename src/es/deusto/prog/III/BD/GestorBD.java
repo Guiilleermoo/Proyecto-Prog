@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
+import java.util.Random;
 import java.util.logging.*;
 
 import javax.net.ssl.SSLEngineResult.Status;
@@ -45,7 +46,8 @@ public class GestorBD {
 			log(Level.SEVERE, "Error al cargar el driver de BBDD", ex);
 		}
 	}
-
+	
+	// FUNCIONES DE CLIENTES:
 	public void insertarClientes(Cliente... clientes ) {
 		//Se define la plantilla de la sentencia SQL
 		String sql = "INSERT INTO CLIENTE (NOMBREYAPELLIDOS, GMAIL, CONTRASENA, DIRECCION, TELEFONO) VALUES (?, ?, ?, ?, ?);";
@@ -78,66 +80,6 @@ public class GestorBD {
 				System.out.println(ex);
 				log(Level.SEVERE, "Error al insertar clientes", ex);
 			}		
-	}
-	
-	public void insertarTrabajador(Trabajador... trabajadores ) {
-		String sql = "INSERT INTO TRABAJADOR (ID_T, NOMBREYAPELLIDOS, GMAIL, CONTRASENA, ESTATUS, SALARIO, TELEFONO) VALUES (?, ?, ?, ?, ?, ?, ?);";
-		
-		//Se abre la conexión y se obtiene el Statement
-		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
-		     PreparedStatement pstmt = con.prepareStatement(sql)) {
-			
-			//Se recorren los clientes y se insertan uno a uno
-			for (Trabajador t : trabajadores) {
-				// Si el trabajador no existe que se a�ada el trabajador a la BD
-				if(comprobarTrabajador(t.getGmail(), t.getContrasena()) == false) {
-					pstmt.setInt(1, t.getId());
-					pstmt.setString(2, t.getNombreYApellidos());
-					pstmt.setString(3, t.getGmail());
-					pstmt.setString(4, t.getContrasena());
-					pstmt.setString(5, t.getStatus().toString());
-					pstmt.setDouble(6, t.getSalario());
-					pstmt.setString(7, t.getTelefono());
-					
-					if (1 != pstmt.executeUpdate()) {
-						log(Level.SEVERE, "No se ha insertado el trabajador" + t, null);
-					} else {
-						log(Level.INFO, "Se ha insertado el trabajador" + t, null);
-					}
-				}
-				log(Level.INFO, trabajadores.length + "	Trabajadores insertados en la BBDD", null);
-			}		
-		} catch (Exception ex) {
-			log(Level.SEVERE, "Error al insertar trabajadores", ex);						
-		}				
-	}
-	
-	public void insertarProducto(Producto... productos) {
-		String sql = "INSERT INTO PRODUCTO (ARTICULO, DEPORTE, MARCA, GENERO, TALLA, PRECIO, STOCK) VALUES (?, ?, ?, ?, ?, ?, ?);";
-		
-		//Se abre la conexión y se obtiene el Statement
-		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
-				PreparedStatement pstmt = con.prepareStatement(sql)) {
-			
-			//Se recorren los clientes y se insertan uno a uno
-			for (Producto p : productos) {
-				pstmt.setString(1, p.getArticulo());
-				pstmt.setString(2, p.getDeporte());
-				pstmt.setString(3, p.getMarca());
-				pstmt.setString(4, p.getGenero().toString());
-				pstmt.setString(5, p.getTalla());
-				pstmt.setDouble(6, p.getPrecio());
-				pstmt.setInt(7, p.getCantidad());
-				
-				if (1 != pstmt.executeUpdate()) {	
-					log(Level.SEVERE, "No se ha insertado el producto" + p, null);
-				} else {
-					log(Level.INFO, "Se ha insertado el producto" + p, null);
-				}
-			}			
-		} catch (Exception ex) {
-			log(Level.SEVERE, "Error al insertar productos", ex);						
-		}				
 	}
 	
 	public List<Cliente> obtenerClientes() {
@@ -288,6 +230,118 @@ public class GestorBD {
 		return cliente;
 	}
 	
+	public int getLastIdCliente() {
+		int id = 0;
+		
+		//Se abre la conexión y se obtiene el Statement
+		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+		     Statement stmt = con.createStatement()) {
+			
+			String sql = "SELECT MAX(ID_C) AS 'MAXIMO' FROM CLIENTE;";
+			
+			//Se ejecuta la sentencia y se obtiene el ResultSet con los resutlados
+			ResultSet rs = stmt.executeQuery(sql);
+
+			//Se recorre el ResultSet y se crean objetos Producto
+			while (rs.next()) {
+				id = rs.getInt("MAXIMO");
+			}
+			//Se cierra el ResultSet
+			rs.close();
+			
+			
+			log(Level.INFO, "Se ha recuperado el id maximo: " + id, null);			
+		} catch (Exception ex) {
+
+			log(Level.SEVERE, "Error al obtener el id maximo: " + id + " de la BD", ex);
+		}
+		return id;
+	}
+	
+	public void actualizarContrasena(Cliente cliente, String contrasenaNueva) {
+		//Se abre la conexión y se obtiene el Statement
+		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+		     Statement stmt = con.createStatement()) {
+			//Se ejecuta la sentencia de borrado de datos
+			String sql = "UPDATE CLIENTE SET CONTRASENA = '%s' WHERE ID_C = %d;";
+			
+			int result = stmt.executeUpdate(String.format(sql, contrasenaNueva, cliente.getId()));
+			
+			logger.info(String.format("Se ha actualizado la contrasena del cliente %d a %d", cliente, contrasenaNueva));
+		} catch (Exception ex) {
+			logger.warning(String.format("Error actualizando datos de la BD: %s", ex.getMessage()));					
+		}		
+	}
+	
+	public boolean comprobarCliente(String gmail, String contrasena) {
+		
+		//Se abre la conexión y se crea el PreparedStatement con la sentencia SQL
+		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+		     Statement pStmt = con.createStatement()) {		
+			String sql = "SELECT GMAIL,CONTRASENA FROM CLIENTE WHERE GMAIL = '" + gmail + "' and CONTRASENA = '" + contrasena + "' LIMIT 1";
+			
+			//Se ejecuta la sentencia y se obtiene el ResultSet con los resutlados
+			ResultSet rs = pStmt.executeQuery(sql);
+
+			if (rs.next()) {
+				log(Level.INFO, "Cliente confirmado", null);	
+				return true;
+			}
+			rs.close();
+		} catch (Exception ex) {
+			log(Level.SEVERE, "Error cliente inexistente en la BD", ex );
+		}
+		return false;		
+	}
+	
+	public void borrarCliente(Cliente cliente) {
+		//Se abre la conexión y se obtiene el Statement
+		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+		     Statement stmt = con.createStatement()) {
+			//Se ejecuta la sentencia de borrado de datos
+			String sql = "DELETE FROM CLIENTE WHERE ID_C = %d;";
+			
+			int result = stmt.executeUpdate(String.format(sql, cliente.getId()));
+			
+			log(Level.INFO, "Se ha borrado al cliente" + cliente, null );
+		} catch (Exception ex) {
+			log(Level.SEVERE, "Error al borrar el cliente en la BD", ex );				
+		}		
+	}
+	
+	// FUNCIONES DE TRABAJADORES:
+	public void insertarTrabajador(Trabajador... trabajadores ) {
+		String sql = "INSERT INTO TRABAJADOR (ID_T, NOMBREYAPELLIDOS, GMAIL, CONTRASENA, ESTATUS, SALARIO, TELEFONO) VALUES (?, ?, ?, ?, ?, ?, ?);";
+		
+		//Se abre la conexión y se obtiene el Statement
+		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+		     PreparedStatement pstmt = con.prepareStatement(sql)) {
+			
+			//Se recorren los clientes y se insertan uno a uno
+			for (Trabajador t : trabajadores) {
+				// Si el trabajador no existe que se a�ada el trabajador a la BD
+				if(comprobarTrabajador(t.getGmail(), t.getContrasena()) == false) {
+					pstmt.setInt(1, t.getId());
+					pstmt.setString(2, t.getNombreYApellidos());
+					pstmt.setString(3, t.getGmail());
+					pstmt.setString(4, t.getContrasena());
+					pstmt.setString(5, t.getStatus().toString());
+					pstmt.setDouble(6, t.getSalario());
+					pstmt.setString(7, t.getTelefono());
+					
+					if (1 != pstmt.executeUpdate()) {
+						log(Level.SEVERE, "No se ha insertado el trabajador" + t, null);
+					} else {
+						log(Level.INFO, "Se ha insertado el trabajador" + t, null);
+					}
+				}
+				log(Level.INFO, trabajadores.length + "	Trabajadores insertados en la BBDD", null);
+			}		
+		} catch (Exception ex) {
+			log(Level.SEVERE, "Error al insertar trabajadores", ex);						
+		}				
+	}
+	
 	public List<Trabajador> obtenerTrabajadores() {
 		List<Trabajador> trabajadores = new ArrayList<>();
 		
@@ -363,72 +417,111 @@ public class GestorBD {
 		}		
 		return trabajador;
 	}
-	public List<Pedido> obtenerPedidos() {
-		List<Pedido> pedidos = new ArrayList<>();
+	
+	public int getLastIdTrabajador() {
+		int id = 0;
 		
 		//Se abre la conexión y se obtiene el Statement
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
 		     Statement stmt = con.createStatement()) {
 			
-			String sql = "SELECT * FROM PEDIDO";
+			String sql = "SELECT MAX(ID_T) AS 'MAXIMO' FROM TRABAJADOR;";
 			
 			//Se ejecuta la sentencia y se obtiene el ResultSet con los resutlados
-			ResultSet rs = stmt.executeQuery(sql);			
-			Pedido pedido;
-			
+			ResultSet rs = stmt.executeQuery(sql);
+
+			//Se recorre el ResultSet y se crean objetos Producto
 			while (rs.next()) {
-				pedido = new Pedido();
-				
-				pedido.setCliente(rs.getString("ID_C"));
-				pedido.setFecha(rs.getDate("FECHA"));
-				pedido.setEstado(Estado.valueOf(rs.getString("ESTADO")));
-				
-
-				pedidos.add(pedido);
+				id = rs.getInt("MAXIMO");
 			}
-
 			//Se cierra el ResultSet
 			rs.close();
 			
-			log(Level.INFO, "Se han recuperado " + pedidos.size() + " pedidos", null);			
+			
+			log(Level.INFO, "Se ha recuperado el id maximo: " + id, null);			
 		} catch (Exception ex) {
-			log(Level.SEVERE, "Error al obtener los pedidos de la BD", ex);					
-		}		
-		return pedidos;
+
+			log(Level.SEVERE, "Error al obtener el id maximo: " + id + " de la BD", ex);
+		}
+		return id;
 	}
 	
-	public List<Pedido> obtenerPedidosCliente(int id) {
-		List<Pedido> pedidos = new ArrayList<>();
-		
+	public void actualizarDatosEmpleado(String columna, String id, String nuevoDato) {
 		//Se abre la conexión y se obtiene el Statement
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
 		     Statement stmt = con.createStatement()) {
+			//Se ejecuta la sentencia de borrado de datos
+			String sql = "UPDATE TRABAJADOR SET %s = '%s' WHERE ID_T = %s;";
+
+			int result = stmt.executeUpdate(String.format(sql, columna, nuevoDato, id));
 			
-			String sql = "SELECT * FROM PEDIDO WHERE ID_C = " + id;
+			logger.info(String.format("Se ha actualizado el dato %s del cliente %s a %s", columna, id, nuevoDato));
+		} catch (Exception ex) {
+			logger.warning(String.format("Error actualizando datos de la BD: %s", ex.getMessage()));					
+		}		
+	}
+
+	public boolean comprobarTrabajador(String gmail, String contrasena) {
+		String sql = "SELECT GMAIL,CONTRASENA FROM TRABAJADOR WHERE GMAIL = '" + gmail + "' and CONTRASENA = '" + contrasena + "' LIMIT 1";
+		
+		//Se abre la conexión y se crea el PreparedStatement con la sentencia SQL
+		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+		     PreparedStatement pStmt = con.prepareStatement(sql)) {			
 			
 			//Se ejecuta la sentencia y se obtiene el ResultSet con los resutlados
-			ResultSet rs = stmt.executeQuery(sql);			
-			Pedido pedido;
-			
-
-			while (rs.next()) {
-				pedido = new Pedido();
-				
-				pedido.setId(rs.getInt("ID_P"));
-				pedido.setCliente(rs.getString("ID_C"));
-				pedido.setFecha(rs.getDate("FECHA"));
-				pedido.setEstado(Estado.valueOf(rs.getString("ESTADO")));
-
-				pedidos.add(pedido);
+			ResultSet rs = pStmt.executeQuery();
+			if (rs.next()) {
+				log(Level.INFO, "Trabajador confirmado", null );
+				return true;
 			}
-			//Se cierra el ResultSet
-			rs.close();
+		} catch (Exception ex) {				
+			log(Level.SEVERE, "Error trabajador inexistente en la BD", ex );
+		}
+		return false;		
+	}
+	
+	public void borrarTrabajador(int id) {
+		//Se abre la conexión y se obtiene el Statement
+		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+		     Statement stmt = con.createStatement()) {
+			//Se ejecuta la sentencia de borrado de datos
+			String sql = "DELETE FROM TRABAJADOR WHERE ID_T = %d;";
 			
-			log(Level.INFO, "Se han recuperado " + pedidos.size() + " pedidos", null);			
+			int result = stmt.executeUpdate(String.format(sql, id));
+			
+			log(Level.INFO, "Se ha borrado al cliente" + id, null);
 		} catch (Exception ex) {
-			log(Level.SEVERE, "Error al obtener los pedidos de la BD", ex);					
-		}		
-		return pedidos;
+			log(Level.SEVERE, "Error al borrar el trabajador en la BD", ex);						
+		}	
+}
+	
+	// FUNCIONES DE PRODUCTOS:
+	public void insertarProducto(Producto... productos) {
+		String sql = "INSERT INTO PRODUCTO (ARTICULO, DEPORTE, MARCA, GENERO, TALLA, PRECIO, STOCK) VALUES (?, ?, ?, ?, ?, ?, ?);";
+		
+		//Se abre la conexión y se obtiene el Statement
+		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+			
+			//Se recorren los clientes y se insertan uno a uno
+			for (Producto p : productos) {
+				pstmt.setString(1, p.getArticulo());
+				pstmt.setString(2, p.getDeporte());
+				pstmt.setString(3, p.getMarca());
+				pstmt.setString(4, p.getGenero().toString());
+				pstmt.setString(5, p.getTalla());
+				pstmt.setDouble(6, p.getPrecio());
+				pstmt.setInt(7, p.getCantidad());
+				
+				if (1 != pstmt.executeUpdate()) {	
+					log(Level.SEVERE, "No se ha insertado el producto" + p, null);
+				} else {
+					log(Level.INFO, "Se ha insertado el producto" + p, null);
+				}
+			}			
+		} catch (Exception ex) {
+			log(Level.SEVERE, "Error al insertar productos", ex);						
+		}				
 	}
 	
 	public List<Producto> obtenerProductosTodos() {
@@ -510,35 +603,7 @@ public class GestorBD {
 		return productos;
 	}
 	
-	public int getLastIdCliente() {
-		int id = 0;
-		
-		//Se abre la conexión y se obtiene el Statement
-		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
-		     Statement stmt = con.createStatement()) {
-			
-			String sql = "SELECT MAX(ID_C) AS 'MAXIMO' FROM CLIENTE;";
-			
-			//Se ejecuta la sentencia y se obtiene el ResultSet con los resutlados
-			ResultSet rs = stmt.executeQuery(sql);
-
-			//Se recorre el ResultSet y se crean objetos Producto
-			while (rs.next()) {
-				id = rs.getInt("MAXIMO");
-			}
-			//Se cierra el ResultSet
-			rs.close();
-			
-			
-			log(Level.INFO, "Se ha recuperado el id maximo: " + id, null);			
-		} catch (Exception ex) {
-
-			log(Level.SEVERE, "Error al obtener el id maximo: " + id + " de la BD", ex);
-		}
-		return id;
-	}
-	
-	public int getLastId() {
+	public int getLastIdProducto() {
 		int id = 0;
 		
 		//Se abre la conexión y se obtiene el Statement
@@ -891,51 +956,6 @@ public class GestorBD {
 		return productos;
 	}
 	
-	public void actualizarContrasena(Cliente cliente, String contrasenaNueva) {
-		//Se abre la conexión y se obtiene el Statement
-		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
-		     Statement stmt = con.createStatement()) {
-			//Se ejecuta la sentencia de borrado de datos
-			String sql = "UPDATE CLIENTE SET CONTRASENA = '%s' WHERE ID_C = %d;";
-			
-			int result = stmt.executeUpdate(String.format(sql, contrasenaNueva, cliente.getId()));
-			
-			logger.info(String.format("Se ha actualizado la contrasena del cliente %d a %d", cliente, contrasenaNueva));
-		} catch (Exception ex) {
-			logger.warning(String.format("Error actualizando datos de la BD: %s", ex.getMessage()));					
-		}		
-	}
-	
-	public void actualizarDatosEmpleado(String columna, String id, String nuevoDato) {
-		//Se abre la conexión y se obtiene el Statement
-		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
-		     Statement stmt = con.createStatement()) {
-			//Se ejecuta la sentencia de borrado de datos
-			String sql = "UPDATE TRABAJADOR SET %s = '%s' WHERE ID_T = %s;";
-			System.out.println(String.format(sql, columna, nuevoDato, id));
-			int result = stmt.executeUpdate(String.format(sql, columna, nuevoDato, id));
-			
-			logger.info(String.format("Se ha actualizado el dato %s del cliente %s a %s", columna, id, nuevoDato));
-		} catch (Exception ex) {
-			logger.warning(String.format("Error actualizando datos de la BD: %s", ex.getMessage()));					
-		}		
-	}
-	
-	public void actualizarSalario(Trabajador trabajador, Float salario) {
-		//Se abre la conexión y se obtiene el Statement
-		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
-		     Statement stmt = con.createStatement()) {
-			//Se ejecuta la sentencia de borrado de datos
-			String sql = "UPDATE TRABAJADOR SET SALARIO = '%s' WHERE ID_T = %d;";
-
-			int result = stmt.executeUpdate(String.format(sql, salario, trabajador.getId()));
-			
-			log(Level.INFO, "Se ha actualizado el salario de " + trabajador, null);	
-		} catch (Exception ex) {
-			log(Level.SEVERE, "Error actualizando el salario del trabajador " + trabajador, ex);					
-		}		
-	}
-	
 	public void actualizarPrecio(int id, double precio) {
 		//Se abre la conexión y se obtiene el Statement
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
@@ -966,61 +986,180 @@ public class GestorBD {
 		}		
 	}
 	
-	public void actualizarStockCompra(int id, int stock) {
+	public void borrarProducto(int id) {
 		//Se abre la conexión y se obtiene el Statement
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
 		     Statement stmt = con.createStatement()) {
 			//Se ejecuta la sentencia de borrado de datos
-			String sql = "UPDATE PRODUCTO SET STOCK = STOCK - '%s' WHERE ID_PROD = %d;";
-
-			int result = stmt.executeUpdate(String.format(sql, stock, id));
+			String sql = "DELETE FROM PRODUCTO WHERE ID_PROD = %d;";
 			
-			log(Level.INFO, "Se ha actualizado el stock del producto con id:  " + id, null);	
+			int result = stmt.executeUpdate(String.format(sql, id));
+			
+			log(Level.INFO, "Se ha borrado el producto con id: " + id, null );
 		} catch (Exception ex) {
-			log(Level.SEVERE, "Error actualizando el stock del producto con id: " + id, ex);
+			log(Level.SEVERE, "Error al borrar el producto con id: " + id + " en la BD", ex );				
 		}		
 	}
 	
-	public boolean comprobarCliente(String gmail, String contrasena) {
+	// FUNCIONES DE PEDIDOS:
+	public void insertarPedido(Pedido... pedidos) {
+		String sql = "INSERT INTO PEDIDO (ID_P, ESTADO, FECHA, ID_C, ID_T) VALUES (?, ?, ?, ?, ?);";
 		
-		//Se abre la conexión y se crea el PreparedStatement con la sentencia SQL
+		//Se abre la conexión y se obtiene el Statement
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
-		     Statement pStmt = con.createStatement()) {		
-			String sql = "SELECT GMAIL,CONTRASENA FROM CLIENTE WHERE GMAIL = '" + gmail + "' and CONTRASENA = '" + contrasena + "' LIMIT 1";
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
 			
-			//Se ejecuta la sentencia y se obtiene el ResultSet con los resutlados
-			ResultSet rs = pStmt.executeQuery(sql);
+			//Se recorren los clientes y se insertan uno a uno
+			for (Pedido p : pedidos) {
+				pstmt.setInt(1, getLastIdPedido() + 1);
+				pstmt.setString(2, p.getEstado().toString());
+				pstmt.setLong(3, Long.parseLong(p.getFecha().toString()));
+				pstmt.setInt(4, Integer.parseInt(p.getCliente()));
+				List<Trabajador> trabajadores = obtenerTrabajadores();
+				int posicion = (int)(Math.random() * trabajadores.size());
+				pstmt.setInt(5, trabajadores.get(posicion).getId());
 
-			if (rs.next()) {
-				log(Level.INFO, "Cliente confirmado", null);	
-				return true;
-			}
-			rs.close();
+				
+				if (1 != pstmt.executeUpdate()) {	
+					log(Level.SEVERE, "No se ha insertado el producto" + p, null);
+				} else {
+					log(Level.INFO, "Se ha insertado el producto" + p, null);
+				}
+			}			
 		} catch (Exception ex) {
-			log(Level.SEVERE, "Error cliente inexistente en la BD", ex );
-		}
-		return false;		
+			log(Level.SEVERE, "Error al insertar productos", ex);						
+		}				
 	}
 	
-	public boolean comprobarTrabajador(String gmail, String contrasena) {
-		String sql = "SELECT GMAIL,CONTRASENA FROM TRABAJADOR WHERE GMAIL = '" + gmail + "' and CONTRASENA = '" + contrasena + "' LIMIT 1";
+	public List<Pedido> obtenerPedidos() {
+		List<Pedido> pedidos = new ArrayList<>();
 		
-		//Se abre la conexión y se crea el PreparedStatement con la sentencia SQL
+		//Se abre la conexión y se obtiene el Statement
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
-		     PreparedStatement pStmt = con.prepareStatement(sql)) {			
+		     Statement stmt = con.createStatement()) {
+			
+			String sql = "SELECT * FROM PEDIDO";
 			
 			//Se ejecuta la sentencia y se obtiene el ResultSet con los resutlados
-			ResultSet rs = pStmt.executeQuery();
-			if (rs.next()) {
-				log(Level.INFO, "Trabajador confirmado", null );
-				return true;
+			ResultSet rs = stmt.executeQuery(sql);			
+			Pedido pedido;
+			
+			while (rs.next()) {
+				pedido = new Pedido();
+				
+				pedido.setId(rs.getInt("ID_P"));
+				pedido.setCliente(rs.getString("ID_C"));
+				pedido.setFecha(rs.getDate("FECHA"));
+				pedido.setEstado(Estado.valueOf(rs.getString("ESTADO")));
+				
+
+				pedidos.add(pedido);
 			}
-		} catch (Exception ex) {				
-			log(Level.SEVERE, "Error trabajador inexistente en la BD", ex );
-		}
-		return false;		
+
+			//Se cierra el ResultSet
+			rs.close();
+			
+			log(Level.INFO, "Se han recuperado " + pedidos.size() + " pedidos", null);			
+		} catch (Exception ex) {
+			log(Level.SEVERE, "Error al obtener los pedidos de la BD", ex);					
+		}		
+		return pedidos;
 	}
 	
+	public List<Pedido> obtenerPedidosCliente(int id) {
+		List<Pedido> pedidos = new ArrayList<>();
+		
+		//Se abre la conexión y se obtiene el Statement
+		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+		     Statement stmt = con.createStatement()) {
+			
+			String sql = "SELECT * FROM PEDIDO WHERE ID_C = " + id;
+			
+			//Se ejecuta la sentencia y se obtiene el ResultSet con los resutlados
+			ResultSet rs = stmt.executeQuery(sql);			
+			Pedido pedido;
+			
+
+			while (rs.next()) {
+				pedido = new Pedido();
+				
+				pedido.setId(rs.getInt("ID_P"));
+				pedido.setCliente(rs.getString("ID_C"));
+				pedido.setFecha(rs.getDate("FECHA"));
+				pedido.setEstado(Estado.valueOf(rs.getString("ESTADO")));
+
+				pedidos.add(pedido);
+			}
+			//Se cierra el ResultSet
+			rs.close();
+			
+			log(Level.INFO, "Se han recuperado " + pedidos.size() + " pedidos", null);			
+		} catch (Exception ex) {
+			log(Level.SEVERE, "Error al obtener los pedidos de la BD", ex);					
+		}		
+		return pedidos;
+	}
+	
+	public int getLastIdPedido() {
+		int id = 0;
+		
+		//Se abre la conexión y se obtiene el Statement
+		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+		     Statement stmt = con.createStatement()) {
+			
+			String sql = "SELECT MAX(ID_P) AS 'MAXIMO' FROM PEDIDO;";
+			
+			//Se ejecuta la sentencia y se obtiene el ResultSet con los resutlados
+			ResultSet rs = stmt.executeQuery(sql);
+
+			//Se recorre el ResultSet y se crean objetos Producto
+			while (rs.next()) {
+				id = rs.getInt("MAXIMO");
+			}
+			//Se cierra el ResultSet
+			rs.close();
+			
+			
+			log(Level.INFO, "Se ha recuperado el id maximo: " + id, null);			
+		} catch (Exception ex) {
+
+			log(Level.SEVERE, "Error al obtener el id maximo: " + id + " de la BD", ex);
+		}
+		return id;
+	}
+	
+	public void actualizarEstadoPedido(int id, String estado) {
+		//Se abre la conexión y se obtiene el Statement
+		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+		     Statement stmt = con.createStatement()) {
+			//Se ejecuta la sentencia de borrado de datos
+			String sql = "UPDATE PEDIDO SET ESTADO = '%s' WHERE ID_P = %s;";
+			
+			int result = stmt.executeUpdate(String.format(sql, estado, id));
+			
+			logger.info(String.format("Se ha actualizado el estado del pedido %d a %s", id, estado));
+		} catch (Exception ex) {
+			logger.warning(String.format("Error actualizando el estado del pedido de la BD: %s", ex.getMessage()));					
+		}		
+	}
+	
+	public void borrarPedido(int id) {
+		//Se abre la conexión y se obtiene el Statement
+		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+		     Statement stmt = con.createStatement()) {
+			//Se ejecuta la sentencia de borrado de datos
+			String sql = "DELETE FROM PEDIDO WHERE ID_P = %d;";
+			
+			int result = stmt.executeUpdate(String.format(sql, id));
+			
+			log(Level.INFO, "Se ha borrado el pedido con id: " + id, null );
+		} catch (Exception ex) {
+			System.out.println(ex);
+			log(Level.SEVERE, "Error al borrar el pedido con id: " + id + " en la BD", ex );				
+		}		
+	}
+
+	// LOGGER:
 	private void setLogger( Logger logger ) {
 		this.logger = logger;
 	}
@@ -1041,52 +1180,8 @@ public class GestorBD {
 			logger.log(level, msg, excepcion);
 		}
 	}
-	
-	public void borrarCliente(Cliente cliente) {
-		//Se abre la conexión y se obtiene el Statement
-		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
-		     Statement stmt = con.createStatement()) {
-			//Se ejecuta la sentencia de borrado de datos
-			String sql = "DELETE FROM CLIENTE WHERE ID_C = %d;";
-			
-			int result = stmt.executeUpdate(String.format(sql, cliente.getId()));
-			
-			log(Level.INFO, "Se ha borrado al cliente" + cliente, null );
-		} catch (Exception ex) {
-			log(Level.SEVERE, "Error al borrar el cliente en la BD", ex );				
-		}		
-	}
-	
-	public void borrarProducto(int id) {
-		//Se abre la conexión y se obtiene el Statement
-		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
-		     Statement stmt = con.createStatement()) {
-			//Se ejecuta la sentencia de borrado de datos
-			String sql = "DELETE FROM PRODUCTO WHERE ID_PROD = %d;";
-			
-			int result = stmt.executeUpdate(String.format(sql, id));
-			
-			log(Level.INFO, "Se ha borrado el producto con id: " + id, null );
-		} catch (Exception ex) {
-			log(Level.SEVERE, "Error al borrar el producto con id: " + id + " en la BD", ex );				
-		}		
-	}
-	
-	public void borrarTrabajador(int id) {
-			//Se abre la conexión y se obtiene el Statement
-			try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
-			     Statement stmt = con.createStatement()) {
-				//Se ejecuta la sentencia de borrado de datos
-				String sql = "DELETE FROM TRABAJADOR WHERE ID_T = %d;";
-				
-				int result = stmt.executeUpdate(String.format(sql, id));
-				
-				log(Level.INFO, "Se ha borrado al cliente" + id, null);
-			} catch (Exception ex) {
-				log(Level.SEVERE, "Error al borrar el trabajador en la BD", ex);						
-			}	
-	}
 
+	// GENERAL:
 	public void borrarDatos(String tabla) {
 		//Se abre la conexión y se obtiene el Statement
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);

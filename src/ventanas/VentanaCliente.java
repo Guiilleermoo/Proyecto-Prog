@@ -16,6 +16,7 @@ import es.deusto.prog.III.Producto.Genero;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -28,7 +29,6 @@ public class VentanaCliente extends JFrame{
 	// Guardamos el gmail y contrasena en variables
 	protected String gmail;
 	protected String contrasena;
-	protected VentanaProgreso ventanaProgreso;
 	protected VentanaPedidos ventanaPedidos;
 	
 	private static final long serialVersionUID = 1L;
@@ -150,6 +150,10 @@ public class VentanaCliente extends JFrame{
 		JButton compraPosible = new JButton("Compra posible");
 		panel_7.add(compraPosible);
 		
+		JProgressBar progreso = new JProgressBar(0, 100);
+		progreso.setStringPainted(true);
+		panel_8.add(progreso);
+		
 		tablaProductos.addKeyListener(new KeyAdapter() {
 			
 			@Override
@@ -180,10 +184,24 @@ public class VentanaCliente extends JFrame{
 					JOptionPane.showMessageDialog(null, "Tu carrito esta vacio", "Advertencia", JOptionPane.WARNING_MESSAGE);
 					
 				}else {
-					ventanaProgreso = new VentanaProgreso(gestorBD, obtenerCarrito(tablaSeleccionados));
-					for (int i = 0; i < tablaSeleccionados.getRowCount(); i++) {
-						modeloDatosSeleccionados.removeRow(0);
-					}
+					Thread hilo = new Thread(new Runnable() {
+						@Override
+						public void run() {
+							gestorBD.log(Level.INFO, "Ha empezado la compra", null);
+							for (int i = 0; i < 100; i++) {
+								progreso.setValue(i+1);
+								try {
+									Thread.sleep(60);
+								} catch (InterruptedException e) {
+									e.printStackTrace();
+								}
+							}
+							gestorBD.log(Level.INFO, "La compra ha finalizado", null);
+							factura(obtenerCarrito(tablaSeleccionados));
+							JOptionPane.showMessageDialog(VentanaCliente.this, "Compra Finalizada con exito, revise su factura.", "Atencion", JOptionPane.INFORMATION_MESSAGE);
+						}
+					});
+					hilo.start();
 				}
 			}
 		});
@@ -195,7 +213,6 @@ public class VentanaCliente extends JFrame{
 				Double importe = Double.parseDouble(JOptionPane.showInputDialog("Cual es tu importe maximo??"));
 				List<Producto> productos = gestorBD.obtenerProductosTodos();
 				List<List<Producto>> comprasPosibles = comprasPosibles(productos, importe);
-//				System.out.println(comprasPosibles);
 				VentanaRecursividad ventanaRecursividad = new VentanaRecursividad(comprasPosibles);
 			}
 		});
@@ -692,6 +709,19 @@ public class VentanaCliente extends JFrame{
 		return productos;
 	}
 	
+	private void factura(List<Producto> productos) {
+		try (PrintWriter out = new PrintWriter("factura.txt")){
+			
+			out.println("PRODUCTO\t\t\t\t\t\tPRECIO\tCANTIDAD");
+			for (Producto p : productos) {
+				out.println(String.format("%s-%s-%s-%s-%s\t%.2f\t%d", p.getArticulo(), p.getDeporte(), p.getMarca(), p.getGenero(), p.getTalla(), p.getPrecio(), p.getCantidad()));
+			}
+			out.println("Total: " + calcularTotal(modeloDatosSeleccionados) + "");
+		} catch (Exception e) {
+			gestorBD.log(Level.INFO, "Error exportando datos", e);
+		}
+	}
+	
 	private static void comprasPosiblesRecursividad(List<List<Producto>> result, List<Producto> productos, double maximo, List<Producto> temp) {
 		// Caso base. Si el importe disponible es negativo se detiene la recursividad
 		if (maximo < 0) {
@@ -705,11 +735,13 @@ public class VentanaCliente extends JFrame{
 					comprasPosiblesRecursividad(result, productos, maximo-p.getPrecio(), temp);
 					//Se elimina el último de la lista temporal
 					temp.remove(temp.size()-1);
-					if (!result.contains(temp)) {
-						
-		            	//Se añade la lista temporal a la lista de resultados
-		                result.add(new ArrayList<>(temp));
-		        	}
+					
+					temp.sort((Producto o1, Producto o2) -> Integer.compare(o1.getId(), o2.getId()));
+					
+					if (!result.contains(temp) && !temp.isEmpty()) {
+						//Se añade la lista temporal a la lista de resultados
+			            result.add(new ArrayList<>(temp));
+					}  
 				}
 		}
 	}

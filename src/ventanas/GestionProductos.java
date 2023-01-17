@@ -162,7 +162,7 @@ public class GestionProductos extends JFrame {
 				} else {
 					gestorBD.insertarProducto(p);
 					
-					int id = gestorBD.getLastId();
+					int id = gestorBD.getLastIdProducto();
 					modeloDatosProductos.addRow(new Object[] {id, p.getArticulo(), p.getDeporte(), p.getMarca(), p.getGenero(), p.getTalla(), p.getPrecio(), p.getCantidad()});
 					
 					limpiar();

@@ -21,6 +21,7 @@ public class TestPedido {
 	Producto producto = new Producto("Zapatillas", "Baloncesto", "Nike", Genero.HOMBRE, "M", 0, 1);
 	
 	private Pedido pedido;
+	private int id = 1;
 	private String cliente = "cliente";
 	private Date fecha = new Date(System.currentTimeMillis());
 	private ArrayList<Producto> productos = new ArrayList<Producto>();
@@ -32,6 +33,7 @@ public class TestPedido {
 	@Before
 	public void setUp() throws Exception {
 		pedido = new Pedido();
+		pedido.setId(id);
 		pedido.setCliente(cliente);
 		pedido.setFecha(fecha);
 		pedido.setProductos(productos);
@@ -40,13 +42,25 @@ public class TestPedido {
 
 	@Test
 	public void testPedido() {
-		pedido = new Pedido(cliente, fecha,  productos, estado);
+		pedido = new Pedido(1, cliente, fecha,  productos, estado);
 		assertEquals(pedido.getCliente(), cliente);
 		assertEquals(pedido.getFecha(), fecha);
 		assertEquals(pedido.getProductos(), productos);
 		assertEquals(pedido.getEstado(), estado);
 	}
 
+	@Test
+	public void testGetId() {
+		assertEquals(pedido.getId(), id);
+	}
+
+	@Test
+	public void testSetId() {
+		int id1 = 2;
+		pedido.setId(id);
+		assertEquals(pedido.getId(), 2);
+	}
+	
 	@Test
 	public void testGetCliente() {
 		assertEquals(pedido.getCliente(), cliente);

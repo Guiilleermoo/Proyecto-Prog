@@ -24,8 +24,9 @@ public class Pedido {
 		this.estado = Estado.LISTO;
 	}
 
-	public Pedido(String cliente, Date fecha, ArrayList<Producto> productos, Estado estado) {
+	public Pedido(int id, String cliente, Date fecha, ArrayList<Producto> productos, Estado estado) {
 		super();
+		this.id = id;
 		this.cliente = cliente;
 		this.fecha = fecha;
 		this.productos = productos;
