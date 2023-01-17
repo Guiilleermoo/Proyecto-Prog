@@ -3,6 +3,7 @@ package ventanas;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -78,6 +79,7 @@ public class GestionProductos extends JFrame {
 		arriba.setLayout(new GridLayout(3, 4));
 		
 		JLabel labelArticulo = new JLabel("Articulo:");
+		labelArticulo.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
 		arriba.add(labelArticulo);
 		
 		txtArticulo = new JTextField();
@@ -85,6 +87,7 @@ public class GestionProductos extends JFrame {
 		txtArticulo.setColumns(10);
 		
 		JLabel labelDeporte = new JLabel("Deporte:");
+		labelDeporte.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
 		arriba.add(labelDeporte);
 		
 		txtDeporte = new JTextField();
@@ -92,6 +95,7 @@ public class GestionProductos extends JFrame {
 		txtDeporte.setColumns(10);
 		
 		JLabel labelMarca = new JLabel("Marca:");
+		labelMarca.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
 		arriba.add(labelMarca);
 		
 		txtMarca = new JTextField();
@@ -99,12 +103,14 @@ public class GestionProductos extends JFrame {
 		txtMarca.setColumns(10);
 		
 		JLabel labelGenero = new JLabel("Genero:");
+		labelGenero.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
 		arriba.add(labelGenero);
 		
 		genero = new JComboBox<Producto.Genero>(Genero.values());
 		arriba.add(genero);
 		
 		JLabel labelTalla = new JLabel("Talla:");
+		labelTalla.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
 		arriba.add(labelTalla);
 		
 		txtTalla = new JTextField();
@@ -112,6 +118,7 @@ public class GestionProductos extends JFrame {
 		txtTalla.setColumns(10);
 		
 		JLabel labelPrecio = new JLabel("Precio:");
+		labelPrecio.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
 		arriba.add(labelPrecio);
 		
 		SpinnerModel modelPrecio = new SpinnerNumberModel(30.0, 1.0, 300.0, 0.5);
@@ -122,9 +129,13 @@ public class GestionProductos extends JFrame {
 		derecha.add(medio);
 		
 		JButton BotonAnadir = new JButton("Anadir Producto");
+		BotonAnadir.setBackground(new Color(255, 186, 117));
+		BotonAnadir.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
 		medio.add(BotonAnadir);
 		
 		JButton BotonBorrar = new JButton("Borrar Producto");
+		BotonBorrar.setBackground(new Color(255, 147, 147));
+		BotonBorrar.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
 		medio.add(BotonBorrar);
 
 		JPanel abajo = new JPanel();
@@ -135,6 +146,8 @@ public class GestionProductos extends JFrame {
 		abajo.add(spinnerStock);
 		
 		JButton BotonStock = new JButton("Anadir Stock");
+		BotonStock.setBackground(new Color(176, 176, 255));
+		BotonStock.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
 		abajo.add(BotonStock);
 		
 		BotonAnadir.addActionListener(new ActionListener() {
@@ -227,7 +240,7 @@ public class GestionProductos extends JFrame {
 		this.tablaProductos.getColumnModel().getColumn(7).setCellRenderer(renderStock);
 		
 		this.setTitle("Gestion Productos");
-		this.pack();
+		this.setSize(1200, 600);;
 		this.setIconImage(new ImageIcon("data/logo.png").getImage());
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
 		this.setLocationRelativeTo(null);

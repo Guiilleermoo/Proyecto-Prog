@@ -47,6 +47,7 @@ public class GestionPedidos extends JFrame{
 		JScrollPane scrollPreparacion = new JScrollPane(listaPreparacion);
 		
 		botonPreparacionAListo = new JButton(">>");
+		botonPreparacionAListo.setBackground(new Color(181, 227, 255));
 		
 		botonPreparacionAListo.addActionListener(new ActionListener() {
 			@Override
@@ -76,7 +77,9 @@ public class GestionPedidos extends JFrame{
 		JScrollPane scrollListo = new JScrollPane(listaListo);
 		
 		botonListoAPreparacion = new JButton("<<");
+		botonListoAPreparacion.setBackground(new Color(255, 185, 185));
 		botonListoAFinalizado= new JButton(">>");
+		botonListoAFinalizado.setBackground(new Color(181, 227, 255));
 		
 		botonListoAPreparacion.addActionListener(new ActionListener() {
 			@Override
@@ -120,6 +123,7 @@ public class GestionPedidos extends JFrame{
 		JScrollPane scrollFinalizado = new JScrollPane(listaFinalizado);
 		
 		botonFinalizadoAListo = new JButton("<<");
+		botonFinalizadoAListo.setBackground(new Color(255, 185, 185));
 		
 		botonFinalizadoAListo.addActionListener(new ActionListener() {
 			@Override
@@ -136,6 +140,7 @@ public class GestionPedidos extends JFrame{
 		});
 		
 		botonEnviar = new JButton("Enviar");
+		botonEnviar.setBackground(new Color(128, 255, 128));
 		
 		botonEnviar.addActionListener(new ActionListener() {
 			

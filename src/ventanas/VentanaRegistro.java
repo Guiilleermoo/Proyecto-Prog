@@ -9,6 +9,7 @@ import javax.swing.*;
 
 import es.deusto.prog.III.Cliente;
 import es.deusto.prog.III.BD.GestorBD;
+import java.awt.Font;
 
 public class VentanaRegistro extends JFrame {
 	protected GestorBD gestorBD;
@@ -18,19 +19,22 @@ public class VentanaRegistro extends JFrame {
 		
 		Container panel = this.getContentPane();
 		panel.setLayout(null);
-		panel.setBackground(Color.MAGENTA);
+		panel.setBackground(new Color(245, 240, 190));
 		
 		// Creacion de los botones
 		JLabel registro = new JLabel("REGISTRO:");
-		registro.setBounds(200, 50, 80, 25);
+		registro.setFont(new Font("Gill Sans Nova Light", Font.BOLD | Font.ITALIC, 20));
+		registro.setBounds(200, 50, 204, 25);
 		panel.add(registro);
 		
 		JLabel nombreLabel = new JLabel("Nombre y");
-		nombreLabel.setBounds(100, 85, 80, 25);
+		nombreLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
+		nombreLabel.setBounds(100, 87, 80, 25);
 		panel.add(nombreLabel);
 		
 		JLabel apellidoLabel = new JLabel("Apellidos: ");
-		apellidoLabel.setBounds(100, 100, 80, 25);
+		apellidoLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
+		apellidoLabel.setBounds(100, 105, 80, 25);
 		panel.add(apellidoLabel);
 		
 		JTextField nombreYApellidoText = new JTextField(30);
@@ -38,6 +42,7 @@ public class VentanaRegistro extends JFrame {
 		panel.add(nombreYApellidoText);
 		
 		JLabel gmailLabel = new JLabel("Gmail: ");
+		gmailLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
 		gmailLabel.setBounds(100, 175, 80, 25);
 		panel.add(gmailLabel);
 		
@@ -46,7 +51,8 @@ public class VentanaRegistro extends JFrame {
 		panel.add(gmailText);
 		
 		JLabel contrasenaLabel = new JLabel("Contrasena: ");
-		contrasenaLabel.setBounds(100, 250, 80, 25);
+		contrasenaLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
+		contrasenaLabel.setBounds(100, 250, 90, 25);
 		panel.add(contrasenaLabel);
 		
 		JPasswordField contrasenaText = new JPasswordField(30);
@@ -54,6 +60,7 @@ public class VentanaRegistro extends JFrame {
 		panel.add(contrasenaText);
 		
 		JLabel direccionLabel = new JLabel("Direccion: ");
+		direccionLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
 		direccionLabel.setBounds(100, 325, 80, 25);
 		panel.add(direccionLabel);
 		
@@ -62,6 +69,7 @@ public class VentanaRegistro extends JFrame {
 		panel.add(direccionText);
 		
 		JLabel telefonoLabel = new JLabel("Telefono: ");
+		telefonoLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
 		telefonoLabel.setBounds(100, 400, 80, 25);
 		panel.add(telefonoLabel);
 		
@@ -70,11 +78,15 @@ public class VentanaRegistro extends JFrame {
 		panel.add(telefonoText);
 		
 		JButton registroboton = new JButton("Registrar");
-		registroboton.setBounds(100, 450, 100, 25);
+		registroboton.setBackground(new Color(192, 181, 255));
+		registroboton.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
+		registroboton.setBounds(223, 450, 117, 25);
 		panel.add(registroboton);
 		
 		JButton volverboton = new JButton("Volver");
-		volverboton.setBounds(350, 450, 100, 25);
+		volverboton.setBackground(new Color(192, 181, 255));
+		volverboton.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
+		volverboton.setBounds(378, 450, 100, 25);
 		panel.add(volverboton);
 		
 		registroboton.addActionListener(new ActionListener() {

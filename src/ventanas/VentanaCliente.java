@@ -30,6 +30,8 @@ public class VentanaCliente extends JFrame{
 	protected String gmail;
 	protected String contrasena;
 	protected VentanaPedidos ventanaPedidos;
+	protected VentanaRecursividad ventanaRecursividad;
+	
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -64,6 +66,7 @@ public class VentanaCliente extends JFrame{
 		panel_1.add(panel_5);
 		
 		JLabel Articulo = new JLabel("Articulo:");
+		Articulo.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
 		panel_5.add(Articulo);
 		
 		JComboBox<String> articulo = new JComboBox<String>();
@@ -72,6 +75,7 @@ public class VentanaCliente extends JFrame{
 		panel_5.add(articulo);
 		
 		JLabel Deporte = new JLabel("Deporte:");
+		Deporte.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
 		Deporte.setEnabled(true);
 		panel_5.add(Deporte);
 		
@@ -81,6 +85,7 @@ public class VentanaCliente extends JFrame{
 		panel_5.add(deporte);
 		
 		JLabel Marca = new JLabel("Marca:");
+		Marca.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
 		panel_5.add(Marca);
 		
 		JComboBox<String> marca = new JComboBox<String>();
@@ -89,6 +94,7 @@ public class VentanaCliente extends JFrame{
 		panel_5.add(marca);
 		
 		JLabel Precio = new JLabel("Precio:");
+		Precio.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
 		panel_5.add(Precio);
 		
 		JSlider slider = new JSlider();
@@ -101,6 +107,7 @@ public class VentanaCliente extends JFrame{
 		panel_5.add(slider);
 		
 		JCheckBox Precio2 = new JCheckBox("Cualquier precio");
+		Precio2.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
 		Precio2.setHorizontalAlignment(SwingConstants.LEFT);
 		panel_5.add(Precio2);
 		
@@ -132,12 +139,18 @@ public class VentanaCliente extends JFrame{
 		panel_2.add(panel_8);
 		
 		JButton borrar = new JButton("Borrar");
+		borrar.setBackground(new Color(255, 147, 147));
+		borrar.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
 		panel_8.add(borrar);
 		
 		JButton carrito = new JButton("Comprar");
+		carrito.setBackground(new Color(255, 186, 117));
+		carrito.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
 		panel_8.add(carrito);
 
 		JButton pedidos = new JButton("Mis Pedidos");
+		pedidos.setBackground(new Color(176, 176, 255));
+		pedidos.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
 		panel_8.add(pedidos);
 		
 		
@@ -145,12 +158,18 @@ public class VentanaCliente extends JFrame{
 		panel_6.add(panel_7);
 		
 		JButton anyadir = new JButton("Anadir");
+		anyadir.setBackground(new Color(155, 207, 255));
+		anyadir.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
 		panel_7.add(anyadir);
 		
 		JButton compraPosible = new JButton("Compra posible");
+		compraPosible.setBackground(new Color(204, 255, 204));
+		compraPosible.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
 		panel_7.add(compraPosible);
 		
 		JProgressBar progreso = new JProgressBar(0, 100);
+		progreso.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
+		progreso.setForeground(new Color(0, 128, 255));
 		progreso.setStringPainted(true);
 		panel_8.add(progreso);
 		
@@ -213,7 +232,9 @@ public class VentanaCliente extends JFrame{
 				Double importe = Double.parseDouble(JOptionPane.showInputDialog("Cual es tu importe maximo??"));
 				List<Producto> productos = gestorBD.obtenerProductosTodos();
 				List<List<Producto>> comprasPosibles = comprasPosibles(productos, importe);
-				VentanaRecursividad ventanaRecursividad = new VentanaRecursividad(comprasPosibles);
+				System.out.println(comprasPosibles);
+				VentanaRecursividad ventanaRecursividad = new VentanaRecursividad(comprasPosibles, importe);
+				ventanaRecursividad.setVisible(true);
 			}
 		});
 		
@@ -325,7 +346,7 @@ public class VentanaCliente extends JFrame{
 
 				//Si la celda esta seleccionada se asocia un color de fondo y letra
 				if (mouseRow == row) {
-					label.setBackground(Color.BLUE);
+					label.setBackground(Color.ORANGE);
 					label.setForeground(Color.WHITE);
 				}
 						
@@ -352,7 +373,7 @@ public class VentanaCliente extends JFrame{
 
 				//Si la celda esta seleccionada se asocia un color de fondo y letra
 				if (mouseRow == row) {
-					label.setBackground(Color.PINK);
+					label.setBackground(Color.pink);
 					label.setForeground(Color.WHITE);
 				}
 						

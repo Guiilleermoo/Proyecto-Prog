@@ -35,6 +35,7 @@ import es.deusto.prog.III.Trabajador;
 import es.deusto.prog.III.Trabajador.Estatus;
 import es.deusto.prog.III.BD.GestorBD;
 import es.deusto.prog.III.Producto.Genero;
+import java.awt.Font;
 
 public class GestionEmpleados extends JFrame{
 	protected GestorBD gestorBD;
@@ -91,6 +92,7 @@ public class GestionEmpleados extends JFrame{
 		derecha.setLayout(new GridLayout(7, 2, 0, 0));
 		
 		JLabel lblNewLabel = new JLabel("Nombre Y Apellidos:");
+		lblNewLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
 		derecha.add(lblNewLabel);
 		
 		nombreYApellidoText = new JTextField();
@@ -98,6 +100,7 @@ public class GestionEmpleados extends JFrame{
 		nombreYApellidoText.setColumns(10);
 		
 		JLabel lblNewLabel_1 = new JLabel("Gmail:");
+		lblNewLabel_1.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
 		derecha.add(lblNewLabel_1);
 		
 		gmailText = new JTextField();
@@ -105,6 +108,7 @@ public class GestionEmpleados extends JFrame{
 		gmailText.setColumns(10);
 		
 		JLabel lblNewLabel_2 = new JLabel("Contrasena:");
+		lblNewLabel_2.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
 		derecha.add(lblNewLabel_2);
 		
 		contrasenaText = new JTextField();
@@ -112,6 +116,7 @@ public class GestionEmpleados extends JFrame{
 		contrasenaText.setColumns(10);
 		
 		JLabel lblNewLabel_3 = new JLabel("Estatus:");
+		lblNewLabel_3.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
 		derecha.add(lblNewLabel_3);
 		
 		JComboBox estatusCombo = new JComboBox(Estatus.values());
@@ -119,6 +124,7 @@ public class GestionEmpleados extends JFrame{
 		
 		
 		JLabel lblNewLabel_4 = new JLabel("Salario:");
+		lblNewLabel_4.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
 		derecha.add(lblNewLabel_4);
 		
 		SpinnerNumberModel modeloSpinner = new SpinnerNumberModel(2000.0, 900.0, 5000.0, 100.0);
@@ -127,6 +133,7 @@ public class GestionEmpleados extends JFrame{
 		
 		
 		JLabel lblNewLabel_5 = new JLabel("Telefono:");
+		lblNewLabel_5.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
 		derecha.add(lblNewLabel_5);
 		
 		telefonoText = new JTextField();
@@ -134,9 +141,13 @@ public class GestionEmpleados extends JFrame{
 		telefonoText.setColumns(10);
 		
 		JButton botonAnadir = new JButton("Anadir");
+		botonAnadir.setBackground(new Color(185, 255, 252));
+		botonAnadir.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
 		derecha.add(botonAnadir);
 		
 		JButton botonBorrar = new JButton("Borrar");
+		botonBorrar.setBackground(new Color(255, 210, 210));
+		botonBorrar.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
 		derecha.add(botonBorrar);
 		
 		TableCellRenderer renderJefe = (table, value, isSelected, hasFocus, row, column) -> {

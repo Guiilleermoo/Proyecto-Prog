@@ -35,7 +35,7 @@ public class VentanaLogging extends JFrame{
 		
 		Container panel = this.getContentPane();
 		panel.setLayout(null);
-		panel.setBackground(Color.CYAN);
+		panel.setBackground(new Color(183, 255, 183));
 		
 		// Creacion de los botones
 		JLabel foto = new JLabel();
@@ -44,6 +44,7 @@ public class VentanaLogging extends JFrame{
 		panel.add(foto);
 		
 		JLabel gmailLabel = new JLabel("Gmail");
+		gmailLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
 		gmailLabel.setBounds(200, 450, 80, 25);
 		panel.add(gmailLabel);
 		
@@ -52,6 +53,7 @@ public class VentanaLogging extends JFrame{
 		panel.add(gmailText);
 		
 		JLabel contrasenaLabel = new JLabel("Contrasena");
+		contrasenaLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
 		contrasenaLabel.setBounds(200, 480, 80, 25);
 		panel.add(contrasenaLabel);
 		
@@ -60,16 +62,22 @@ public class VentanaLogging extends JFrame{
 		panel.add(contrasenaText);
 		
 		JButton accesoButton = new JButton("Acceder");
+		accesoButton.setBackground(new Color(181, 218, 255));
+		accesoButton.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
 		accesoButton.setBounds(200, 520, 120, 25);
 		panel.add(accesoButton);
 		
 		JButton registroButton = new JButton("Registarse");
+		registroButton.setBackground(new Color(181, 218, 255));
+		registroButton.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
 		registroButton.setBounds(350, 520, 120, 25);
 		panel.add(registroButton);
 		
 		// Crear los JRadioButton de cliente/trabajador y a�adirlos a un grupo de botones
 		JRadioButton cliente = new JRadioButton("Cliente", true);
+		cliente.setFont(new Font("Comic Sans MS", Font.PLAIN, 13));
 		JRadioButton trabajador = new JRadioButton("Trabajador", false);
+		trabajador.setFont(new Font("Comic Sans MS", Font.PLAIN, 12));
 		ButtonGroup jbg = new ButtonGroup();
 		jbg.add(cliente);
 		jbg.add(trabajador);
