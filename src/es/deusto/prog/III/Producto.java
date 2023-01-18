@@ -109,6 +109,6 @@ public class Producto {
 
 	@Override
 	public String toString() {
-		return articulo + "-" + deporte + "-" + marca + "-" + talla + "-" + genero + "\t" + precio + "€\t" + cantidad;
+		return articulo + "-" + deporte + "-" + marca + "-" + talla + "-" + genero + "\t" + precio + "€";
 	}
 }

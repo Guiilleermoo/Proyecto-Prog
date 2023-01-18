@@ -205,7 +205,9 @@ public class GestionProductos extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int id = (int) tablaProductos.getValueAt(tablaProductos.getSelectedRow(), 0);
-				gestorBD.actualizarStock(id, (int) spinnerStock.getValue());
+				int cantidad = (int) spinnerStock.getValue();
+				gestorBD.actualizarStock(id, cantidad);
+				gestorBD.insertarRepone(cantidad, id, gestorBD.getTrabajadorByGmail(gmail).getId());
 				
 				loadProductos();
 			}

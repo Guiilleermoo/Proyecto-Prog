@@ -854,6 +854,73 @@ public class GestorBD {
 		return precio;
 	}
 	
+	public int obtenerStock(int id) {
+		int stock = 0;
+		
+		String sql = "SELECT STOCK FROM PRODUCTO WHERE ID_PROD = ? LIMIT 1";
+		
+		//Se abre la conexi贸n y se crea el PreparedStatement con la sentencia SQL
+		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+		     PreparedStatement pStmt = con.prepareStatement(sql)) {			
+			
+			//Se definen los par谩metros de la sentencia SQL
+			pStmt.setInt(1, id);
+
+			
+			//Se ejecuta la sentencia y se obtiene el ResultSet con los resutlados
+			ResultSet rs = pStmt.executeQuery();			
+
+			//Se procesa el unico resultado
+			if (rs.next()) {
+				stock = rs.getInt("STOCK");
+			}
+			
+			//Se cierra el ResultSet
+			rs.close();
+			
+			log(Level.INFO, "Se ha recuperado el stock del producto con id:" + id, null);			
+		} catch (Exception ex) {
+			log(Level.SEVERE, "Error al recuperar el stock del producto con id: " + id, ex);
+			System.out.println(ex);
+		}		
+		return stock;
+	}
+	
+	public int getIdProducto(Producto  producto) {
+
+        String sql = "SELECT * FROM PRODUCTO WHERE ARTICULO = ? AND DEPORTE = ? AND MARCA = ? AND GENERO = ? AND TALLA = ?";
+        int id = 0;
+        //Se abre la conexi髇 y se crea el PreparedStatement con la sentencia SQL
+        try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+             PreparedStatement pStmt = con.prepareStatement(sql)) {
+            pStmt.setString(1, producto.getArticulo());
+            pStmt.setString(2, producto.getDeporte());
+            pStmt.setString(3, producto.getMarca());
+            pStmt.setString(4, producto.getGenero().toString());
+            pStmt.setString(5, producto.getTalla());
+
+
+            ResultSet rs = pStmt.executeQuery();
+
+
+            //Se procesa el unico resultado
+            if (rs.next()) {
+
+                id = rs.getInt("ID_PROD");
+
+            }
+
+            //Se cierra el ResultSet
+            rs.close();
+
+            log(Level.INFO, "Se ha recuperado el id producto", null);
+        } catch (Exception ex) {
+            log(Level.SEVERE, "Error al recuperar el producto", ex);
+            System.out.println(ex);
+        }
+        return id;
+    }
+	
 	public List<Producto> obtenerProductosFiltro(String articulo, String deporte, String marca, double precio) {
 		List<Producto> productos = new ArrayList<>();
 		
@@ -986,6 +1053,21 @@ public class GestorBD {
 		}		
 	}
 	
+	public void actualizarStockCompra(int id, int cantidad) {
+		//Se abre la conexi贸n y se obtiene el Statement
+		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+		     Statement stmt = con.createStatement()) {
+			//Se ejecuta la sentencia de borrado de datos
+			String sql = "UPDATE PRODUCTO SET STOCK = STOCK - '%s' WHERE ID_PROD = %d;";
+
+			int result = stmt.executeUpdate(String.format(sql, cantidad, id));
+			
+			log(Level.INFO, "Se ha actualizado el stock del producto con id:  " + id, null);	
+		} catch (Exception ex) {
+			log(Level.SEVERE, "Error actualizando el stock del producto con id: " + id, ex);
+		}		
+	}
+	
 	public void borrarProducto(int id) {
 		//Se abre la conexi贸n y se obtiene el Statement
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
@@ -1003,33 +1085,34 @@ public class GestorBD {
 	
 	// FUNCIONES DE PEDIDOS:
 	public void insertarPedido(Pedido... pedidos) {
-		String sql = "INSERT INTO PEDIDO (ID_P, ESTADO, FECHA, ID_C, ID_T) VALUES (?, ?, ?, ?, ?);";
-		
-		//Se abre la conexi贸n y se obtiene el Statement
-		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
-				PreparedStatement pstmt = con.prepareStatement(sql)) {
-			
-			//Se recorren los clientes y se insertan uno a uno
-			for (Pedido p : pedidos) {
-				pstmt.setInt(1, getLastIdPedido() + 1);
-				pstmt.setString(2, p.getEstado().toString());
-				pstmt.setLong(3, Long.parseLong(p.getFecha().toString()));
-				pstmt.setInt(4, Integer.parseInt(p.getCliente()));
-				List<Trabajador> trabajadores = obtenerTrabajadores();
-				int posicion = (int)(Math.random() * trabajadores.size());
-				pstmt.setInt(5, trabajadores.get(posicion).getId());
+        String sql = "INSERT INTO PEDIDO (ID_P, ESTADO, FECHA, ID_C, ID_T) VALUES (?, ?, ?, ?, ?);";
 
-				
-				if (1 != pstmt.executeUpdate()) {	
-					log(Level.SEVERE, "No se ha insertado el producto" + p, null);
-				} else {
-					log(Level.INFO, "Se ha insertado el producto" + p, null);
-				}
-			}			
-		} catch (Exception ex) {
-		//	log(Level.SEVERE, "Error al insertar productos", ex);						
-		}				
-	}
+        //Se abre la conexi髇 y se obtiene el Statement
+        try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+                PreparedStatement pstmt = con.prepareStatement(sql)) {
+
+            //Se recorren los clientes y se insertan uno a uno
+            for (Pedido p : pedidos) {
+                pstmt.setInt(1, getLastIdPedido()+1);
+                pstmt.setString(2, p.getEstado().toString());
+                pstmt.setDate(3, new java.sql.Date(p.getFecha().getTime()));
+                pstmt.setInt(4, Integer.parseInt(p.getCliente()));
+                List<Trabajador> trabajadores = obtenerTrabajadores();
+                int posicion = (int)(Math.random() * trabajadores.size());
+                pstmt.setInt(5, trabajadores.get(posicion).getId());
+
+
+                if (1 != pstmt.executeUpdate()) {
+                    log(Level.SEVERE, "No se ha insertado el producto" + p, null);
+                } else {
+                    log(Level.INFO, "Se ha insertado el producto" + p, null);
+                }
+            }
+        } catch (Exception ex) {
+            log(Level.SEVERE, "Error al insertar pedido" + ex.getMessage(), ex);
+        }
+    }
+
 	
 	public List<Pedido> obtenerPedidos() {
 		List<Pedido> pedidos = new ArrayList<>();
@@ -1051,7 +1134,6 @@ public class GestorBD {
 				pedido.setCliente(rs.getString("ID_C"));
 				pedido.setFecha(rs.getDate("FECHA"));
 				pedido.setEstado(Estado.valueOf(rs.getString("ESTADO")));
-				
 
 				pedidos.add(pedido);
 			}
@@ -1158,32 +1240,54 @@ public class GestorBD {
 			log(Level.SEVERE, "Error al borrar el pedido con id: " + id + " en la BD", ex );				
 		}		
 	}
+
+	// Tabla compone: (relacion N a M entre Producto y Pedido)
+	public void insertarCompone(int id_p, List<Producto> producto) {
+        String sql = "INSERT INTO COMPONE (CANTIDAD, ID_P, ID_PROD) VALUES (?, " + id_p + ", ?);";
+
+        //Se abre la conexi髇 y se obtiene el Statement
+        try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+                PreparedStatement pstmt = con.prepareStatement(sql)) {
+
+            //Se recorren los clientes y se insertan uno a uno
+            for (Producto p : producto) {
+                pstmt.setInt(1, p.getCantidad());
+                pstmt.setInt(2, getIdProducto(p));
+
+                if (1 != pstmt.executeUpdate()) {
+                    log(Level.SEVERE, "No se ha insertado el producto" + p, null);
+                } else {
+                    log(Level.INFO, "Se ha insertado el producto" + p, null);
+                }
+            }
+        } catch (Exception ex) {
+            log(Level.SEVERE, "Error al insertar pedido" + ex.getMessage(), ex);
+        }
+    }
 	
-	public String getIdCloente(String gmail) throws SQLException {
-		String id = "";
+	// Tabla repone: (relacion N a M entre Trabajador y Producto
+	public void insertarRepone(int cantidad, int IdProducto, int IdTrabajador) {
+		String sql = "INSERT INTO REPONE (CANTIDAD, ID_PROD, ID_T) VALUES (?, ?, ?);";
 		
 		//Se abre la conexi贸n y se obtiene el Statement
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
-		     Statement stmt = con.createStatement()) {
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
 			
-			String sql = "SELECT * FROM CLIENTE WHERE GMAIL = " + gmail;
-			
-			//Se ejecuta la sentencia y se obtiene el ResultSet con los resutlados
-			ResultSet rs = stmt.executeQuery(sql);			
+			//Se recorren los clientes y se insertan uno a uno
+				pstmt.setInt(1, cantidad);
+				pstmt.setInt(2, IdProducto);
+				pstmt.setInt(3, IdTrabajador);
 
-			while (rs.next()) {
-				id = rs.getString("ID_C");
-			}
-			//Se cierra el ResultSet
-			rs.close();
-			
-			log(Level.INFO, "Se han recuperado " + id + " cliente", null);			
+				if (1 != pstmt.executeUpdate()) {	
+					log(Level.SEVERE, "No se ha insertado en la Tabla REPONE", null);
+				} else {
+					log(Level.INFO, "Se ha insertado en la Tabla REPONE", null);
+				}			
 		} catch (Exception ex) {
-			log(Level.SEVERE, "Error al obtener los pedidos de la BD", ex);					
-		}		
-		return id;
+			log(Level.SEVERE, "Error al insertar pedidos", ex);						
+		}				
 	}
-
+	
 	// LOGGER:
 	private void setLogger( Logger logger ) {
 		this.logger = logger;

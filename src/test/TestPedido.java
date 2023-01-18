@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -23,7 +25,7 @@ public class TestPedido {
 	private Pedido pedido;
 	private int id = 1;
 	private String cliente = "cliente";
-	private Date fecha = new Date(System.currentTimeMillis());
+	private Date fecha = new Date();
 	private ArrayList<Producto> productos = new ArrayList<Producto>();
 	private Estado estado = Estado.FINALIZADO;
 	private float precio = 0;
@@ -80,7 +82,8 @@ public class TestPedido {
 
 	@Test
 	public void testSetFecha() {
-		Date fecha1 = new Date(System.currentTimeMillis());
+		//dtf.format(LocalDateTime.now()
+		Date fecha1 = new Date();
 		pedido.setFecha(fecha1);
 		assertEquals(pedido.getFecha(), fecha1);
 	}

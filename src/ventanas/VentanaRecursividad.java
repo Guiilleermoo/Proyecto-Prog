@@ -38,11 +38,11 @@ public class VentanaRecursividad extends JFrame{
 		
 		
 		for (List<Producto> list : comprasPosibles) {
-			String borja = "";
+			String string = "";
 			for (Producto list2 : list) {
-				borja = borja + list2.toString() + " ";
+				string = string + list2.toString() + " ";
 			}
-			modeloListaRecursivad.addElement(borja);
+			modeloListaRecursivad.addElement(string);
 			
 		}
 		

@@ -7,6 +7,8 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.DateFormatter;
+
 import Editors.GeneroEditor;
 import Editors.SpinnerEditor;
 import Editors.TallaEditor;
@@ -20,6 +22,10 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -135,7 +141,7 @@ public class VentanaCliente extends JFrame{
 		panel_6.add(scrollPaneProductos);
 		
 		JScrollPane scrollPaneSeleccionados = new JScrollPane(this.tablaSeleccionados);
-		scrollPaneSeleccionados.setBorder(new TitledBorder("Carrito,Total: " + 0.0 + " euros"));
+		scrollPaneSeleccionados.setBorder(new TitledBorder("Total: " + 0.0 + " euros"));
 		this.tablaSeleccionados.setFillsViewportHeight(true);
 		panel_2.add(scrollPaneSeleccionados);
 		
@@ -222,12 +228,25 @@ public class VentanaCliente extends JFrame{
 							gestorBD.log(Level.INFO, "La compra ha finalizado", null);
 							try {
 								factura(obtenerCarrito(tablaSeleccionados), gmail);
+								Date date = new Date();
+
+						        String id_cliente = String.valueOf(gestorBD.getClienteByGmail(gmail).getId());
+
+						        Pedido pedido = new Pedido(id_cliente, date, (ArrayList<Producto>) productos, Estado.PREPARACION);
+
+						        gestorBD.insertarPedido(pedido);
+
+						        gestorBD.insertarCompone(gestorBD.getLastIdPedido(), productos);
 							} catch (SQLException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 							
 							JOptionPane.showMessageDialog(VentanaCliente.this, "Compra Finalizada con exito, revise su factura.", "Atencion", JOptionPane.INFORMATION_MESSAGE);
+							
+							for (int i = 0; i < tablaSeleccionados.getRowCount() + 1; i++) {
+								modeloDatosSeleccionados.removeRow(0);
+							}
+							scrollPaneSeleccionados.setBorder(new TitledBorder("Total: " + 0.0 + " euros"));
 						}
 					});
 					hilo.start();
@@ -745,21 +764,12 @@ public class VentanaCliente extends JFrame{
 			
 			out.println("PRODUCTO\t\t\t\t\t\tPRECIO\tCANTIDAD");
 			for (Producto p : productos) {
-				out.println(String.format("%s-%s-%s-%s-%s\t%.2f\t%d", p.getArticulo(), p.getDeporte(), p.getMarca(), p.getGenero(), p.getTalla(), p.getPrecio(), p.getCantidad()));
+				out.println(String.format("%s-%s-%s-%s-%s\t%.2f€\t%d", p.getArticulo(), p.getDeporte(), p.getMarca(), p.getGenero(), p.getTalla(), p.getPrecio(), p.getCantidad()));
 			}
 			out.println("Total: " + calcularTotal(modeloDatosSeleccionados) + "");
 		} catch (Exception e) {
 			gestorBD.log(Level.INFO, "Error exportando datos", e);
 		}
-		
-		Date date = new Date();
-		
-		String id_cliente = gestorBD.getIdCloente(gmail);
-		
-		Pedido pedido = new Pedido(id_cliente, date, (ArrayList<Producto>) productos, Estado.PREPARACION);
-		
-		gestorBD.insertarPedido(pedido);
-		
 	}
 	
 	private static void comprasPosiblesRecursividad(List<List<Producto>> result, List<Producto> productos, double maximo, List<Producto> temp) {
