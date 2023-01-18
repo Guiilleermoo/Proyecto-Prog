@@ -249,7 +249,8 @@ public class VentanaCliente extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Double importe = Double.parseDouble(JOptionPane.showInputDialog("Cual es tu importe maximo??"));
+				Double importe = Double.parseDouble(JOptionPane.showInputDialog("Cual es tu importe maximo?? (Debes introducir un decimal con punto)"));
+				
 				List<Producto> productos = gestorBD.obtenerProductosTodos();
 				List<List<Producto>> comprasPosibles = comprasPosibles(productos, importe);
 				System.out.println(comprasPosibles);
@@ -755,7 +756,7 @@ public class VentanaCliente extends JFrame{
 			
 			out.println("PRODUCTO\t\t\t\t\t\tPRECIO\tCANTIDAD");
 			for (Producto p : productos) {
-				out.println(String.format("%s-%s-%s-%s-%s\t%.2f€\t%d", p.getArticulo(), p.getDeporte(), p.getMarca(), p.getGenero(), p.getTalla(), p.getPrecio(), p.getCantidad()));
+				out.println(String.format("%s-%s-%s-%s-%s\t%.2fï¿½\t%d", p.getArticulo(), p.getDeporte(), p.getMarca(), p.getGenero(), p.getTalla(), p.getPrecio(), p.getCantidad()));
 			}
 			out.println("Total: " + calcularTotal(modeloDatosSeleccionados) + "");
 		} catch (Exception e) {
