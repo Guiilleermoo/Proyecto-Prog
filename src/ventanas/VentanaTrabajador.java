@@ -72,8 +72,6 @@ public class VentanaTrabajador extends JFrame {
 		
 		
 		
-		
-		
 		botonEmpleados.addActionListener(new ActionListener() {
 			
 			@Override
