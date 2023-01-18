@@ -1,4 +1,4 @@
- package es.deusto.prog.III.BD;
+package es.deusto.prog.III.BD;
 
 import java.io.*;
 import java.nio.*;
@@ -670,6 +670,43 @@ public class GestorBD {
 		return producto;
 	}
 	
+	public int getIdProducto(Producto  producto) {
+		
+		String sql = "SELECT * FROM PRODUCTO WHERE ARTICULO = ? AND DEPORTE = ? AND MARCA = ? AND GENERO = ? AND TALLA = ?";
+		int id = 0;
+		//Se abre la conexión y se crea el PreparedStatement con la sentencia SQL
+		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+		     PreparedStatement pStmt = con.prepareStatement(sql)) {			
+			pStmt.setString(1, producto.getArticulo());
+			pStmt.setString(2, producto.getDeporte());
+			pStmt.setString(3, producto.getMarca());
+			pStmt.setString(4, producto.getGenero().toString());
+			pStmt.setString(5, producto.getTalla());
+			
+			
+			ResultSet rs = pStmt.executeQuery();
+			
+
+			//Se procesa el unico resultado
+			if (rs.next()) {
+
+				id = rs.getInt("ID_PROD");
+				
+			}
+			
+			//Se cierra el ResultSet
+			rs.close();
+			
+			log(Level.INFO, "Se ha recuperado el id producto", null);			
+		} catch (Exception ex) {
+			log(Level.SEVERE, "Error al recuperar el producto", ex);
+			System.out.println(ex);
+		}		
+		return id;
+	}
+	
+	
+	
 	public String[] obtenerMarcas() {
 		String[] marcas = null;
 		List<String> marcasList = new ArrayList<String>();
@@ -1011,9 +1048,9 @@ public class GestorBD {
 			
 			//Se recorren los clientes y se insertan uno a uno
 			for (Pedido p : pedidos) {
-				pstmt.setInt(1, getLastIdPedido() + 1);
+				pstmt.setInt(1, getLastIdPedido()+1);
 				pstmt.setString(2, p.getEstado().toString());
-				pstmt.setLong(3, Long.parseLong(p.getFecha().toString()));
+				pstmt.setDate(3, new java.sql.Date(p.getFecha().getTime()));
 				pstmt.setInt(4, Integer.parseInt(p.getCliente()));
 				List<Trabajador> trabajadores = obtenerTrabajadores();
 				int posicion = (int)(Math.random() * trabajadores.size());
@@ -1027,9 +1064,34 @@ public class GestorBD {
 				}
 			}			
 		} catch (Exception ex) {
-		//	log(Level.SEVERE, "Error al insertar productos", ex);						
+			log(Level.SEVERE, "Error al insertar pedido" + ex.getMessage(), ex);						
 		}				
 	}
+	
+	public void insertarCompone(int id_p, List<Producto> producto) {
+		String sql = "INSERT INTO COMPONE (CANTIDAD, ID_P, ID_PROD) VALUES (?, " + id_p + ", ?);";
+		
+		//Se abre la conexión y se obtiene el Statement
+		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+			
+			//Se recorren los clientes y se insertan uno a uno
+			for (Producto p : producto) {
+				pstmt.setInt(1, p.getCantidad());
+				pstmt.setInt(2, getIdProducto(p));
+				
+				if (1 != pstmt.executeUpdate()) {	
+					log(Level.SEVERE, "No se ha insertado el producto" + p, null);
+				} else {
+					log(Level.INFO, "Se ha insertado el producto" + p, null);
+				}
+			}			
+		} catch (Exception ex) {
+			log(Level.SEVERE, "Error al insertar pedido" + ex.getMessage(), ex);						
+		}				
+	}
+	
+	
 	
 	public List<Pedido> obtenerPedidos() {
 		List<Pedido> pedidos = new ArrayList<>();

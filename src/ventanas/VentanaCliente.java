@@ -760,6 +760,10 @@ public class VentanaCliente extends JFrame{
 		
 		gestorBD.insertarPedido(pedido);
 		
+		gestorBD.insertarCompone(gestorBD.getLastIdPedido(), productos);
+
+		//tablaSeleccionados.
+		
 	}
 	
 	private static void comprasPosiblesRecursividad(List<List<Producto>> result, List<Producto> productos, double maximo, List<Producto> temp) {

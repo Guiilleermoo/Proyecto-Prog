@@ -6810,3 +6810,618 @@
 [01/16/23 14:29:00] [INFORMACIÓN] Se ha actualizado el dato SALARIO del cliente 7 a 3000.0 
 [01/16/23 14:29:01] [INFORMACIÓN] Se ha actualizado el dato ESTATUS del cliente 3 a EMPLEADO 
 [01/16/23 14:29:01] [INFORMACIÓN] Se ha actualizado el dato SALARIO del cliente 3 a 2300.0 
+[01/17/23 10:48:44] [INFORMACIÓN] Cliente confirmado 
+[01/17/23 10:48:44] [INFORMACIÓN] Se han recuperado 5 articulos 
+[01/17/23 10:48:44] [INFORMACIÓN] Se han recuperado 4 deportes 
+[01/17/23 10:48:44] [INFORMACIÓN] Se han recuperado 4 marcas 
+[01/17/23 10:48:44] [INFORMACIÓN] Se han recuperado 6 productos 
+[01/17/23 10:48:45] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila -11, columna 31 
+[01/17/23 10:48:45] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 31 
+[01/17/23 10:48:46] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila -11, columna 31 
+[01/17/23 10:48:46] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 31 
+[01/17/23 10:48:47] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila -11, columna 31 
+[01/17/23 10:48:47] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 31 
+[01/17/23 10:48:47] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 21, columna 31 
+[01/17/23 10:48:47] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila -11, columna 41 
+[01/17/23 10:48:48] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 01, columna 41 
+[01/17/23 10:48:48] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila 31, columna 41 
+[01/17/23 10:48:54] [INFORMACIÓN] Se han recuperado 40 productos 
+[01/17/23 10:49:47] [INFORMACIÓN] Cliente confirmado 
+[01/17/23 10:49:47] [INFORMACIÓN] Se han recuperado 5 articulos 
+[01/17/23 10:49:47] [INFORMACIÓN] Se han recuperado 4 deportes 
+[01/17/23 10:49:47] [INFORMACIÓN] Se han recuperado 4 marcas 
+[01/17/23 10:49:47] [INFORMACIÓN] Se han recuperado 6 productos 
+[01/17/23 10:49:48] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila -11, columna 31 
+[01/17/23 10:49:48] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 31 
+[01/17/23 10:49:48] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 21, columna 41 
+[01/17/23 10:49:48] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila 01, columna 51 
+[01/17/23 10:49:48] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 01, columna 51 
+[01/17/23 10:49:48] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila 31, columna 41 
+[01/17/23 10:49:53] [INFORMACIÓN] Se han recuperado 40 productos 
+[01/17/23 10:50:01] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila -11, columna 51 
+[01/17/23 10:50:02] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 41 
+[01/17/23 10:50:02] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 31, columna 41 
+[01/17/23 10:50:02] [INFORMACIÓN] Se han recuperado 2 productos 
+[01/17/23 10:50:02] [INFORMACIÓN] Tabla Productos: Se ha pulsado el boton 1 en la fila 11, columna 31 
+[01/17/23 10:50:03] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila 11, columna 31 
+[01/17/23 10:50:03] [INFORMACIÓN] Tabla Productos: Se ha liverado el boton 1 en la fila 11, columna 31 
+[01/17/23 10:50:03] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 31, columna 21 
+[01/17/23 10:50:04] [INFORMACIÓN] Tabla Productos: Se ha pulsado el boton 1 en la fila 11, columna 21 
+[01/17/23 10:50:04] [INFORMACIÓN] Tabla Productos: Se ha liverado el boton 1 en la fila 11, columna 21 
+[01/17/23 10:50:04] [INFORMACIÓN] Tabla Productos: Se ha hecho click con el boton 1en la fila 11, columna 21 
+[01/17/23 10:50:05] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila 31, columna 21 
+[01/17/23 10:50:07] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila 01, columna 21 
+[01/17/23 10:50:07] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 21 
+[01/17/23 10:50:07] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila -11, columna 31 
+[01/17/23 10:50:07] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 31 
+[01/17/23 10:50:08] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 31, columna 21 
+[01/17/23 10:50:08] [INFORMACIÓN] Tabla Productos: Se ha pulsado el boton 1 en la fila 21, columna 21 
+[01/17/23 10:50:08] [INFORMACIÓN] Tabla Productos: Se ha liverado el boton 1 en la fila 21, columna 21 
+[01/17/23 10:50:08] [INFORMACIÓN] Tabla Productos: Se ha hecho click con el boton 1en la fila 21, columna 21 
+[01/17/23 10:50:08] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila 41, columna 21 
+[01/17/23 10:50:10] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 21, columna 31 
+[01/17/23 10:50:11] [INFORMACIÓN] Tabla Productos: Se ha pulsado el boton 1 en la fila 11, columna 21 
+[01/17/23 10:50:11] [INFORMACIÓN] Tabla Productos: Se ha liverado el boton 1 en la fila 11, columna 21 
+[01/17/23 10:50:11] [INFORMACIÓN] Tabla Productos: Se ha hecho click con el boton 1en la fila 11, columna 21 
+[01/17/23 10:50:11] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila 31, columna 31 
+[01/17/23 10:50:13] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila 01, columna 31 
+[01/17/23 10:50:13] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 21 
+[01/17/23 10:50:14] [INFORMACIÓN] Se ha recuperado el clienteCliente [ID = 5 nombreYApellidos=Pruebas,gmail=1, contrasena=1, direccion=Deusto, telefono=666333444] 
+[01/17/23 10:50:14] [INFORMACIÓN] Se han recuperado 0 pedidos 
+[01/17/23 10:50:14] [INFORMACIÓN] Se ha recuperado el clienteCliente [ID = 5 nombreYApellidos=Pruebas,gmail=1, contrasena=1, direccion=Deusto, telefono=666333444] 
+[01/17/23 10:50:20] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 01, columna 31 
+[01/17/23 10:50:20] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila 31, columna 31 
+[01/17/23 10:50:20] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila 01, columna 31 
+[01/17/23 10:50:21] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 31 
+[01/17/23 10:50:23] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila -11, columna 21 
+[01/17/23 10:50:23] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 31 
+[01/17/23 10:50:23] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 31, columna 41 
+[01/17/23 10:50:23] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila 01, columna 51 
+[01/17/23 10:57:45] [INFORMACIÓN] Cliente confirmado 
+[01/17/23 10:57:45] [INFORMACIÓN] Se han recuperado 5 articulos 
+[01/17/23 10:57:45] [INFORMACIÓN] Se han recuperado 4 deportes 
+[01/17/23 10:57:45] [INFORMACIÓN] Se han recuperado 4 marcas 
+[01/17/23 10:57:45] [INFORMACIÓN] Se han recuperado 6 productos 
+[01/17/23 10:57:46] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila -11, columna 21 
+[01/17/23 10:57:46] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 21 
+[01/17/23 10:57:46] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila -11, columna 31 
+[01/17/23 10:57:46] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 31 
+[01/17/23 10:57:46] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila -11, columna 21 
+[01/17/23 10:57:46] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 21 
+[01/17/23 10:57:47] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 21, columna 21 
+[01/17/23 10:57:48] [INFORMACIÓN] Tabla Productos: Se ha pulsado el boton 1 en la fila 01, columna 21 
+[01/17/23 10:57:48] [INFORMACIÓN] Tabla Productos: Se ha liverado el boton 1 en la fila 01, columna 21 
+[01/17/23 10:57:48] [INFORMACIÓN] Tabla Productos: Se ha hecho click con el boton 1en la fila 01, columna 21 
+[01/17/23 10:57:48] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila 31, columna 21 
+[01/17/23 10:57:49] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 31, columna 31 
+[01/17/23 10:57:49] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila 41, columna 21 
+[01/17/23 10:57:50] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 31, columna 21 
+[01/17/23 10:57:50] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila 31, columna 21 
+[01/17/23 10:57:51] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 31, columna 21 
+[01/17/23 10:57:52] [INFORMACIÓN] Tabla Productos: Se ha pulsado el boton 1 en la fila 01, columna 21 
+[01/17/23 10:57:52] [INFORMACIÓN] Tabla Productos: Se ha liverado el boton 1 en la fila 01, columna 21 
+[01/17/23 10:57:52] [INFORMACIÓN] Tabla Productos: Se ha hecho click con el boton 1en la fila 01, columna 21 
+[01/17/23 10:57:52] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila 31, columna 21 
+[01/17/23 10:57:54] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 31, columna 21 
+[01/17/23 10:57:54] [INFORMACIÓN] Tabla Productos: Se ha pulsado el boton 1 en la fila 21, columna 21 
+[01/17/23 10:57:55] [INFORMACIÓN] Tabla Productos: Se ha liverado el boton 1 en la fila 21, columna 21 
+[01/17/23 10:57:55] [INFORMACIÓN] Tabla Productos: Se ha hecho click con el boton 1en la fila 21, columna 21 
+[01/17/23 10:57:55] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila 31, columna 21 
+[01/17/23 10:57:56] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 31, columna 21 
+[01/17/23 10:57:57] [INFORMACIÓN] Tabla Productos: Se ha pulsado el boton 1 en la fila 31, columna 21 
+[01/17/23 10:57:57] [INFORMACIÓN] Tabla Productos: Se ha liverado el boton 1 en la fila 31, columna 21 
+[01/17/23 10:57:57] [INFORMACIÓN] Tabla Productos: Se ha hecho click con el boton 1en la fila 31, columna 21 
+[01/17/23 10:57:57] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila 41, columna 21 
+[01/17/23 10:57:58] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila 01, columna 31 
+[01/17/23 10:57:58] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 31 
+[01/17/23 10:57:59] [INFORMACIÓN] Ha empezado la compra 
+[01/17/23 10:58:01] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila 21, columna 21 
+[01/17/23 10:58:01] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 11 
+[01/17/23 10:58:05] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 31, columna 41 
+[01/17/23 10:58:05] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila 01, columna 21 
+[01/17/23 10:58:06] [INFORMACIÓN] La compra ha finalizado 
+[01/17/23 10:58:08] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila 01, columna 51 
+[01/17/23 10:58:08] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 41 
+[01/17/23 10:58:13] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila -11, columna 31 
+[01/17/23 10:58:14] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 31 
+[01/17/23 10:58:14] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila -11, columna 31 
+[01/17/23 10:58:14] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 41 
+[01/17/23 10:58:14] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 31, columna 51 
+[01/17/23 10:58:14] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila 01, columna 51 
+[01/17/23 18:56:34] [INFORMACIÓN] Cliente confirmado 
+[01/17/23 18:56:34] [INFORMACIÓN] Se han recuperado 5 articulos 
+[01/17/23 18:56:34] [INFORMACIÓN] Se han recuperado 4 deportes 
+[01/17/23 18:56:34] [INFORMACIÓN] Se han recuperado 4 marcas 
+[01/17/23 18:56:34] [INFORMACIÓN] Se han recuperado 6 productos 
+[01/17/23 18:56:35] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila -11, columna 21 
+[01/17/23 18:56:35] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 21 
+[01/17/23 18:56:35] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 11, columna 11 
+[01/17/23 18:56:35] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila -11, columna 11 
+[01/17/23 18:56:35] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 01, columna 11 
+[01/17/23 18:56:36] [INFORMACIÓN] Tabla Productos: Se ha pulsado el boton 1 en la fila 01, columna 21 
+[01/17/23 18:56:36] [INFORMACIÓN] Tabla Productos: Se ha liverado el boton 1 en la fila 01, columna 21 
+[01/17/23 18:56:36] [INFORMACIÓN] Tabla Productos: Se ha hecho click con el boton 1en la fila 01, columna 21 
+[01/17/23 18:56:36] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila 31, columna 21 
+[01/17/23 18:56:38] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 31, columna 21 
+[01/17/23 18:56:38] [INFORMACIÓN] Tabla Productos: Se ha pulsado el boton 1 en la fila 21, columna 21 
+[01/17/23 18:56:38] [INFORMACIÓN] Tabla Productos: Se ha liverado el boton 1 en la fila 21, columna 21 
+[01/17/23 18:56:38] [INFORMACIÓN] Tabla Productos: Se ha hecho click con el boton 1en la fila 21, columna 21 
+[01/17/23 18:56:38] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila 31, columna 21 
+[01/17/23 18:56:40] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila 01, columna 31 
+[01/17/23 18:56:40] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 31 
+[01/17/23 18:56:42] [INFORMACIÓN] Ha empezado la compra 
+[01/17/23 18:56:48] [INFORMACIÓN] La compra ha finalizado 
+[01/17/23 18:56:50] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 31, columna 31 
+[01/17/23 18:56:50] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila 01, columna 41 
+[01/17/23 18:57:33] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila -11, columna 51 
+[01/17/23 18:57:33] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 41 
+[01/17/23 18:57:34] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 31, columna 21 
+[01/17/23 18:57:35] [INFORMACIÓN] Tabla Productos: Se ha pulsado el boton 1 en la fila 11, columna 21 
+[01/17/23 18:57:35] [INFORMACIÓN] Tabla Productos: Se ha liverado el boton 1 en la fila 11, columna 21 
+[01/17/23 18:57:35] [INFORMACIÓN] Tabla Productos: Se ha hecho click con el boton 1en la fila 11, columna 21 
+[01/17/23 18:57:35] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila 31, columna 31 
+[01/17/23 18:57:36] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 31, columna 21 
+[01/17/23 18:57:36] [INFORMACIÓN] Tabla Productos: Se ha pulsado el boton 1 en la fila 21, columna 21 
+[01/17/23 18:57:37] [INFORMACIÓN] Tabla Productos: Se ha liverado el boton 1 en la fila 21, columna 21 
+[01/17/23 18:57:37] [INFORMACIÓN] Tabla Productos: Se ha hecho click con el boton 1en la fila 21, columna 21 
+[01/17/23 18:57:37] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila 31, columna 21 
+[01/17/23 18:57:37] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila 01, columna 21 
+[01/17/23 18:57:38] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 21 
+[01/17/23 18:57:38] [INFORMACIÓN] Ha empezado la compra 
+[01/17/23 18:57:39] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila -11, columna 21 
+[01/17/23 18:57:39] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila 01, columna 21 
+[01/17/23 18:57:44] [INFORMACIÓN] La compra ha finalizado 
+[01/17/23 18:57:46] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila 01, columna 31 
+[01/17/23 18:57:46] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 41 
+[01/17/23 18:57:49] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila -11, columna 31 
+[01/17/23 18:57:49] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 31 
+[01/17/23 18:57:49] [INFORMACIÓN] Se ha recuperado el clienteCliente [ID = 5 nombreYApellidos=Pruebas,gmail=1, contrasena=1, direccion=Deusto, telefono=666333444] 
+[01/17/23 18:57:49] [INFORMACIÓN] Se han recuperado 0 pedidos 
+[01/17/23 18:57:49] [INFORMACIÓN] Se ha recuperado el clienteCliente [ID = 5 nombreYApellidos=Pruebas,gmail=1, contrasena=1, direccion=Deusto, telefono=666333444] 
+[01/17/23 18:57:51] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 11, columna 61 
+[01/17/23 18:57:51] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila -11, columna 61 
+[01/17/23 18:57:51] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila 11, columna 51 
+[01/17/23 18:57:51] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 51 
+[01/17/23 19:02:53] [INFORMACIÓN] Trabajador confirmado 
+[01/17/23 19:02:53] [INFORMACIÓN] Se han recuperado 4 pedidos 
+[01/17/23 19:02:53] [INFORMACIÓN] Se han recuperado 3 trabajadores 
+[01/17/23 19:02:53] [INFORMACIÓN] Se han recuperado 40 productos 
+[01/17/23 19:03:02] [INFORMACIÓN] Se ha actualizado el estado del pedido 1 a LISTO 
+[01/17/23 19:03:05] [INFORMACIÓN] Se ha actualizado el estado del pedido 4 a PREPARACION 
+[01/17/23 23:02:46] [INFORMACIÓN] Cliente confirmado 
+[01/17/23 23:02:46] [INFORMACIÓN] Se han recuperado 5 articulos 
+[01/17/23 23:02:46] [INFORMACIÓN] Se han recuperado 4 deportes 
+[01/17/23 23:02:46] [INFORMACIÓN] Se han recuperado 4 marcas 
+[01/17/23 23:02:46] [INFORMACIÓN] Se han recuperado 6 productos 
+[01/17/23 23:02:47] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila -11, columna 21 
+[01/17/23 23:02:47] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 21 
+[01/17/23 23:02:47] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 31, columna 31 
+[01/17/23 23:02:48] [INFORMACIÓN] Se han recuperado 1 productos 
+[01/17/23 23:02:48] [INFORMACIÓN] Tabla Productos: Se ha pulsado el boton 1 en la fila 21, columna 31 
+[01/17/23 23:02:48] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila 21, columna 31 
+[01/17/23 23:02:48] [INFORMACIÓN] Tabla Productos: Se está arrastrando con el botón 0 pulsado sobre la fila 21, columna 31 
+[01/17/23 23:02:48] [INFORMACIÓN] Tabla Productos: Se ha liverado el boton 1 en la fila 21, columna 31 
+[01/17/23 23:02:49] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 31, columna 21 
+[01/17/23 23:02:49] [INFORMACIÓN] Tabla Productos: Se ha pulsado el boton 1 en la fila 11, columna 21 
+[01/17/23 23:02:49] [INFORMACIÓN] Tabla Productos: Se ha liverado el boton 1 en la fila 11, columna 21 
+[01/17/23 23:02:49] [INFORMACIÓN] Tabla Productos: Se ha hecho click con el boton 1en la fila 11, columna 21 
+[01/17/23 23:02:49] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila 31, columna 21 
+[01/17/23 23:02:51] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila 01, columna 21 
+[01/17/23 23:02:51] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 21 
+[01/17/23 23:02:51] [INFORMACIÓN] Ha empezado la compra 
+[01/17/23 23:02:58] [INFORMACIÓN] La compra ha finalizado 
+[01/17/23 23:02:58] [INFORMACIÓN] Se han recuperado 5 cliente 
+[01/17/23 23:03:00] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila 01, columna 51 
+[01/17/23 23:03:00] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 61 
+[01/17/23 23:03:05] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila -11, columna 51 
+[01/17/23 23:03:05] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila 01, columna 51 
+[01/17/23 23:03:05] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 21, columna 51 
+[01/17/23 23:03:05] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila -11, columna 61 
+[01/17/23 23:03:08] [INFORMACIÓN] Trabajador confirmado 
+[01/17/23 23:03:08] [INFORMACIÓN] Se han recuperado 4 pedidos 
+[01/17/23 23:03:08] [INFORMACIÓN] Se han recuperado 3 trabajadores 
+[01/17/23 23:03:08] [INFORMACIÓN] Se han recuperado 40 productos 
+[01/17/23 23:08:35] [INFORMACIÓN] Cliente confirmado 
+[01/17/23 23:08:35] [INFORMACIÓN] Se han recuperado 5 articulos 
+[01/17/23 23:08:35] [INFORMACIÓN] Se han recuperado 4 deportes 
+[01/17/23 23:08:35] [INFORMACIÓN] Se han recuperado 4 marcas 
+[01/17/23 23:08:35] [INFORMACIÓN] Se han recuperado 6 productos 
+[01/17/23 23:08:35] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila -11, columna 21 
+[01/17/23 23:08:35] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 21 
+[01/17/23 23:08:36] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 21, columna 21 
+[01/17/23 23:08:36] [INFORMACIÓN] Tabla Productos: Se ha pulsado el boton 1 en la fila 11, columna 21 
+[01/17/23 23:08:36] [INFORMACIÓN] Tabla Productos: Se ha liverado el boton 1 en la fila 11, columna 21 
+[01/17/23 23:08:36] [INFORMACIÓN] Tabla Productos: Se ha hecho click con el boton 1en la fila 11, columna 21 
+[01/17/23 23:08:36] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila 31, columna 21 
+[01/17/23 23:08:37] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila 01, columna 21 
+[01/17/23 23:08:37] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 21 
+[01/17/23 23:08:38] [INFORMACIÓN] Ha empezado la compra 
+[01/17/23 23:08:45] [INFORMACIÓN] La compra ha finalizado 
+[01/17/23 23:08:45] [INFORMACIÓN] Se han recuperado 5 cliente 
+[01/17/23 23:08:45] [GRAVE      ] Error al insertar productos 
+[01/17/23 23:08:47] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila 01, columna 41 
+[01/17/23 23:08:47] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 51 
+[01/17/23 23:10:16] [INFORMACIÓN] Cliente confirmado 
+[01/17/23 23:10:16] [INFORMACIÓN] Se han recuperado 5 articulos 
+[01/17/23 23:10:16] [INFORMACIÓN] Se han recuperado 4 deportes 
+[01/17/23 23:10:16] [INFORMACIÓN] Se han recuperado 4 marcas 
+[01/17/23 23:10:16] [INFORMACIÓN] Se han recuperado 6 productos 
+[01/17/23 23:10:16] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila -11, columna 41 
+[01/17/23 23:10:16] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 41 
+[01/17/23 23:10:17] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 31, columna 31 
+[01/17/23 23:10:17] [INFORMACIÓN] Tabla Productos: Se ha pulsado el boton 1 en la fila 01, columna 21 
+[01/17/23 23:10:17] [INFORMACIÓN] Tabla Productos: Se ha liverado el boton 1 en la fila 01, columna 21 
+[01/17/23 23:10:17] [INFORMACIÓN] Tabla Productos: Se ha hecho click con el boton 1en la fila 01, columna 21 
+[01/17/23 23:10:18] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila 31, columna 21 
+[01/17/23 23:10:18] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila 01, columna 21 
+[01/17/23 23:10:18] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 21 
+[01/17/23 23:10:19] [INFORMACIÓN] Ha empezado la compra 
+[01/17/23 23:10:20] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila -11, columna 21 
+[01/17/23 23:10:20] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila 01, columna 51 
+[01/17/23 23:10:20] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila 01, columna 61 
+[01/17/23 23:10:20] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 61 
+[01/17/23 23:10:26] [INFORMACIÓN] La compra ha finalizado 
+[01/17/23 23:10:26] [INFORMACIÓN] Se han recuperado 5 cliente 
+[01/17/23 23:10:26] [GRAVE      ] Error al insertar productos 
+[01/17/23 23:10:45] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 21, columna 41 
+[01/17/23 23:10:45] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila 01, columna 51 
+[01/17/23 23:10:54] [INFORMACIÓN] Cliente confirmado 
+[01/17/23 23:10:54] [INFORMACIÓN] Se han recuperado 5 articulos 
+[01/17/23 23:10:54] [INFORMACIÓN] Se han recuperado 4 deportes 
+[01/17/23 23:10:54] [INFORMACIÓN] Se han recuperado 4 marcas 
+[01/17/23 23:10:54] [INFORMACIÓN] Se han recuperado 6 productos 
+[01/17/23 23:10:54] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila -11, columna 21 
+[01/17/23 23:10:54] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 21 
+[01/17/23 23:10:55] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 31, columna 21 
+[01/17/23 23:10:55] [INFORMACIÓN] Tabla Productos: Se ha pulsado el boton 1 en la fila 01, columna 11 
+[01/17/23 23:10:55] [INFORMACIÓN] Tabla Productos: Se ha liverado el boton 1 en la fila 01, columna 11 
+[01/17/23 23:10:55] [INFORMACIÓN] Tabla Productos: Se ha hecho click con el boton 1en la fila 01, columna 11 
+[01/17/23 23:10:55] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila 31, columna 21 
+[01/17/23 23:10:56] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila 01, columna 21 
+[01/17/23 23:10:56] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 21 
+[01/17/23 23:10:57] [INFORMACIÓN] Ha empezado la compra 
+[01/17/23 23:11:03] [INFORMACIÓN] La compra ha finalizado 
+[01/17/23 23:11:03] [INFORMACIÓN] Se han recuperado 5 cliente 
+[01/17/23 23:11:03] [GRAVE      ] Error al insertar productos 
+[01/17/23 23:11:34] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 31, columna 41 
+[01/17/23 23:11:34] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila 51, columna 51 
+[01/17/23 23:11:34] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila -11, columna 51 
+[01/17/23 23:11:34] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 61 
+[01/17/23 23:11:43] [INFORMACIÓN] Cliente confirmado 
+[01/17/23 23:11:43] [INFORMACIÓN] Se han recuperado 5 articulos 
+[01/17/23 23:11:44] [INFORMACIÓN] Se han recuperado 4 deportes 
+[01/17/23 23:11:44] [INFORMACIÓN] Se han recuperado 4 marcas 
+[01/17/23 23:11:44] [INFORMACIÓN] Se han recuperado 6 productos 
+[01/17/23 23:11:44] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila -11, columna 31 
+[01/17/23 23:11:44] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 31 
+[01/17/23 23:11:44] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 31, columna 21 
+[01/17/23 23:11:44] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila 31, columna 21 
+[01/17/23 23:11:45] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 31, columna 21 
+[01/17/23 23:11:45] [INFORMACIÓN] Tabla Productos: Se ha pulsado el boton 1 en la fila 11, columna 21 
+[01/17/23 23:11:45] [INFORMACIÓN] Tabla Productos: Se ha liverado el boton 1 en la fila 11, columna 21 
+[01/17/23 23:11:45] [INFORMACIÓN] Tabla Productos: Se ha hecho click con el boton 1en la fila 11, columna 21 
+[01/17/23 23:11:45] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila 31, columna 21 
+[01/17/23 23:11:46] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila 01, columna 21 
+[01/17/23 23:11:46] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 21 
+[01/17/23 23:11:46] [INFORMACIÓN] Ha empezado la compra 
+[01/17/23 23:11:53] [INFORMACIÓN] La compra ha finalizado 
+[01/17/23 23:11:53] [INFORMACIÓN] Se han recuperado 5 cliente 
+[01/17/23 23:11:53] [GRAVE      ] Error al insertar productos 
+[01/17/23 23:12:36] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 21, columna 41 
+[01/17/23 23:12:36] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila -11, columna 61 
+[01/17/23 23:12:44] [INFORMACIÓN] Cliente confirmado 
+[01/17/23 23:12:44] [INFORMACIÓN] Se han recuperado 5 articulos 
+[01/17/23 23:12:44] [INFORMACIÓN] Se han recuperado 4 deportes 
+[01/17/23 23:12:44] [INFORMACIÓN] Se han recuperado 4 marcas 
+[01/17/23 23:12:44] [INFORMACIÓN] Se han recuperado 6 productos 
+[01/17/23 23:12:44] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila -11, columna 21 
+[01/17/23 23:12:44] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 21 
+[01/17/23 23:12:45] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 21, columna 31 
+[01/17/23 23:12:45] [INFORMACIÓN] Tabla Productos: Se ha pulsado el boton 1 en la fila 11, columna 21 
+[01/17/23 23:12:45] [INFORMACIÓN] Tabla Productos: Se ha liverado el boton 1 en la fila 11, columna 21 
+[01/17/23 23:12:45] [INFORMACIÓN] Tabla Productos: Se ha hecho click con el boton 1en la fila 11, columna 21 
+[01/17/23 23:12:45] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila 41, columna 31 
+[01/17/23 23:12:45] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila 01, columna 21 
+[01/17/23 23:12:46] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 21 
+[01/17/23 23:12:46] [INFORMACIÓN] Ha empezado la compra 
+[01/17/23 23:12:52] [INFORMACIÓN] La compra ha finalizado 
+[01/17/23 23:12:52] [INFORMACIÓN] Se han recuperado 5 cliente 
+[01/17/23 23:12:52] [GRAVE      ] Error al insertar productos 
+[01/17/23 23:13:40] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 31, columna 31 
+[01/17/23 23:13:40] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila -11, columna 41 
+[01/17/23 23:16:47] [INFORMACIÓN] Cliente confirmado 
+[01/17/23 23:16:48] [INFORMACIÓN] Se han recuperado 5 articulos 
+[01/17/23 23:16:48] [INFORMACIÓN] Se han recuperado 4 deportes 
+[01/17/23 23:16:48] [INFORMACIÓN] Se han recuperado 4 marcas 
+[01/17/23 23:16:48] [INFORMACIÓN] Se han recuperado 6 productos 
+[01/17/23 23:16:48] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila -11, columna 21 
+[01/17/23 23:16:48] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 21 
+[01/17/23 23:16:49] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 31, columna 21 
+[01/17/23 23:16:49] [INFORMACIÓN] Tabla Productos: Se ha pulsado el boton 1 en la fila 11, columna 21 
+[01/17/23 23:16:49] [INFORMACIÓN] Tabla Productos: Se ha liverado el boton 1 en la fila 11, columna 21 
+[01/17/23 23:16:49] [INFORMACIÓN] Tabla Productos: Se ha hecho click con el boton 1en la fila 11, columna 21 
+[01/17/23 23:16:49] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila 31, columna 21 
+[01/17/23 23:16:50] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila 01, columna 21 
+[01/17/23 23:16:51] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 21 
+[01/17/23 23:16:51] [INFORMACIÓN] Ha empezado la compra 
+[01/17/23 23:16:57] [INFORMACIÓN] La compra ha finalizado 
+[01/17/23 23:16:57] [INFORMACIÓN] Se han recuperado 5 cliente 
+[01/17/23 23:16:57] [INFORMACIÓN] Se han recuperado 3 trabajadores 
+[01/17/23 23:16:57] [GRAVE      ] Error al insertar productos 
+[01/17/23 23:19:33] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila 01, columna 41 
+[01/17/23 23:19:33] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 41 
+[01/17/23 23:23:16] [INFORMACIÓN] Cliente confirmado 
+[01/17/23 23:23:16] [INFORMACIÓN] Se han recuperado 5 articulos 
+[01/17/23 23:23:16] [INFORMACIÓN] Se han recuperado 4 deportes 
+[01/17/23 23:23:16] [INFORMACIÓN] Se han recuperado 4 marcas 
+[01/17/23 23:23:16] [INFORMACIÓN] Se han recuperado 6 productos 
+[01/17/23 23:23:17] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila -11, columna 21 
+[01/17/23 23:23:17] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 31 
+[01/17/23 23:23:18] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 31, columna 21 
+[01/17/23 23:23:18] [INFORMACIÓN] Tabla Productos: Se ha pulsado el boton 1 en la fila 11, columna 21 
+[01/17/23 23:23:18] [INFORMACIÓN] Tabla Productos: Se ha liverado el boton 1 en la fila 11, columna 21 
+[01/17/23 23:23:18] [INFORMACIÓN] Tabla Productos: Se ha hecho click con el boton 1en la fila 11, columna 21 
+[01/17/23 23:23:18] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila 31, columna 21 
+[01/17/23 23:23:19] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila 01, columna 31 
+[01/17/23 23:23:19] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 21 
+[01/17/23 23:23:19] [INFORMACIÓN] Ha empezado la compra 
+[01/17/23 23:23:23] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila -11, columna 41 
+[01/17/23 23:23:23] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila 01, columna 41 
+[01/17/23 23:23:23] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 21, columna 41 
+[01/17/23 23:23:23] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila 01, columna 41 
+[01/17/23 23:23:23] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 01, columna 31 
+[01/17/23 23:23:24] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila 31, columna 31 
+[01/17/23 23:23:24] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 31, columna 31 
+[01/17/23 23:23:26] [INFORMACIÓN] La compra ha finalizado 
+[01/17/23 23:23:26] [INFORMACIÓN] Se han recuperado 5 cliente 
+[01/17/23 23:23:26] [INFORMACIÓN] Se han recuperado 3 trabajadores 
+[01/17/23 23:23:26] [GRAVE      ] Error al insertar pedido[SQLITE_CONSTRAINT_NOTNULL] A NOT NULL constraint failed (NOT NULL constraint failed: PEDIDO.ID_P) 
+[01/17/23 23:23:26] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila 41, columna 31 
+[01/17/23 23:23:27] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila 01, columna 61 
+[01/17/23 23:23:27] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna -11 
+[01/17/23 23:23:37] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 31, columna 01 
+[01/17/23 23:23:37] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila -11, columna 21 
+[01/17/23 23:35:33] [INFORMACIÓN] Cliente confirmado 
+[01/17/23 23:35:33] [INFORMACIÓN] Se han recuperado 5 articulos 
+[01/17/23 23:35:33] [INFORMACIÓN] Se han recuperado 4 deportes 
+[01/17/23 23:35:33] [INFORMACIÓN] Se han recuperado 4 marcas 
+[01/17/23 23:35:33] [INFORMACIÓN] Se han recuperado 6 productos 
+[01/17/23 23:35:34] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila -11, columna 31 
+[01/17/23 23:35:34] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 31 
+[01/17/23 23:35:34] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 21, columna 31 
+[01/17/23 23:35:34] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila -11, columna 31 
+[01/17/23 23:35:35] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 01, columna 21 
+[01/17/23 23:35:36] [INFORMACIÓN] Tabla Productos: Se ha pulsado el boton 1 en la fila 01, columna 11 
+[01/17/23 23:35:36] [INFORMACIÓN] Tabla Productos: Se ha liverado el boton 1 en la fila 01, columna 11 
+[01/17/23 23:35:36] [INFORMACIÓN] Tabla Productos: Se ha hecho click con el boton 1en la fila 01, columna 11 
+[01/17/23 23:35:36] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila 31, columna 21 
+[01/17/23 23:35:39] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila 01, columna 21 
+[01/17/23 23:35:40] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 31 
+[01/17/23 23:35:40] [INFORMACIÓN] Ha empezado la compra 
+[01/17/23 23:35:45] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila -11, columna 31 
+[01/17/23 23:35:45] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 41 
+[01/17/23 23:35:45] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila -11, columna 41 
+[01/17/23 23:35:45] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna -11 
+[01/17/23 23:35:47] [INFORMACIÓN] La compra ha finalizado 
+[01/17/23 23:35:47] [INFORMACIÓN] Se han recuperado 5 cliente 
+[01/17/23 23:35:47] [INFORMACIÓN] Se ha recuperado el id maximo: 6 
+[01/17/23 23:35:47] [INFORMACIÓN] Se han recuperado 3 trabajadores 
+[01/17/23 23:35:47] [INFORMACIÓN] Se ha insertado el productoPedido de 5, 17/01/2023, PREPARACION 
+[01/17/23 23:35:47] [INFORMACIÓN] Se ha insertado el productoCamiseta-Futbol-Puma-M-HOMBRE	30.0�	16 
+[01/17/23 23:35:48] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila 01, columna 51 
+[01/17/23 23:35:48] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 61 
+[01/17/23 23:36:38] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila -11, columna 51 
+[01/17/23 23:36:38] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila 01, columna 51 
+[01/17/23 23:36:39] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 31, columna 51 
+[01/17/23 23:36:39] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila 01, columna 51 
+[01/17/23 23:37:03] [INFORMACIÓN] Cliente confirmado 
+[01/17/23 23:37:03] [INFORMACIÓN] Se han recuperado 5 articulos 
+[01/17/23 23:37:03] [INFORMACIÓN] Se han recuperado 4 deportes 
+[01/17/23 23:37:03] [INFORMACIÓN] Se han recuperado 4 marcas 
+[01/17/23 23:37:03] [INFORMACIÓN] Se han recuperado 6 productos 
+[01/17/23 23:37:03] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila -11, columna 21 
+[01/17/23 23:37:03] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 21 
+[01/17/23 23:37:04] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 31, columna 21 
+[01/17/23 23:37:04] [INFORMACIÓN] Tabla Productos: Se ha pulsado el boton 1 en la fila 01, columna 21 
+[01/17/23 23:37:04] [INFORMACIÓN] Tabla Productos: Se ha liverado el boton 1 en la fila 01, columna 21 
+[01/17/23 23:37:04] [INFORMACIÓN] Tabla Productos: Se ha hecho click con el boton 1en la fila 01, columna 21 
+[01/17/23 23:37:04] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila 31, columna 21 
+[01/17/23 23:37:05] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 31, columna 21 
+[01/17/23 23:37:05] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila 31, columna 21 
+[01/17/23 23:37:08] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 31, columna 21 
+[01/17/23 23:37:08] [INFORMACIÓN] Tabla Productos: Se ha pulsado el boton 1 en la fila 11, columna 21 
+[01/17/23 23:37:09] [INFORMACIÓN] Tabla Productos: Se ha liverado el boton 1 en la fila 11, columna 21 
+[01/17/23 23:37:09] [INFORMACIÓN] Tabla Productos: Se ha hecho click con el boton 1en la fila 11, columna 21 
+[01/17/23 23:37:09] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila 31, columna 21 
+[01/17/23 23:37:10] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 31, columna 21 
+[01/17/23 23:37:11] [INFORMACIÓN] Tabla Productos: Se ha pulsado el boton 1 en la fila 11, columna 21 
+[01/17/23 23:37:11] [INFORMACIÓN] Tabla Productos: Se ha liverado el boton 1 en la fila 11, columna 21 
+[01/17/23 23:37:11] [INFORMACIÓN] Tabla Productos: Se ha hecho click con el boton 1en la fila 11, columna 21 
+[01/17/23 23:37:11] [INFORMACIÓN] Tabla Productos: Se ha pulsado el boton 1 en la fila 21, columna 21 
+[01/17/23 23:37:11] [INFORMACIÓN] Tabla Productos: Se ha liverado el boton 1 en la fila 21, columna 21 
+[01/17/23 23:37:11] [INFORMACIÓN] Tabla Productos: Se ha hecho click con el boton 1en la fila 21, columna 21 
+[01/17/23 23:37:11] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila 31, columna 21 
+[01/17/23 23:37:14] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 31, columna 21 
+[01/17/23 23:37:14] [INFORMACIÓN] Tabla Productos: Se ha pulsado el boton 1 en la fila 41, columna 21 
+[01/17/23 23:37:14] [INFORMACIÓN] Tabla Productos: Se ha liverado el boton 1 en la fila 41, columna 21 
+[01/17/23 23:37:14] [INFORMACIÓN] Tabla Productos: Se ha hecho click con el boton 1en la fila 41, columna 21 
+[01/17/23 23:37:15] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila -11, columna 21 
+[01/17/23 23:37:17] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila 01, columna 31 
+[01/17/23 23:37:17] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila 01, columna 31 
+[01/17/23 23:37:18] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila 11, columna 31 
+[01/17/23 23:37:18] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 21 
+[01/17/23 23:37:18] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila 31, columna 21 
+[01/17/23 23:37:19] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 21 
+[01/17/23 23:37:19] [INFORMACIÓN] Ha empezado la compra 
+[01/17/23 23:37:26] [INFORMACIÓN] La compra ha finalizado 
+[01/17/23 23:37:26] [INFORMACIÓN] Se han recuperado 5 cliente 
+[01/17/23 23:37:26] [INFORMACIÓN] Se ha recuperado el id maximo: 7 
+[01/17/23 23:37:26] [INFORMACIÓN] Se han recuperado 3 trabajadores 
+[01/17/23 23:37:26] [INFORMACIÓN] Se ha insertado el productoPedido de 5, 17/01/2023, PREPARACION 
+[01/17/23 23:37:26] [INFORMACIÓN] Se ha insertado el productoCamiseta-Futbol-Puma-M-HOMBRE	30.0�	5 
+[01/17/23 23:37:26] [INFORMACIÓN] Se ha insertado el productoPantalon-Futbol-Adidas-L-HOMBRE	5.67�	5 
+[01/17/23 23:37:26] [INFORMACIÓN] Se ha insertado el productoReloj-Running-Nike-S-UNISEX	30.0�	6 
+[01/17/23 23:37:26] [INFORMACIÓN] Se ha insertado el productoZapatillas-Running-Adidas-45-HOMBRE	130.0�	6 
+[01/17/23 23:37:29] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila 11, columna 41 
+[01/17/23 23:37:29] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 51 
+[01/17/23 23:37:59] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 21, columna 41 
+[01/17/23 23:37:59] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila -11, columna 51 
+[01/17/23 23:38:01] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 51, columna 41 
+[01/17/23 23:38:01] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila 01, columna 41 
+[01/17/23 23:48:34] [INFORMACIÓN] Cliente confirmado 
+[01/17/23 23:48:34] [INFORMACIÓN] Se han recuperado 5 articulos 
+[01/17/23 23:48:34] [INFORMACIÓN] Se han recuperado 4 deportes 
+[01/17/23 23:48:34] [INFORMACIÓN] Se han recuperado 4 marcas 
+[01/17/23 23:48:34] [INFORMACIÓN] Se han recuperado 6 productos 
+[01/17/23 23:48:35] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila -11, columna 21 
+[01/17/23 23:48:35] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 21 
+[01/17/23 23:48:35] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 31, columna 21 
+[01/17/23 23:48:36] [INFORMACIÓN] Tabla Productos: Se ha pulsado el boton 1 en la fila 01, columna 11 
+[01/17/23 23:48:37] [INFORMACIÓN] Tabla Productos: Se ha liverado el boton 1 en la fila 01, columna 11 
+[01/17/23 23:48:37] [INFORMACIÓN] Tabla Productos: Se ha hecho click con el boton 1en la fila 01, columna 11 
+[01/17/23 23:48:37] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila 31, columna 21 
+[01/17/23 23:48:38] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila 01, columna 21 
+[01/17/23 23:48:38] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 21 
+[01/17/23 23:48:39] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila -11, columna 21 
+[01/17/23 23:48:39] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 21 
+[01/17/23 23:48:39] [INFORMACIÓN] Ha empezado la compra 
+[01/17/23 23:48:43] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila -11, columna 61 
+[01/17/23 23:48:46] [INFORMACIÓN] La compra ha finalizado 
+[01/17/23 23:48:46] [INFORMACIÓN] Se han recuperado 5 cliente 
+[01/17/23 23:48:46] [INFORMACIÓN] Se ha recuperado el id maximo: 8 
+[01/17/23 23:48:46] [INFORMACIÓN] Se han recuperado 3 trabajadores 
+[01/17/23 23:48:46] [INFORMACIÓN] Se ha insertado el productoPedido de 5, 17/01/2023, PREPARACION 
+[01/17/23 23:48:46] [INFORMACIÓN] Se ha recuperado el id maximo: 9 
+[01/17/23 23:48:46] [GRAVE      ] Error al recuperar el producto 
+[01/17/23 23:48:46] [INFORMACIÓN] Se ha insertado el productoCamiseta-Futbol-Puma-M-HOMBRE	30.0�	3 
+[01/17/23 23:48:47] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 31 
+[01/17/23 23:48:48] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila -11, columna 61 
+[01/17/23 23:48:48] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna -11 
+[01/17/23 23:51:44] [INFORMACIÓN] Cliente confirmado 
+[01/17/23 23:51:44] [INFORMACIÓN] Se han recuperado 5 articulos 
+[01/17/23 23:51:44] [INFORMACIÓN] Se han recuperado 4 deportes 
+[01/17/23 23:51:44] [INFORMACIÓN] Se han recuperado 4 marcas 
+[01/17/23 23:51:44] [INFORMACIÓN] Se han recuperado 6 productos 
+[01/17/23 23:51:44] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila -11, columna 21 
+[01/17/23 23:51:44] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 21 
+[01/17/23 23:51:45] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 31, columna 21 
+[01/17/23 23:51:47] [INFORMACIÓN] Tabla Productos: Se ha pulsado el boton 1 en la fila 41, columna 11 
+[01/17/23 23:51:47] [INFORMACIÓN] Tabla Productos: Se ha liverado el boton 1 en la fila 41, columna 11 
+[01/17/23 23:51:47] [INFORMACIÓN] Tabla Productos: Se ha hecho click con el boton 1en la fila 41, columna 11 
+[01/17/23 23:51:47] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila -11, columna 21 
+[01/17/23 23:51:49] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila 01, columna 21 
+[01/17/23 23:51:50] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 21 
+[01/17/23 23:51:50] [INFORMACIÓN] Ha empezado la compra 
+[01/17/23 23:51:56] [INFORMACIÓN] La compra ha finalizado 
+[01/17/23 23:51:56] [INFORMACIÓN] Se han recuperado 5 cliente 
+[01/17/23 23:51:56] [INFORMACIÓN] Se ha recuperado el id maximo: 10 
+[01/17/23 23:51:56] [INFORMACIÓN] Se han recuperado 3 trabajadores 
+[01/17/23 23:51:56] [INFORMACIÓN] Se ha insertado el productoPedido de 5, 17/01/2023, PREPARACION 
+[01/17/23 23:51:56] [INFORMACIÓN] Se ha recuperado el id maximo: 11 
+[01/17/23 23:51:56] [INFORMACIÓN] Se ha recuperado el id producto 
+[01/17/23 23:51:56] [INFORMACIÓN] Se ha insertado el productoZapatillas-Running-Adidas-45-HOMBRE	130.0�	6 
+[01/17/23 23:51:58] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 51, columna 41 
+[01/17/23 23:51:58] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila 11, columna 51 
+[01/17/23 23:52:57] [INFORMACIÓN] Cliente confirmado 
+[01/17/23 23:52:57] [INFORMACIÓN] Se han recuperado 5 articulos 
+[01/17/23 23:52:57] [INFORMACIÓN] Se han recuperado 4 deportes 
+[01/17/23 23:52:57] [INFORMACIÓN] Se han recuperado 4 marcas 
+[01/17/23 23:52:57] [INFORMACIÓN] Se han recuperado 6 productos 
+[01/17/23 23:52:57] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila -11, columna 31 
+[01/17/23 23:52:57] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 31 
+[01/17/23 23:52:58] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 31, columna 21 
+[01/17/23 23:52:58] [INFORMACIÓN] Tabla Productos: Se ha pulsado el boton 1 en la fila 11, columna 21 
+[01/17/23 23:52:58] [INFORMACIÓN] Tabla Productos: Se está arrastrando con el botón 0 pulsado sobre la fila 11, columna 21 
+[01/17/23 23:52:58] [INFORMACIÓN] Tabla Productos: Se ha liverado el boton 1 en la fila 11, columna 21 
+[01/17/23 23:52:58] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila 31, columna 21 
+[01/17/23 23:53:00] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila 01, columna 21 
+[01/17/23 23:53:00] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 21 
+[01/17/23 23:53:00] [INFORMACIÓN] Ha empezado la compra 
+[01/17/23 23:53:07] [INFORMACIÓN] La compra ha finalizado 
+[01/17/23 23:53:07] [INFORMACIÓN] Se han recuperado 5 cliente 
+[01/17/23 23:53:07] [INFORMACIÓN] Se ha recuperado el id maximo: 11 
+[01/17/23 23:53:07] [INFORMACIÓN] Se han recuperado 3 trabajadores 
+[01/17/23 23:53:07] [INFORMACIÓN] Se ha insertado el productoPedido de 5, 17/01/2023, PREPARACION 
+[01/17/23 23:53:07] [INFORMACIÓN] Se ha recuperado el id maximo: 12 
+[01/17/23 23:53:07] [INFORMACIÓN] Se ha recuperado el id producto 
+[01/17/23 23:53:07] [INFORMACIÓN] Se ha insertado el productoPantalon-Futbol-Adidas-L-HOMBRE	5.67�	4 
+[01/17/23 23:53:08] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila 01, columna 51 
+[01/17/23 23:53:08] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna -11 
+[01/17/23 23:56:43] [INFORMACIÓN] Trabajador confirmado 
+[01/17/23 23:56:43] [INFORMACIÓN] Se han recuperado 13 pedidos 
+[01/17/23 23:56:43] [INFORMACIÓN] Se han recuperado 3 trabajadores 
+[01/17/23 23:56:43] [INFORMACIÓN] Se han recuperado 40 productos 
+[01/17/23 23:56:53] [INFORMACIÓN] Cliente confirmado 
+[01/17/23 23:56:53] [INFORMACIÓN] Se han recuperado 5 articulos 
+[01/17/23 23:56:53] [INFORMACIÓN] Se han recuperado 4 deportes 
+[01/17/23 23:56:53] [INFORMACIÓN] Se han recuperado 4 marcas 
+[01/17/23 23:56:53] [INFORMACIÓN] Se han recuperado 6 productos 
+[01/17/23 23:56:54] [INFORMACIÓN] Se ha recuperado el clienteCliente [ID = 5 nombreYApellidos=Pruebas,gmail=1, contrasena=1, direccion=Deusto, telefono=666333444] 
+[01/17/23 23:56:54] [INFORMACIÓN] Se han recuperado 9 pedidos 
+[01/17/23 23:56:54] [INFORMACIÓN] Se ha recuperado el clienteCliente [ID = 5 nombreYApellidos=Pruebas,gmail=1, contrasena=1, direccion=Deusto, telefono=666333444] 
+[01/17/23 23:56:58] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 11, columna 41 
+[01/17/23 23:56:58] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila 41, columna 41 
+[01/17/23 23:56:59] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila -11, columna 31 
+[01/17/23 23:56:59] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 31 
+[01/17/23 23:57:00] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila -11, columna 21 
+[01/17/23 23:57:00] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 21 
+[01/17/23 23:57:00] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 21, columna 21 
+[01/17/23 23:57:00] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila 01, columna 11 
+[01/17/23 23:57:01] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 01, columna 11 
+[01/17/23 23:57:01] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila 31, columna 11 
+[01/17/23 23:57:01] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila -11, columna 21 
+[01/17/23 23:57:01] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 31 
+[01/17/23 23:57:01] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 21, columna 41 
+[01/17/23 23:57:01] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila -11, columna 51 
+[01/17/23 23:57:04] [INFORMACIÓN] Trabajador confirmado 
+[01/17/23 23:57:04] [INFORMACIÓN] Se han recuperado 13 pedidos 
+[01/17/23 23:57:04] [INFORMACIÓN] Se han recuperado 3 trabajadores 
+[01/17/23 23:57:04] [INFORMACIÓN] Se han recuperado 40 productos 
+[01/17/23 23:57:05] [INFORMACIÓN] Se ha recuperado el trabajador 
+[01/18/23 09:46:19] [INFORMACIÓN] Cliente confirmado 
+[01/18/23 09:46:19] [INFORMACIÓN] Se han recuperado 5 articulos 
+[01/18/23 09:46:19] [INFORMACIÓN] Se han recuperado 4 deportes 
+[01/18/23 09:46:19] [INFORMACIÓN] Se han recuperado 4 marcas 
+[01/18/23 09:46:19] [INFORMACIÓN] Se han recuperado 6 productos 
+[01/18/23 09:46:20] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila -11, columna 21 
+[01/18/23 09:46:20] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 31 
+[01/18/23 09:46:20] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 21, columna 21 
+[01/18/23 09:46:21] [INFORMACIÓN] Tabla Productos: Se ha pulsado el boton 1 en la fila 01, columna 21 
+[01/18/23 09:46:21] [INFORMACIÓN] Tabla Productos: Se ha liverado el boton 1 en la fila 01, columna 21 
+[01/18/23 09:46:21] [INFORMACIÓN] Tabla Productos: Se ha hecho click con el boton 1en la fila 01, columna 21 
+[01/18/23 09:46:21] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila 31, columna 21 
+[01/18/23 09:46:23] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila 01, columna 31 
+[01/18/23 09:46:23] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 21 
+[01/18/23 09:46:24] [INFORMACIÓN] Ha empezado la compra 
+[01/18/23 09:46:30] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila -11, columna 31 
+[01/18/23 09:46:30] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 41 
+[01/18/23 09:46:31] [INFORMACIÓN] La compra ha finalizado 
+[01/18/23 09:46:31] [INFORMACIÓN] Se han recuperado 5 cliente 
+[01/18/23 09:46:31] [INFORMACIÓN] Se ha recuperado el id maximo: 14 
+[01/18/23 09:46:31] [INFORMACIÓN] Se han recuperado 3 trabajadores 
+[01/18/23 09:46:31] [INFORMACIÓN] Se ha insertado el productoPedido de 5, 18/01/2023, PREPARACION 
+[01/18/23 09:46:31] [INFORMACIÓN] Se ha recuperado el id maximo: 15 
+[01/18/23 09:46:31] [INFORMACIÓN] Se ha recuperado el id producto 
+[01/18/23 09:46:31] [INFORMACIÓN] Se ha insertado el productoCamiseta-Futbol-Puma-M-HOMBRE	30.0�	1 
+[01/18/23 09:46:33] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila 01, columna 31 
+[01/18/23 09:46:33] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 31 
+[01/18/23 09:46:34] [INFORMACIÓN] Se ha recuperado el clienteCliente [ID = 5 nombreYApellidos=Pruebas,gmail=1, contrasena=1, direccion=Deusto, telefono=666333444] 
+[01/18/23 09:46:34] [INFORMACIÓN] Se han recuperado 10 pedidos 
+[01/18/23 09:46:34] [INFORMACIÓN] Se ha recuperado el clienteCliente [ID = 5 nombreYApellidos=Pruebas,gmail=1, contrasena=1, direccion=Deusto, telefono=666333444] 
+[01/18/23 09:46:38] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 11, columna 61 
+[01/18/23 09:46:38] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila -11, columna 51 
+[01/18/23 09:46:38] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila 01, columna 51 
+[01/18/23 09:46:39] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila 01, columna 41 
+[01/18/23 09:46:39] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila 01, columna 11 
+[01/18/23 09:46:39] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila -11, columna 11 
+[01/18/23 09:46:40] [INFORMACIÓN] Tabla Seleccionados: Se ha entrado en la fila -11, columna 21 
+[01/18/23 09:46:40] [INFORMACIÓN] Tabla Seleccionados: Se ha salido de la fila 01, columna 21 
+[01/18/23 09:46:40] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 01, columna 11 
+[01/18/23 09:46:40] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila -11, columna 01 
+[01/18/23 09:46:40] [INFORMACIÓN] Tabla Productos: Se ha entrado en la fila 01, columna 21 
+[01/18/23 09:46:41] [INFORMACIÓN] Tabla Productos: Se ha salido de la fila -11, columna 41 
+[01/18/23 09:46:51] [INFORMACIÓN] Trabajador confirmado 
+[01/18/23 09:46:51] [INFORMACIÓN] Se han recuperado 14 pedidos 
+[01/18/23 09:46:51] [INFORMACIÓN] Se han recuperado 3 trabajadores 
+[01/18/23 09:46:51] [INFORMACIÓN] Se han recuperado 40 productos 
+[01/18/23 09:47:21] [INFORMACIÓN] Se ha recuperado el trabajador 
