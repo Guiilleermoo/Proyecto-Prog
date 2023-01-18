@@ -228,15 +228,6 @@ public class VentanaCliente extends JFrame{
 							gestorBD.log(Level.INFO, "La compra ha finalizado", null);
 							try {
 								factura(obtenerCarrito(tablaSeleccionados), gmail);
-								Date date = new Date();
-
-						        String id_cliente = String.valueOf(gestorBD.getClienteByGmail(gmail).getId());
-
-						        Pedido pedido = new Pedido(id_cliente, date, (ArrayList<Producto>) productos, Estado.PREPARACION);
-
-						        gestorBD.insertarPedido(pedido);
-
-						        gestorBD.insertarCompone(gestorBD.getLastIdPedido(), productos);
 							} catch (SQLException e) {
 								e.printStackTrace();
 							}
@@ -770,6 +761,16 @@ public class VentanaCliente extends JFrame{
 		} catch (Exception e) {
 			gestorBD.log(Level.INFO, "Error exportando datos", e);
 		}
+		
+		Date date = new Date();
+
+        String id_cliente = String.valueOf(gestorBD.getClienteByGmail(gmail).getId());
+
+        Pedido pedido = new Pedido(id_cliente, date, (ArrayList<Producto>) productos, Estado.PREPARACION);
+
+        gestorBD.insertarPedido(pedido);
+
+        gestorBD.insertarCompone(gestorBD.getLastIdPedido(), productos);
 	}
 	
 	private static void comprasPosiblesRecursividad(List<List<Producto>> result, List<Producto> productos, double maximo, List<Producto> temp) {
